@@ -1,26 +1,67 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/**
+ * Design tokens.
+ *
+ * The palette is deliberately narrow: warm paper, near-black ink, one accent.
+ * Restraint is what separates a designed page from a generated one — every
+ * extra hue is a decision that has to earn itself, and most do not.
+ *
+ * The accent is a warm vermilion. It reads as confident rather than corporate,
+ * and it sits well against the trades, food, and beauty businesses we build
+ * for, where a cool tech blue would feel borrowed from somewhere else.
+ */
+@theme {
+  --color-paper: #f6f3ee;
+  --color-paper-deep: #ece7df;
+  --color-ink: #14120f;
+  --color-ink-soft: #4a453d;
+  --color-ink-faint: #8b8377;
+  --color-rule: #ddd6cb;
+  --color-accent: #c8442a;
+  --color-accent-deep: #a4341f;
+
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  /* Optical sizing and old-style figures are the sort of detail that reads as
+     considered without anyone consciously noticing it. */
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* A small-caps label used to open each section. Tight, wide-tracked, quiet. */
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+/* Numerals in the process list — tabular so they align down the column. */
+.numeral {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
