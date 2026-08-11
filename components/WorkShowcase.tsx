@@ -20,18 +20,24 @@ interface Piece {
   note: string;
 }
 
+/**
+ * Demonstration pages for invented businesses, and labelled as such on the
+ * page. Presenting them as delivered client work would be the fabrication we
+ * refuse to do on a prospect's own site, and it is the kind of claim that
+ * collapses the moment somebody searches the business name.
+ */
 const PIECES: Piece[] = [
   {
     slug: 'demo-valley-tree',
-    name: 'Valley Tree Service',
-    kind: 'Trades',
-    note: 'Phone-first. Someone with a limb through the fence is not reading an About page.',
+    name: 'A tree service',
+    kind: 'Example · Trades',
+    note: 'Phone first. Someone with a limb through the fence is not reading an About page.',
   },
   {
     slug: 'demo-linden-spa',
-    name: 'Linden Row Spa',
-    kind: 'Wellness',
-    note: 'Booking-led and photographic. The same platform, and not a relation of the one on the left.',
+    name: 'A day spa',
+    kind: 'Example · Wellness',
+    note: 'Booking led and photographic. Same system, and no relation to the one beside it.',
   },
 ];
 
@@ -68,7 +74,7 @@ function Frame({ piece }: { piece: Piece }) {
           <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
           <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
           <span className="ml-2 truncate font-[family-name:var(--font-sans)] text-[11px] text-ink-faint">
-            {piece.slug.replace('demo-', '')}.com
+            {piece.slug.replace('demo-', '').replace(/-/g, '')}.example
           </span>
         </div>
 
