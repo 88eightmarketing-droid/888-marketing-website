@@ -53,7 +53,10 @@ export default function HeroMotion() {
      * actually favours, so the animation is a real artefact rather than decor.
      */
     function layout(): { x: number; y: number; w: number; h: number; tone: number }[] {
-      const m = Math.min(width, height) * 0.08;
+      // Margin scales off the *narrow* edge but is capped, so a tall panel on a
+      // phone does not end up mostly empty. An 8% margin on a 600px-high box
+      // reads as a blank frame rather than a composition.
+      const m = Math.min(Math.min(width, height) * 0.06, 34);
       const w = width - m * 2;
       const h = height - m * 2;
 

@@ -121,7 +121,9 @@ export default function Home() {
 
           {/* The platform composing a layout, on a loop. Ours, not stock. */}
           <div className="reveal lg:col-span-5" data-delay="2">
-            <div className="aspect-[4/5] w-full border border-rule bg-paper-deep">
+            {/* Wide and short when stacked under the headline; tall only once
+                it sits beside it, where the column can carry the height. */}
+            <div className="aspect-[16/10] w-full border border-rule bg-white lg:aspect-[4/5]">
               <HeroMotion />
             </div>
           </div>
