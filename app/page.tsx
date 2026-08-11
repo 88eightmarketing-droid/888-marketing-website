@@ -1,4 +1,7 @@
 import ContactForm from '@/components/ContactForm';
+import HeroMotion from '@/components/HeroMotion';
+import Reveal from '@/components/Reveal';
+import WorkShowcase from '@/components/WorkShowcase';
 
 /**
  * The 888 Marketing homepage.
@@ -73,6 +76,7 @@ const INCLUDED = [
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <Reveal />
       {/* ---------- Header ---------- */}
       <header className="mx-auto flex max-w-6xl items-baseline justify-between px-6 pt-8 sm:px-10">
         <a href="/" className="font-[family-name:var(--font-display)] text-2xl tracking-tight">
@@ -87,31 +91,39 @@ export default function Home() {
       </header>
 
       {/* ---------- Hero ---------- */}
-      <section className="mx-auto max-w-6xl px-6 pt-20 pb-24 sm:px-10 sm:pt-32 sm:pb-32">
-        <p className="eyebrow">Websites for local business</p>
+      <section className="mx-auto max-w-6xl px-6 pt-16 pb-20 sm:px-10 sm:pt-24 sm:pb-28">
+        <div className="grid items-center gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <p className="eyebrow reveal">Websites for local business</p>
 
-        <h1 className="mt-6 max-w-4xl font-[family-name:var(--font-display)] text-[clamp(2.75rem,8vw,6.5rem)] leading-[0.95] tracking-[-0.02em]">
-          We build your website first.
-          <br />
-          <span className="italic text-accent">You decide after.</span>
-        </h1>
+            <h1 className="reveal mt-6 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2.75rem,7vw,5.75rem)] leading-[0.95] tracking-[-0.02em]" data-delay="1">
+              We build your website first.
+              <br />
+              <span className="italic text-accent">You decide after.</span>
+            </h1>
 
-        <div className="mt-12 grid gap-10 sm:grid-cols-12">
-          <p className="text-lg leading-relaxed text-ink-soft sm:col-span-6 sm:col-start-1 sm:text-xl">
-            Most agencies want a deposit before you have seen anything. We do it the other
-            way around — we build the page, send you the link, and you decide once it is
-            real and in front of you.
-          </p>
-          <div className="sm:col-span-4 sm:col-start-9">
-            <a
-              href="#start"
-              className="inline-block bg-ink px-7 py-4 text-sm font-medium text-paper transition-colors hover:bg-accent"
-            >
-              Get your page built
-            </a>
-            <p className="mt-3 text-sm text-ink-faint">
-              No deposit. Nothing to cancel.
+            <p className="reveal mt-8 max-w-[46ch] text-lg leading-relaxed text-ink-soft sm:text-xl" data-delay="2">
+              Most agencies want a deposit before you have seen anything. We do it the
+              other way around — we build the page, send you the link, and you decide
+              once it is real and in front of you.
             </p>
+
+            <div className="reveal mt-10 flex flex-wrap items-center gap-5" data-delay="3">
+              <a
+                href="#start"
+                className="inline-block bg-ink px-7 py-4 text-sm font-medium text-paper transition-colors hover:bg-accent"
+              >
+                Get your page built
+              </a>
+              <span className="text-sm text-ink-faint">No deposit. Nothing to cancel.</span>
+            </div>
+          </div>
+
+          {/* The platform composing a layout, on a loop. Ours, not stock. */}
+          <div className="reveal lg:col-span-5" data-delay="2">
+            <div className="aspect-[4/5] w-full border border-rule bg-paper-deep">
+              <HeroMotion />
+            </div>
           </div>
         </div>
       </section>
@@ -125,14 +137,32 @@ export default function Home() {
         </ul>
       </section>
 
+      {/* ---------- Work ---------- */}
+      <section id="work" className="border-b border-rule">
+        <div className="mx-auto max-w-6xl px-6 py-24 sm:px-10 sm:py-32">
+          <p className="eyebrow reveal">Pages we have built</p>
+          <h2 className="reveal mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.015em]" data-delay="1">
+            These are live. Open them.
+          </h2>
+          <p className="reveal mt-5 max-w-[52ch] leading-relaxed text-ink-soft" data-delay="1">
+            Two businesses, two trades, one platform. Nothing here is a mockup — each is a
+            real page on the internet, and they look nothing like each other on purpose.
+          </p>
+
+          <div className="reveal mt-14" data-delay="2">
+            <WorkShowcase />
+          </div>
+        </div>
+      </section>
+
       {/* ---------- How it works ---------- */}
       <section id="how" className="mx-auto max-w-6xl px-6 py-24 sm:px-10 sm:py-32">
-        <p className="eyebrow">How it works</p>
+        <p className="eyebrow reveal">How it works</p>
         <h2 className="mt-5 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.015em]">
           Three steps, and the money is at the end of them.
         </h2>
 
-        <ol className="mt-16 border-t border-rule">
+        <ol className="reveal mt-16 border-t border-rule">
           {STEPS.map((step) => (
             <li
               key={step.n}
@@ -153,12 +183,12 @@ export default function Home() {
       {/* ---------- What's included ---------- */}
       <section className="bg-ink py-24 text-paper sm:py-32">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
-          <p className="eyebrow !text-paper/45">Included in every build</p>
+          <p className="eyebrow reveal !text-paper/45">Included in every build</p>
           <h2 className="mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.015em]">
             Hosting and business email, <span className="italic">included</span>.
           </h2>
 
-          <div className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2">
+          <div className="reveal mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2">
             {INCLUDED.map((item) => (
               <div key={item.title} className="border-t border-paper/15 pt-6">
                 <h3 className="text-lg font-medium">{item.title}</h3>
@@ -173,7 +203,7 @@ export default function Home() {
       <section id="start" className="mx-auto max-w-6xl px-6 py-24 sm:px-10 sm:py-32">
         <div className="grid gap-14 sm:grid-cols-12">
           <div className="sm:col-span-5">
-            <p className="eyebrow">Start here</p>
+            <p className="eyebrow reveal">Start here</p>
             <h2 className="mt-5 font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.015em]">
               Tell us about your business.
             </h2>
