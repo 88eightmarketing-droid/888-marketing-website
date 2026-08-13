@@ -1,5 +1,5 @@
 import ContactForm from '@/components/ContactForm';
-import HeroMotion from '@/components/HeroMotion';
+import HeroProof from '@/components/HeroProof';
 import Reveal from '@/components/Reveal';
 import WorkShowcase from '@/components/WorkShowcase';
 
@@ -130,9 +130,12 @@ export default function Home() {
           </div>
 
           <div className="reveal lg:col-span-5" data-delay="2">
-            <div className="aspect-[16/10] w-full border border-rule bg-white lg:aspect-[4/5]">
-              <HeroMotion />
+            <div className="aspect-[4/5] w-full sm:aspect-[16/11] lg:aspect-[4/5]">
+              <HeroProof />
             </div>
+            <p className="mt-4 text-center text-sm text-ink-faint">
+              A real page, on a phone. Tap it — it opens.
+            </p>
           </div>
         </div>
       </section>
