@@ -1,5 +1,6 @@
 import ContactForm from '@/components/ContactForm';
 import HeroProof from '@/components/HeroProof';
+import Social from '@/components/Social';
 import StickyCta from '@/components/StickyCta';
 import Reveal from '@/components/Reveal';
 import WorkShowcase from '@/components/WorkShowcase';
@@ -94,16 +95,22 @@ export default function Home() {
       <Reveal />
 
       {/* ---------- Header ---------- */}
-      <header className="mx-auto flex max-w-6xl items-baseline justify-between px-6 pt-8 sm:px-10">
+      <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 pt-8 sm:px-10">
         <a href="/" className="font-[family-name:var(--font-display)] text-2xl tracking-tight">
           888 <span className="italic text-accent">Marketing</span>
         </a>
-        <a
-          href="#start"
-          className="bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent"
-        >
-          Get your page
-        </a>
+
+        <div className="flex items-center gap-2 sm:gap-4">
+          {/* Hidden on the narrowest screens so the call to action keeps the room. */}
+          <Social className="hidden xs:flex sm:flex" />
+
+          <a
+            href="#start"
+            className="bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent"
+          >
+              Get your page
+          </a>
+        </div>
       </header>
 
       {/* ---------- Hero ---------- */}
@@ -300,11 +307,21 @@ export default function Home() {
 
       {/* ---------- Footer ---------- */}
       <footer className="border-t border-rule">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 sm:flex-row sm:items-baseline sm:justify-between sm:px-10">
-          <p className="font-[family-name:var(--font-display)] text-lg">
-            888 <span className="italic text-accent">Marketing</span>
-          </p>
-          <p className="text-sm text-ink-faint">
+        <div className="mx-auto max-w-6xl px-6 py-12 sm:px-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-[family-name:var(--font-display)] text-lg">
+                888 <span className="italic text-accent">Marketing</span>
+              </p>
+              <p className="mt-1 text-sm text-ink-soft">
+                See the work as it goes live.
+              </p>
+            </div>
+
+            <Social size={20} className="-ml-2 sm:ml-0" />
+          </div>
+
+          <p className="mt-10 border-t border-rule pt-6 text-sm text-ink-faint">
             © {new Date().getFullYear()} 888 Marketing. Websites for local business.
           </p>
         </div>
