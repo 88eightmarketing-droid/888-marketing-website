@@ -23,6 +23,29 @@
 
   --font-display: var(--font-instrument-serif), Georgia, serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Soft-panel geometry.
+   *
+   * Large radii and pastel washes are the current language of software
+   * companies people already trust — Stripe, Squarespace, Meta's own
+   * developer site. For a two-person agency selling to businesses that have
+   * been burned by cheap web work, looking like a real software company is
+   * worth more than looking like a boutique studio.
+   *
+   * The vermilion stays. Borrowing the geometry is not the same as borrowing
+   * the identity, and every one of those sites is some shade of blue. */
+  --radius-panel: 32px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
+}
+
+/* A pastel wash, tinted toward our own accent rather than Meta's blue-mint. */
+.wash {
+  background:
+    radial-gradient(120% 120% at 8% 0%, #f7e2dc 0%, rgba(247, 226, 220, 0) 55%),
+    radial-gradient(100% 100% at 95% 15%, #e2eef0 0%, rgba(226, 238, 240, 0) 60%),
+    radial-gradient(90% 90% at 60% 100%, #f3ece2 0%, rgba(243, 236, 226, 0) 70%),
+    var(--color-paper);
 }
 
 html {

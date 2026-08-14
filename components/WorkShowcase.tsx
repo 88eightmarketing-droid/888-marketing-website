@@ -68,7 +68,8 @@ function Frame({ piece }: { piece: Piece }) {
   return (
     <figure ref={ref} className="group">
       {/* Browser chrome, drawn rather than imaged so it stays crisp. */}
-      <div className="overflow-hidden border border-rule bg-white shadow-[0_1px_2px_rgba(20,18,15,0.06),0_12px_40px_-12px_rgba(20,18,15,0.25)]">
+      <div style={{ borderRadius: 'var(--radius-card)' }}
+        className="overflow-hidden border border-rule bg-white shadow-[0_1px_2px_rgba(20,18,15,0.06),0_12px_40px_-12px_rgba(20,18,15,0.25)]">
         <div className="flex items-center gap-2 border-b border-rule bg-paper-deep px-3 py-2.5">
           <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
           <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />

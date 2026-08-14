@@ -106,7 +106,7 @@ export default function Home() {
 
           <a
             href="#start"
-            className="bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent"
+            className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent"
           >
               Get your page
           </a>
@@ -114,8 +114,11 @@ export default function Home() {
       </header>
 
       {/* ---------- Hero ---------- */}
-      <section className="mx-auto max-w-6xl px-6 pt-14 pb-16 sm:px-10 sm:pt-20 sm:pb-20">
-        <div className="grid items-center gap-12 lg:grid-cols-12">
+      <section className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
+        <div
+          className="wash grid items-center gap-12 px-6 py-14 sm:px-10 sm:py-20 lg:grid-cols-12"
+          style={{ borderRadius: 'var(--radius-panel)' }}
+        >
           <div className="lg:col-span-6">
             <p className="eyebrow reveal">Websites for local business</p>
 
@@ -135,7 +138,7 @@ export default function Home() {
             <div className="reveal mt-9 flex flex-wrap items-center gap-5" data-delay="3">
               <a
                 href="#start"
-                className="inline-block bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
+                className="inline-block rounded-full bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
               >
                 Get my page built
               </a>
@@ -159,9 +162,9 @@ export default function Home() {
             One price, paid once. Hosting and email included.
           </h2>
 
-          <div className="reveal mt-12 grid gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-4" data-delay="2">
+          <div className="reveal mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-delay="2">
             {PRICES.map((tier) => (
-              <div key={tier.name} className="flex flex-col bg-paper p-6 transition-colors hover:bg-paper-deep/40">
+              <div key={tier.name} className="flex flex-col border border-rule bg-paper p-6 transition-colors hover:border-accent/40" style={{ borderRadius: 'var(--radius-card)' }}>
                 <p className="font-[family-name:var(--font-display)] text-4xl leading-none">{tier.price}</p>
                 <p className="mt-3 font-medium">{tier.name}</p>
                 <p className="mt-1 text-xs uppercase tracking-[0.08em] text-ink-faint">{tier.pages}</p>
@@ -183,7 +186,7 @@ export default function Home() {
           <div className="reveal mt-10 flex flex-wrap items-center gap-5" data-delay="3">
             <a
               href="#start"
-              className="inline-block bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
+              className="inline-block rounded-full bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
             >
               Get my page built
             </a>
@@ -249,7 +252,7 @@ export default function Home() {
           <div className="reveal mt-14 flex flex-wrap items-center gap-5" data-delay="2">
             <a
               href="#start"
-              className="inline-block bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
+              className="inline-block rounded-full bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
             >
               Build one for my business
             </a>

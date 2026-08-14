@@ -77,7 +77,8 @@ export default function HeroProof() {
 
   return (
     <div ref={ref} className="relative">
-      <div className="overflow-hidden border border-rule bg-white shadow-[0_2px_4px_rgba(20,18,15,0.05),0_24px_60px_-20px_rgba(20,18,15,0.35)]">
+      <div style={{ borderRadius: 'var(--radius-card)' }}
+        className="overflow-hidden border border-rule bg-white shadow-[0_2px_4px_rgba(20,18,15,0.05),0_24px_60px_-20px_rgba(20,18,15,0.35)]">
         {/* Browser chrome, drawn rather than imaged so it stays sharp. */}
         <div className="flex items-center gap-2 border-b border-rule bg-paper-deep px-4 py-3">
           <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
