@@ -1,5 +1,6 @@
 import ContactForm from '@/components/ContactForm';
 import HeroProof from '@/components/HeroProof';
+import StickyCta from '@/components/StickyCta';
 import Reveal from '@/components/Reveal';
 import WorkShowcase from '@/components/WorkShowcase';
 
@@ -25,10 +26,18 @@ import WorkShowcase from '@/components/WorkShowcase';
  */
 
 const PRICES = [
-  { name: 'Landing page', price: '$499', line: 'One page. Phone, services, and how to find you.' },
-  { name: 'Full website', price: '$999', line: 'Everything above, plus your story, photos and reviews.' },
-  { name: 'Multi-page', price: '$1,999', line: 'Four pages, with room for each service.' },
-  { name: 'Larger build', price: 'Quoted', line: 'Booking, menus, portfolios, anything bespoke.' },
+  { name: 'Landing page', price: '$499', pages: 'One page', line: 'Phone, services, and how to find you. Built for people who just need to be findable and callable.' },
+  { name: 'Full website', price: '$999', pages: 'One page, complete', line: 'Everything above, plus your story, your photos and your reviews.' },
+  { name: 'Multi-page', price: '$1,999', pages: 'Four pages', line: 'Room to explain each service properly, rather than squeezing them into a list.' },
+  { name: 'Larger build', price: 'Quoted', pages: 'Five or more', line: 'Booking, menus, portfolios, anything bespoke. We will tell you what it costs before we start.' },
+];
+
+/** In every package, at every price. Repeated here because it is what removes the risk. */
+const INCLUDED = [
+  'Twelve months of hosting',
+  'A business email on your own domain',
+  'The domain is yours, in your name',
+  'No deposit, and nothing to cancel',
 ];
 
 const STEPS = [
@@ -100,7 +109,7 @@ export default function Home() {
       {/* ---------- Hero ---------- */}
       <section className="mx-auto max-w-6xl px-6 pt-14 pb-16 sm:px-10 sm:pt-20 sm:pb-20">
         <div className="grid items-center gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-6">
             <p className="eyebrow reveal">Websites for local business</p>
 
             <h1 className="reveal mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2.5rem,6.5vw,5.25rem)] leading-[0.95] tracking-[-0.02em]" data-delay="1">
@@ -129,13 +138,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="reveal lg:col-span-5" data-delay="2">
-            <div className="aspect-[4/5] w-full sm:aspect-[16/11] lg:aspect-[4/5]">
-              <HeroProof />
-            </div>
-            <p className="mt-4 text-center text-sm text-ink-faint">
-              A real page, on a phone. Tap it — it opens.
-            </p>
+          <div className="reveal lg:col-span-6" data-delay="2">
+            <HeroProof />
           </div>
         </div>
       </section>
@@ -150,17 +154,40 @@ export default function Home() {
 
           <div className="reveal mt-12 grid gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-4" data-delay="2">
             {PRICES.map((tier) => (
-              <div key={tier.name} className="bg-paper p-6">
-                <p className="font-[family-name:var(--font-display)] text-3xl">{tier.price}</p>
-                <p className="mt-2 font-medium">{tier.name}</p>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{tier.line}</p>
+              <div key={tier.name} className="flex flex-col bg-paper p-6 transition-colors hover:bg-paper-deep/40">
+                <p className="font-[family-name:var(--font-display)] text-4xl leading-none">{tier.price}</p>
+                <p className="mt-3 font-medium">{tier.name}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.08em] text-ink-faint">{tier.pages}</p>
+                <p className="mt-3 text-sm leading-relaxed text-ink-soft">{tier.line}</p>
               </div>
             ))}
           </div>
 
-          <p className="reveal mt-6 max-w-[60ch] text-sm leading-relaxed text-ink-faint" data-delay="2">
-            Every build includes twelve months of hosting and a business email on your own
-            domain. We tell you the renewal price in writing on the quote, before you buy.
+          {/* What every price has in it. The reassurance belongs where the money is. */}
+          <ul className="reveal mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2" data-delay="2">
+            {INCLUDED.map((item) => (
+              <li key={item} className="flex items-baseline gap-3 text-sm text-ink-soft">
+                <span aria-hidden="true" className="text-accent">&#10003;</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="reveal mt-10 flex flex-wrap items-center gap-5" data-delay="3">
+            <a
+              href="#start"
+              className="inline-block bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
+            >
+              Get my page built
+            </a>
+            <span className="text-sm text-ink-faint">
+              You see it before you pay a penny.
+            </span>
+          </div>
+
+          <p className="reveal mt-8 max-w-[60ch] text-sm leading-relaxed text-ink-faint" data-delay="3">
+            We tell you the renewal price in writing on the quote, before you buy — never
+            after.
           </p>
         </div>
       </section>
@@ -191,18 +218,37 @@ export default function Home() {
       {/* ---------- Examples, labelled honestly ---------- */}
       <section id="work" className="border-y border-rule bg-paper-deep">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-24">
-          <p className="eyebrow reveal">What you would get</p>
+          <p className="eyebrow reveal">Our work</p>
           <h2 className="reveal mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.015em]" data-delay="1">
-            Two examples. Open them.
+            Work we have done. Open it.
           </h2>
           <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-ink-soft" data-delay="1">
-            These are demonstration pages, not client sites — built by the same system that
-            would build yours, for two invented businesses in different trades. They look
-            nothing like each other on purpose. Yours would look like neither.
+            Real businesses, at their real addresses — not mockups, and not screenshots you
+            have to take our word for. Click either one and you are on the live site. They
+            look nothing like each other on purpose, because they are not the same business.
           </p>
 
           <div className="reveal mt-12" data-delay="2">
             <WorkShowcase />
+          </div>
+
+          {/*
+            * The examples are the strongest thing on this page, and until now
+            * the only thing after them was more reading. Somebody who has just
+            * opened a real site we built is as convinced as they are going to
+            * get — that is the moment to offer the next step, not three
+            * thousand pixels later.
+            */}
+          <div className="reveal mt-14 flex flex-wrap items-center gap-5" data-delay="2">
+            <a
+              href="#start"
+              className="inline-block bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
+            >
+              Build one for my business
+            </a>
+            <span className="text-sm text-ink-faint">
+              Same day, and you owe nothing to look at it.
+            </span>
           </div>
         </div>
       </section>
@@ -263,6 +309,8 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      <StickyCta />
     </div>
   );
 }

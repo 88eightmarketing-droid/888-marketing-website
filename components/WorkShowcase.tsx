@@ -3,45 +3,45 @@
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * Real pages, running.
+ * Real client sites, running.
  *
- * Not screenshots and not mockups — live iframes of concept pages the platform
- * actually produced. For an agency selling websites, the honest proof is the
- * websites, and a static image of one invites the question of whether it exists.
+ * These replaced two demonstration pages built for invented businesses. The
+ * demos were honest and clearly labelled, but "here is something we made up"
+ * is a far weaker argument than "here is a real business, at its real address,
+ * open it and check". For an agency selling websites, the only proof that
+ * cannot be argued with is a website belonging to somebody else.
  *
- * They load lazily and only once scrolled into view: three embedded pages on
- * first paint would be indefensible on a phone.
+ * Live iframes rather than screenshots, for the same reason: a static image of
+ * a site invites the question of whether the site exists.
+ *
+ * They load only once scrolled into view — two embedded sites on first paint
+ * would be indefensible on a phone.
  */
 
 interface Piece {
-  slug: string;
+  url: string;
+  domain: string;
   name: string;
   kind: string;
   note: string;
 }
 
-/**
- * Demonstration pages for invented businesses, and labelled as such on the
- * page. Presenting them as delivered client work would be the fabrication we
- * refuse to do on a prospect's own site, and it is the kind of claim that
- * collapses the moment somebody searches the business name.
- */
 const PIECES: Piece[] = [
   {
-    slug: 'demo-valley-tree',
-    name: 'A tree service',
-    kind: 'Example · Trades',
-    note: 'Phone first. Someone with a limb through the fence is not reading an About page.',
+    url: 'https://classeskin.com',
+    domain: 'classeskin.com',
+    name: 'Classé Skin & Sculpt',
+    kind: 'Wellness · San Jose',
+    note: 'A treatment menu people actually read, and a booking path that does not make anyone hunt for it.',
   },
   {
-    slug: 'demo-linden-spa',
-    name: 'A day spa',
-    kind: 'Example · Wellness',
-    note: 'Booking led and photographic. Same system, and no relation to the one beside it.',
+    url: 'https://getkickz.com',
+    domain: 'getkickz.com',
+    name: 'GetKickz',
+    kind: 'Retail · Streetwear',
+    note: 'Built around the drop. The thing that matters is above the fold and everything else gets out of its way.',
   },
 ];
-
-const BASE = 'https://agency-previews-888-marketing.vercel.app/site';
 
 function Frame({ piece }: { piece: Piece }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -58,7 +58,7 @@ function Frame({ piece }: { piece: Piece }) {
           observer.disconnect();
         }
       },
-      { rootMargin: '200px' },
+      { rootMargin: '300px' },
     );
 
     observer.observe(node);
@@ -74,18 +74,18 @@ function Frame({ piece }: { piece: Piece }) {
           <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
           <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
           <span className="ml-2 truncate font-[family-name:var(--font-sans)] text-[11px] text-ink-faint">
-            {piece.slug.replace('demo-', '').replace(/-/g, '')}.example
+            {piece.domain}
           </span>
         </div>
 
         <div className="relative aspect-[4/3] bg-paper">
           {visible ? (
             <iframe
-              src={`${BASE}/${piece.slug}`}
-              title={`${piece.name} — concept page`}
+              src={piece.url}
+              title={`${piece.name} — a site we built`}
               loading="lazy"
-              // A live page from another origin: give it nothing.
-              sandbox="allow-scripts"
+              // Somebody else's live site: give it nothing.
+              sandbox="allow-scripts allow-same-origin"
               referrerPolicy="no-referrer"
               className="absolute left-0 top-0 origin-top-left border-0"
               style={{ width: '200%', height: '200%', transform: 'scale(0.5)' }}
@@ -93,13 +93,13 @@ function Frame({ piece }: { piece: Piece }) {
           ) : (
             <div className="absolute inset-0 animate-pulse bg-paper-deep" />
           )}
-          {/* Keeps the embed from stealing scroll and clicks on a phone. */}
+          {/* Keeps the embed from stealing scroll and taps on a phone. */}
           <a
-            href={`${BASE}/${piece.slug}`}
+            href={piece.url}
             target="_blank"
             rel="noreferrer"
             className="absolute inset-0 z-10"
-            aria-label={`Open the ${piece.name} concept`}
+            aria-label={`Open ${piece.name}`}
           />
         </div>
       </div>
@@ -110,6 +110,14 @@ function Frame({ piece }: { piece: Piece }) {
           {piece.name}
         </p>
         <p className="mt-2 max-w-[38ch] text-sm leading-relaxed text-ink-soft">{piece.note}</p>
+        <a
+          href={piece.url}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-3 inline-block text-sm text-accent underline underline-offset-4"
+        >
+          Open {piece.domain}
+        </a>
       </figcaption>
     </figure>
   );
@@ -119,7 +127,7 @@ export default function WorkShowcase() {
   return (
     <div className="grid gap-12 sm:grid-cols-2 sm:gap-8">
       {PIECES.map((piece) => (
-        <Frame key={piece.slug} piece={piece} />
+        <Frame key={piece.url} piece={piece} />
       ))}
     </div>
   );

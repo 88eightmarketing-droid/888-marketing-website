@@ -3,35 +3,45 @@
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * The proof, in the first screen.
+ * The proof, in the first screen — two real client sites, cross-fading.
  *
- * This slot used to hold an abstract animation of a layout composing itself —
- * grey and black rectangles sliding into a grid. It was pleasant to build and
- * it told a plumber nothing. The strongest evidence this business has is that
- * it produces real, working websites, and that evidence was four screens down
- * the page while the most valuable space on the site ran a screensaver.
+ * This slot has been through several versions and the reasoning is worth
+ * keeping. First an abstract animation of a layout composing itself, which was
+ * pleasant and told a plumber nothing. Then a phone frame showing a page for an
+ * invented tree service — better, because it was a real page, but a phone-sized
+ * window and a made-up business are both ways of underselling.
  *
- * So it shows a real page instead. On a phone, because that is how the prospect
- * actually receives it — Jessica sends a link, they open it standing in a
- * workshop — and because step two of our own copy says "open it on your phone".
+ * Now: real client work, full width, rotating. Two sites that look nothing like
+ * each other is the argument, made without a word of copy — a visitor watching
+ * a spa become a streetwear shop has understood "you will not get a template"
+ * faster than any sentence could tell them.
  *
- * The frame is drawn rather than imaged so it stays sharp, and the page inside
- * is live: anyone can tap through to the real thing and check it exists.
+ * Both frames stay mounted and only their opacity changes. Swapping the `src`
+ * would reload the site on every turn, which flashes white and costs the
+ * visitor bandwidth for something they already looked at.
  */
 
-const SRC = 'https://agency-previews-888-marketing.vercel.app/site/demo-valley-tree';
+interface Piece {
+  url: string;
+  domain: string;
+  name: string;
+  where: string;
+}
 
-/** Phone-shaped viewport, rendered at real device width and scaled to fit. */
-const DEVICE_WIDTH = 390;
-const DEVICE_HEIGHT = 780;
+const PIECES: Piece[] = [
+  { url: 'https://classeskin.com', domain: 'classeskin.com', name: 'Classé Skin & Sculpt', where: 'San Jose' },
+  { url: 'https://getkickz.com', domain: 'getkickz.com', name: 'GetKickz', where: 'Streetwear' },
+];
+
+const INTERVAL = 7000;
 
 export default function HeroProof() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [scale, setScale] = useState(1);
+  const [index, setIndex] = useState(0);
 
-  // Eager by intent — this is above the fold — but still gated on being in view
-  // so a phone that lands mid-page does not pay for it twice.
+  // Above the fold, so effectively eager — the observer only guards against a
+  // phone that lands mid-page paying for it twice.
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
@@ -43,66 +53,106 @@ export default function HeroProof() {
           observer.disconnect();
         }
       },
-      { rootMargin: '400px' },
+      { rootMargin: '500px' },
     );
+
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
-  // The page inside renders at true phone width and is scaled down to whatever
-  // room the column has. Scaling rather than resizing keeps it an honest mobile
-  // rendering instead of a squeezed desktop one.
+  // Rotation stops for anyone who has asked for less motion, and while the tab
+  // is in the background — nobody needs a carousel running in a tab they left.
   useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
+    if (!visible) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const measure = () => {
-      const { width, height } = node.getBoundingClientRect();
-      if (width && height) {
-        setScale(Math.min(width / DEVICE_WIDTH, height / DEVICE_HEIGHT));
-      }
-    };
+    let timer = window.setInterval(() => {
+      if (!document.hidden) setIndex((i) => (i + 1) % PIECES.length);
+    }, INTERVAL);
 
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
+    return () => window.clearInterval(timer);
+  }, [visible]);
+
+  const current = PIECES[index];
 
   return (
-    <div ref={ref} className="relative h-full w-full overflow-hidden">
-      <div
-        className="absolute left-1/2 top-1/2 overflow-hidden rounded-[2.25rem] border-[10px] border-ink bg-white shadow-[0_30px_60px_-25px_rgba(20,18,15,0.45)]"
-        style={{
-          width: DEVICE_WIDTH,
-          height: DEVICE_HEIGHT,
-          transform: `translate(-50%, -50%) scale(${scale})`,
-        }}
-      >
-        {visible ? (
-          <iframe
-            src={SRC}
-            title="A real page we built, shown on a phone"
-            loading="eager"
-            // A live page from another origin: give it nothing.
-            sandbox="allow-scripts"
-            referrerPolicy="no-referrer"
-            className="h-full w-full border-0"
-            scrolling="no"
+    <div ref={ref} className="relative">
+      <div className="overflow-hidden border border-rule bg-white shadow-[0_2px_4px_rgba(20,18,15,0.05),0_24px_60px_-20px_rgba(20,18,15,0.35)]">
+        {/* Browser chrome, drawn rather than imaged so it stays sharp. */}
+        <div className="flex items-center gap-2 border-b border-rule bg-paper-deep px-4 py-3">
+          <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-ink/15" />
+          <span className="ml-3 truncate rounded bg-white/70 px-3 py-1 text-[11px] tabular-nums text-ink-faint transition-opacity duration-500">
+            {current.domain}
+          </span>
+        </div>
+
+        <div className="relative aspect-[16/11] bg-paper">
+          {PIECES.map((piece, i) => (
+            <div
+              key={piece.url}
+              aria-hidden={i !== index}
+              className="absolute inset-0 transition-opacity duration-[900ms] ease-in-out"
+              style={{ opacity: i === index ? 1 : 0 }}
+            >
+              {visible ? (
+                <iframe
+                  src={piece.url}
+                  title={`${piece.name} — a site we built`}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  sandbox="allow-scripts allow-same-origin"
+                  referrerPolicy="no-referrer"
+                  className="absolute left-0 top-0 origin-top-left border-0"
+                  style={{ width: '200%', height: '200%', transform: 'scale(0.5)' }}
+                />
+              ) : (
+                <div className="absolute inset-0 animate-pulse bg-paper-deep" />
+              )}
+            </div>
+          ))}
+
+          {/* Keeps the embed from stealing scroll and taps. */}
+          <a
+            href={current.url}
+            target="_blank"
+            rel="noreferrer"
+            className="absolute inset-0 z-10"
+            aria-label={`Open ${current.domain}`}
           />
-        ) : (
-          <div className="h-full w-full animate-pulse bg-paper-deep" />
-        )}
+        </div>
       </div>
 
-      {/* Keeps the embed from stealing scroll and taps. */}
-      <a
-        href={SRC}
-        target="_blank"
-        rel="noreferrer"
-        className="absolute inset-0 z-10"
-        aria-label="Open this example page"
-      />
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <p className="text-sm text-ink-faint">
+          <span className="text-ink">{current.name}</span>, {current.where} — one of ours.{' '}
+          <a
+            href={current.url}
+            target="_blank"
+            rel="noreferrer"
+            className="text-accent underline underline-offset-4"
+          >
+            Open it
+          </a>
+        </p>
+
+        {/* Small, and clickable — a visitor who wants the other one should not
+            have to wait seven seconds for it. */}
+        <div className="ml-auto flex items-center gap-2">
+          {PIECES.map((piece, i) => (
+            <button
+              key={piece.url}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Show ${piece.name}`}
+              aria-current={i === index}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === index ? 'w-6 bg-accent' : 'w-1.5 bg-ink/20 hover:bg-ink/40'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
