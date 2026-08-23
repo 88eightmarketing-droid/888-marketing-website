@@ -27,9 +27,12 @@
  *
  * ## The token
  *
- * `INSTAGRAM_TOKEN` is a long-lived user access token. It lasts 60 days and
- * must be refreshed before it expires, which is the one real maintenance cost.
- * Setup steps are in the handbook.
+ * `INSTAGRAM_TOKEN` is a long-lived access token. It lasts 60 days and must be
+ * refreshed before it expires, which is the one real maintenance cost. Setup
+ * steps are in the handbook.
+ *
+ * `INSTAGRAM_USER_ID` is set only for the Facebook-login route — it is the
+ * Instagram account's numeric id, and its presence is what selects that path.
  *
  * With no token configured, this returns an empty list and the section does not
  * render. The site is complete without it, which is deliberate: a feed is worth
@@ -88,7 +91,26 @@ export async function recentPosts(limit = 6): Promise<InstagramPost[]> {
   const token = process.env.INSTAGRAM_TOKEN;
   if (!token) return [];
 
-  const url = new URL('https://graph.instagram.com/me/media');
+  /*
+   * Two ways in, because Meta offers two and only one of them works per setup.
+   *
+   *   Instagram login — the account authorises the app directly and the token
+   *   reads `me` on graph.instagram.com. Cleanest, and it needs the account to
+   *   hold an Instagram Tester role on the app.
+   *
+   *   Facebook login — the account is reached through the Facebook Page it is
+   *   linked to, so the token is a Page token and the media lives under the
+   *   Instagram user's own id on graph.facebook.com.
+   *
+   * Setting INSTAGRAM_USER_ID picks the second. Supporting both costs four
+   * lines and saves being blocked on which one Meta lets us finish today.
+   */
+  const igUserId = process.env.INSTAGRAM_USER_ID;
+
+  const url = igUserId
+    ? new URL(`https://graph.facebook.com/v21.0/${igUserId}/media`)
+    : new URL('https://graph.instagram.com/me/media');
+
   url.searchParams.set('fields', FIELDS);
   url.searchParams.set('limit', String(Math.min(limit * 2, 25)));
   url.searchParams.set('access_token', token);
