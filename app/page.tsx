@@ -4,6 +4,7 @@ import Social from '@/components/Social';
 import StickyCta from '@/components/StickyCta';
 import Reveal from '@/components/Reveal';
 import WorkShowcase from '@/components/WorkShowcase';
+import InstagramFeed from '@/components/InstagramFeed';
 
 /**
  * The 888 Marketing homepage.
@@ -279,6 +280,18 @@ export default function Home() {
           ))}
         </dl>
       </section>
+
+      {/*
+        * The feed, last before the call to action.
+        *
+        * It is proof of life rather than proof of work — the showcase above
+        * already does the arguing. Here it says somebody is at the desk this
+        * week, which is the doubt a one-man agency actually has to answer.
+        *
+        * Renders nothing when there are no posts, so the page is complete
+        * without it.
+        */}
+      <InstagramFeed />
 
       {/* ---------- Start ---------- */}
       <section id="start" className="border-t border-rule bg-ink text-paper">
