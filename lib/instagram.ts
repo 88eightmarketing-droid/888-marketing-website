@@ -111,13 +111,33 @@ interface BeholdPost {
   sizes?: { medium?: { mediaUrl?: string }; small?: { mediaUrl?: string } };
 }
 
+/**
+ * Whatever was pasted into the environment variable, as a feed URL.
+ *
+ * Behold's dashboard shows both a feed id and a full endpoint, and which one
+ * lands in the variable depends on who copied it. Accepting either is three
+ * lines; the alternative is a 404 whose only clue is that somebody pasted the
+ * wrong half of a page, which is exactly how the first attempt failed.
+ */
+function beholdUrl(value: string): string {
+  const trimmed = value.trim().replace(/\/+$/, '');
+
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+
+  // A bare id, or the tail of a path somebody copied.
+  const id = trimmed.split('/').filter(Boolean).pop() ?? trimmed;
+  return `https://feeds.behold.so/${id}`;
+}
+
 async function fromBehold(feedId: string, limit: number): Promise<InstagramPost[]> {
-  const response = await fetch(`https://feeds.behold.so/${feedId}`, {
-    next: { revalidate: 3600 },
-  });
+  const endpoint = beholdUrl(feedId);
+  const response = await fetch(endpoint, { next: { revalidate: 3600 } });
 
   if (!response.ok) {
-    console.error(`Behold feed unavailable: ${response.status}`);
+    // The endpoint is logged, not just the status. A feed id is not a secret —
+    // it is in the embed code on every page that uses one — and a 404 with no
+    // indication of what was requested is unanswerable.
+    console.error(`Behold feed unavailable: ${response.status} for ${endpoint}`);
     return [];
   }
 
