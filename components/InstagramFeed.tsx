@@ -70,7 +70,16 @@ export default async function InstagramFeed() {
           </a>
         </div>
 
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+        {/*
+          * Three across on every width, not two.
+          *
+          * We fetch six, and three posts is the minimum this renders at, so a
+          * three-column grid is always full rows. Two columns left the third
+          * post alone on its own line with a hole beside it, which on the
+          * section arguing that our pages look finished is the wrong detail to
+          * get wrong.
+          */}
+        <ul className="mt-10 grid grid-cols-3 gap-2 sm:gap-4">
           {posts.map((post, index) => (
             <li key={post.id}>
               <a
