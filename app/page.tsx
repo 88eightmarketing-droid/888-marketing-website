@@ -138,7 +138,7 @@ export default function Home() {
             <h1 className="reveal mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2.5rem,6.5vw,5.25rem)] leading-[0.95] tracking-[-0.02em]" data-delay="1">
               See your website
               <br />
-              <span className="italic text-accent">before you pay for it.</span>
+              <span className="italic text-accent">before you pay.</span>
             </h1>
 
             <p className="reveal mt-7 max-w-[48ch] text-lg leading-relaxed text-ink-soft sm:text-xl" data-delay="2">

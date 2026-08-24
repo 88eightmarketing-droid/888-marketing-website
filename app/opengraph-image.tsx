@@ -23,7 +23,7 @@ async function font(file: string) {
 
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const alt = '888 Marketing — See your website before you pay for it.';
+export const alt = '888 Marketing — See your website before you pay.';
 
 export default async function OpengraphImage() {
   const [regular, italic] = await Promise.all([
@@ -63,7 +63,7 @@ export default async function OpengraphImage() {
           }}
         >
           <div>See your website</div>
-          <div style={{ color: '#c8442a', fontStyle: 'italic' }}>before you pay for it.</div>
+          <div style={{ color: '#c8442a', fontStyle: 'italic' }}>before you pay.</div>
         </div>
 
         <div

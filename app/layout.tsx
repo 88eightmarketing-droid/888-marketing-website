@@ -27,7 +27,7 @@ const SITE = 'https://888marketing.net';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: '888 Marketing — See your website before you pay for it.',
+    default: '888 Marketing — See your website before you pay.',
     template: '%s · 888 Marketing',
   },
   description:
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
     type: 'website',
     url: SITE,
     siteName: '888 Marketing',
-    title: '888 Marketing — See your website before you pay for it.',
+    title: '888 Marketing — See your website before you pay.',
     description:
       'Websites for local businesses. We build yours before asking for a penny. Hosting and business email included.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '888 Marketing — See your website before you pay for it.',
+    title: '888 Marketing — See your website before you pay.',
     description:
       'Websites for local businesses. We build yours before asking for a penny.',
   },
