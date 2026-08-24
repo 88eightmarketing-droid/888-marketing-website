@@ -25,20 +25,48 @@ export default async function InstagramFeed() {
   return (
     <section className="border-y border-rule bg-paper-deep">
       <div className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        {/*
+          * Named as a live feed, on purpose.
+          *
+          * It read as "some photographs we chose", which is the one thing it is
+          * not. Every prospect who says "I just use Instagram" is looking at the
+          * answer to their own objection here — but only if they can tell that
+          * the grid fills itself. So: the glyph, the handle, and a line saying
+          * out loud that this updates when we post.
+          *
+          * That last line is the sales pitch. It is the difference between a
+          * visitor admiring our photographs and a visitor wanting this on their
+          * own site.
+          */}
+        <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="eyebrow">Lately</p>
-            <h2 className="mt-2 font-[family-name:var(--font-display)] text-3xl leading-tight sm:text-4xl">
-              What we have been building
+            <p className="eyebrow flex items-center gap-2">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+                <path d={INSTAGRAM.path} />
+              </svg>
+              Live from Instagram
+            </p>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl leading-tight sm:text-4xl">
+              <a href={INSTAGRAM.href} target="_blank" rel="noreferrer" className="hover:text-accent">
+                @88eightmarketing
+              </a>
             </h2>
+            <p className="mt-3 max-w-[40ch] text-ink-soft">
+              This section fills itself. We post to Instagram, it appears here —{' '}
+              <span className="text-ink">and it can do the same on your site.</span>
+            </p>
           </div>
+
           <a
             href={INSTAGRAM.href}
             target="_blank"
             rel="noreferrer"
-            className="text-sm text-accent underline underline-offset-4"
+            className="inline-flex items-center gap-2 rounded-full border border-ink px-6 py-3 text-sm font-medium transition-colors hover:bg-ink hover:text-paper"
           >
-            Follow @88eightmarketing
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+              <path d={INSTAGRAM.path} />
+            </svg>
+            Follow
           </a>
         </div>
 
@@ -85,6 +113,21 @@ export default async function InstagramFeed() {
             </li>
           ))}
         </ul>
+
+        {/*
+          * The ask, immediately under the proof.
+          *
+          * Somebody who has just worked out that this grid is live is as close
+          * to wanting one as they will ever be. Making them scroll back up to
+          * the contact form to act on it loses most of them.
+          */}
+        <p className="mt-8 text-sm text-ink-soft">
+          Want your feed on your own site?{' '}
+          <a href="#start" className="text-accent underline underline-offset-4">
+            Tell us your business name
+          </a>{' '}
+          and we will build the page first.
+        </p>
       </div>
     </section>
   );
