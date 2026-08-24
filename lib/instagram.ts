@@ -120,9 +120,37 @@ interface BeholdPost {
  * wrong half of a page, which is exactly how the first attempt failed.
  */
 function beholdUrl(value: string): string {
-  const trimmed = value.trim().replace(/\/+$/, '');
+  const raw = value.trim();
 
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  /*
+   * An embed snippet, which is what the dashboard offers first.
+   *
+   * Behold's copy button gives a script tag, so that is what gets pasted —
+   * twice now. The feed id is inside it as an attribute, so rather than
+   * explaining which half of the page to copy, take it from either.
+   */
+  const attribute = raw.match(/(?:feed-id|data-feed-id|feedId)\s*=\s*["']([^"']+)["']/i);
+  if (attribute) return `https://feeds.behold.so/${attribute[1]}`;
+
+  const trimmed = raw.replace(/\/+$/, '');
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    /*
+     * Only the JSON host is a feed. A widget script URL answers 200 with
+     * JavaScript, which fails later as a parse error and reads like our bug
+     * rather than the wrong URL — so it is rejected here where it can be named.
+     */
+    try {
+      const host = new URL(trimmed).hostname.toLowerCase();
+      if (host !== 'feeds.behold.so') {
+        const id = trimmed.split('/').filter(Boolean).pop() ?? '';
+        if (/^[A-Za-z0-9_-]{6,}$/.test(id) && !/\.(?:js|css|json)$/i.test(id)) {
+          return `https://feeds.behold.so/${id}`;
+        }
+      }
+    } catch { /* fall through and use it as given */ }
+    return trimmed;
+  }
 
   // A bare id, or the tail of a path somebody copied.
   const id = trimmed.split('/').filter(Boolean).pop() ?? trimmed;
@@ -146,6 +174,19 @@ async function fromBehold(feedId: string, limit: number): Promise<InstagramPost[
    * versions of their API. Accepting either costs one line and means a change
    * at their end degrades to an empty section rather than a crash.
    */
+  /*
+   * Checked before parsing, so a widget script served with a 200 is reported as
+   * the wrong URL rather than as a JSON syntax error three frames deeper.
+   */
+  const type = response.headers.get('content-type') ?? '';
+  if (!/json/i.test(type)) {
+    console.error(
+      `Behold returned ${type || 'no content type'} from ${endpoint} — that is the `
+      + 'widget script, not the JSON feed. Use the feed id or the feeds.behold.so URL.',
+    );
+    return [];
+  }
+
   const body = (await response.json()) as BeholdPost[] | { posts?: BeholdPost[] };
   const posts = Array.isArray(body) ? body : body.posts ?? [];
 
