@@ -129,17 +129,23 @@ export default function Home() {
           <div className="lg:col-span-6">
             <p className="eyebrow reveal">Websites for local business</p>
 
+            {/*
+              * "We build first, you decide after" described our process. This
+              * describes what they get, which is the same promise said with
+              * confidence rather than caution — and it puts the reader in the
+              * sentence instead of us.
+              */}
             <h1 className="reveal mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2.5rem,6.5vw,5.25rem)] leading-[0.95] tracking-[-0.02em]" data-delay="1">
-              We build your website first.
+              See your website
               <br />
-              <span className="italic text-accent">You decide after.</span>
+              <span className="italic text-accent">before you pay for it.</span>
             </h1>
 
             <p className="reveal mt-7 max-w-[48ch] text-lg leading-relaxed text-ink-soft sm:text-xl" data-delay="2">
-              Tell us the name of your business. We build a real page for it today and
-              send you the link. If you like it, it&rsquo;s <strong className="text-ink">from $499</strong>,
-              live in about a week, with hosting and email included. If you don&rsquo;t,
-              you close the tab — you&rsquo;ve paid nothing.
+              Tell us the name of your business. We build the real thing today and send
+              you the link — not a mockup, not a slide deck. Like it and it&rsquo;s{' '}
+              <strong className="text-ink">from $499</strong>, live in about a week, with
+              hosting and email included. Don&rsquo;t, and you close the tab owing nothing.
             </p>
 
             <div className="reveal mt-9 flex flex-wrap items-center gap-5" data-delay="3">
@@ -161,9 +167,60 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Price, early and plainly ---------- */}
-      <section id="price" className="border-y border-rule bg-paper-deep">
+      {/*
+        * Proof first, price second.
+        *
+        * The price used to sit here, directly under the hero, on the argument
+        * that local business owners hate hunting for a number. They do — but a
+        * number arriving before any evidence is a number with nothing to weigh
+        * it against, and $499 reads as either suspiciously cheap or too much
+        * depending on nothing at all.
+        *
+        * Two live client sites they can open changes what the number means. It
+        * is still above the fold-and-a-half, still before any form, and still
+        * the second thing on the page.
+        */}
+      {/* ---------- Examples, labelled honestly ---------- */}
+      <section id="work" className="border-y border-rule bg-paper-deep">
         <div className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-24">
+          <p className="eyebrow reveal">Our work</p>
+          <h2 className="reveal mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.015em]" data-delay="1">
+            Work we have done. Open it.
+          </h2>
+          <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-ink-soft" data-delay="1">
+            Real businesses, at their real addresses — not mockups, and not screenshots you
+            have to take our word for. Click either one and you are on the live site. They
+            look nothing like each other on purpose, because they are not the same business.
+          </p>
+
+          <div className="reveal mt-12" data-delay="2">
+            <WorkShowcase />
+          </div>
+
+          {/*
+            * The examples are the strongest thing on this page, and until now
+            * the only thing after them was more reading. Somebody who has just
+            * opened a real site we built is as convinced as they are going to
+            * get — that is the moment to offer the next step, not three
+            * thousand pixels later.
+            */}
+          <div className="reveal mt-14 flex flex-wrap items-center gap-5" data-delay="2">
+            <a
+              href="#start"
+              className="inline-block rounded-full bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
+            >
+              Build one for my business
+            </a>
+            <span className="text-sm text-ink-faint">
+              Same day, and you owe nothing to look at it.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Price, plainly, once they have seen the work ---------- */}
+      <section id="price" className="mx-auto max-w-6xl px-6 sm:px-10">
+        <div className="py-20 sm:py-24">
           <p className="eyebrow reveal">What it costs</p>
           <h2 className="reveal mt-5 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.015em]" data-delay="1">
             One price, paid once. Hosting and email included.
@@ -210,7 +267,8 @@ export default function Home() {
       </section>
 
       {/* ---------- How it works ---------- */}
-      <section id="how" className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+      <section id="how" className="border-y border-rule bg-paper-deep">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
         <p className="eyebrow reveal">How it works</p>
         <h2 className="reveal mt-5 max-w-2xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.015em]" data-delay="1">
           Three steps, and the money is at the end of them.
@@ -230,43 +288,6 @@ export default function Home() {
             </li>
           ))}
         </ol>
-      </section>
-
-      {/* ---------- Examples, labelled honestly ---------- */}
-      <section id="work" className="border-y border-rule bg-paper-deep">
-        <div className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-24">
-          <p className="eyebrow reveal">Our work</p>
-          <h2 className="reveal mt-5 max-w-3xl font-[family-name:var(--font-display)] text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.015em]" data-delay="1">
-            Work we have done. Open it.
-          </h2>
-          <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-ink-soft" data-delay="1">
-            Real businesses, at their real addresses — not mockups, and not screenshots you
-            have to take our word for. Click either one and you are on the live site. They
-            look nothing like each other on purpose, because they are not the same business.
-          </p>
-
-          <div className="reveal mt-12" data-delay="2">
-            <WorkShowcase />
-          </div>
-
-          {/*
-            * The examples are the strongest thing on this page, and until now
-            * the only thing after them was more reading. Somebody who has just
-            * opened a real site we built is as convinced as they are going to
-            * get — that is the moment to offer the next step, not three
-            * thousand pixels later.
-            */}
-          <div className="reveal mt-14 flex flex-wrap items-center gap-5" data-delay="2">
-            <a
-              href="#start"
-              className="inline-block rounded-full bg-ink px-8 py-4 text-[0.95rem] font-medium text-paper transition-colors hover:bg-accent"
-            >
-              Build one for my business
-            </a>
-            <span className="text-sm text-ink-faint">
-              Same day, and you owe nothing to look at it.
-            </span>
-          </div>
         </div>
       </section>
 
