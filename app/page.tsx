@@ -1,4 +1,5 @@
 import ContactForm from '@/components/ContactForm';
+import Link from 'next/link';
 import HeroProof from '@/components/HeroProof';
 import Social from '@/components/Social';
 import StickyCta from '@/components/StickyCta';
@@ -97,9 +98,14 @@ export default function Home() {
 
       {/* ---------- Header ---------- */}
       <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 pt-8 sm:px-10">
-        <a href="/" className="font-[family-name:var(--font-display)] text-2xl tracking-tight">
+        {/*
+          * Link, not an anchor. An <a href="/"> on the site's own homepage
+          * throws away the client-side router and does a full reload — on the
+          * one page arguing that we build fast sites.
+          */}
+        <Link href="/" className="font-[family-name:var(--font-display)] text-2xl tracking-tight">
           888 <span className="italic text-accent">Marketing</span>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-2 sm:gap-4">
           {/* Hidden on the narrowest screens so the call to action keeps the room. */}

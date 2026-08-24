@@ -66,7 +66,7 @@ export default function HeroProof() {
     if (!visible) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    let timer = window.setInterval(() => {
+    const timer = window.setInterval(() => {
       if (!document.hidden) setIndex((i) => (i + 1) % PIECES.length);
     }, INTERVAL);
 
