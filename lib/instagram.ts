@@ -1,19 +1,19 @@
 /**
  * Our own Instagram feed, fetched on the server.
  *
- * ## Why not a widget
+ * ## Server-side, whichever source
  *
- * Behold, Elfsight and the rest are the right answer for a *client's* site —
- * they carry the Meta compliance work and the client pays a few dollars a month
- * for somebody else to keep it alive.
+ * Always fetched on the server, cached, and rendered as ordinary markup. No
+ * third-party script, no cookies from anyone, no layout shift. This site is
+ * 55 KB with no images at all, and a drop-in widget would arrive with a
+ * JavaScript bundle heavier than the whole page to show six photographs — we
+ * sell fast websites, and losing that argument on our own homepage is not on.
  *
- * They are the wrong answer here. This site is 55 KB with no images at all, and
- * a widget would arrive with a JavaScript bundle heavier than the entire page
- * to show six photographs. We sell fast websites; loading somebody else's
- * framework to render a photo grid loses that argument on our own homepage.
- *
- * So the posts are fetched on the server, cached, and rendered as ordinary
- * markup. No third-party script, no cookies from anyone, no layout shift.
+ * Which is why Behold is used through its JSON feed rather than its embed
+ * script. A hosted feed and a client-side widget are not the same trade, and
+ * conflating them nearly cost us the good version: the JSON gives us somebody
+ * else's Meta compliance and token maintenance while the page stays exactly as
+ * light as it is now.
  *
  * ## Why this does not need App Review
  *
@@ -25,14 +25,20 @@
  * That is also why this approach does not generalise to clients — see the
  * handbook, "Putting a Client's Instagram Feed on Their Site".
  *
- * ## The token
+ * ## Three ways in, tried in order
  *
- * `INSTAGRAM_TOKEN` is a long-lived access token. It lasts 60 days and must be
- * refreshed before it expires, which is the one real maintenance cost. Setup
- * steps are in the handbook.
+ * `BEHOLD_FEED_ID` — a hosted JSON feed. No Meta app, no token, nothing to
+ * refresh. Preferred, because the other two both failed on our own account:
+ * Meta will not issue a token to someone who does not fully administer the
+ * Page and the Instagram account, and sorting that out is a business-settings
+ * job rather than a code one.
  *
- * `INSTAGRAM_USER_ID` is set only for the Facebook-login route — it is the
- * Instagram account's numeric id, and its presence is what selects that path.
+ * `INSTAGRAM_TOKEN` — direct from Meta. Lasts 60 days and must be refreshed
+ * before it expires, which is the one real maintenance cost. Setting
+ * `INSTAGRAM_USER_ID` alongside it selects the Facebook-login variant, where
+ * the account is reached through its linked Page.
+ *
+ * None of them set: an empty list, and the section does not render.
  *
  * With no token configured, this returns an empty list and the section does not
  * render. The site is complete without it, which is deliberate: a feed is worth
@@ -87,24 +93,83 @@ function altFrom(caption: string | undefined): string | undefined {
  * afternoon, and there is no state in which an empty feed is worse than an
  * error page.
  */
+/**
+ * One post from Behold's JSON feed.
+ *
+ * Their shape, not Meta's. Fields are optional because a hosted feed is a
+ * contract we do not control, and the failure we care about is a silently
+ * empty grid rather than a thrown error.
+ */
+interface BeholdPost {
+  id?: string;
+  mediaUrl?: string;
+  thumbnailUrl?: string;
+  permalink?: string;
+  prunedCaption?: string;
+  caption?: string;
+  mediaType?: string;
+  sizes?: { medium?: { mediaUrl?: string }; small?: { mediaUrl?: string } };
+}
+
+async function fromBehold(feedId: string, limit: number): Promise<InstagramPost[]> {
+  const response = await fetch(`https://feeds.behold.so/${feedId}`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    console.error(`Behold feed unavailable: ${response.status}`);
+    return [];
+  }
+
+  /*
+   * Behold has returned both a bare array and an object with `posts` across
+   * versions of their API. Accepting either costs one line and means a change
+   * at their end degrades to an empty section rather than a crash.
+   */
+  const body = (await response.json()) as BeholdPost[] | { posts?: BeholdPost[] };
+  const posts = Array.isArray(body) ? body : body.posts ?? [];
+
+  return posts
+    .map((post): InstagramPost | null => {
+      // Prefer a sized variant: the full-resolution original is far more than a
+      // 300px tile needs, and Behold offers smaller renditions for free.
+      const image = post.sizes?.medium?.mediaUrl
+        ?? post.sizes?.small?.mediaUrl
+        ?? (post.mediaType === 'VIDEO' ? post.thumbnailUrl : post.mediaUrl)
+        ?? post.mediaUrl;
+
+      if (!image || !post.permalink) return null;
+
+      return {
+        id: post.id ?? post.permalink,
+        image,
+        permalink: post.permalink,
+        caption: altFrom(post.prunedCaption ?? post.caption),
+        isVideo: post.mediaType === 'VIDEO',
+      };
+    })
+    .filter((post): post is InstagramPost => post !== null)
+    .slice(0, limit);
+}
+
 export async function recentPosts(limit = 6): Promise<InstagramPost[]> {
+  /*
+   * Behold first. It needs no Meta app, no token and no refresh, and the two
+   * direct routes both dead-ended on account permissions rather than on code.
+   */
+  const feedId = process.env.BEHOLD_FEED_ID;
+  if (feedId) {
+    try {
+      return await fromBehold(feedId, limit);
+    } catch (cause) {
+      console.error(`Behold feed failed: ${cause instanceof Error ? cause.message : cause}`);
+      return [];
+    }
+  }
+
   const token = process.env.INSTAGRAM_TOKEN;
   if (!token) return [];
 
-  /*
-   * Two ways in, because Meta offers two and only one of them works per setup.
-   *
-   *   Instagram login — the account authorises the app directly and the token
-   *   reads `me` on graph.instagram.com. Cleanest, and it needs the account to
-   *   hold an Instagram Tester role on the app.
-   *
-   *   Facebook login — the account is reached through the Facebook Page it is
-   *   linked to, so the token is a Page token and the media lives under the
-   *   Instagram user's own id on graph.facebook.com.
-   *
-   * Setting INSTAGRAM_USER_ID picks the second. Supporting both costs four
-   * lines and saves being blocked on which one Meta lets us finish today.
-   */
   const igUserId = process.env.INSTAGRAM_USER_ID;
 
   const url = igUserId
