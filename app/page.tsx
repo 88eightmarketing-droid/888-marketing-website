@@ -188,9 +188,15 @@ export default function Home() {
             Work we have done. Open it.
           </h2>
           <p className="reveal mt-5 max-w-[56ch] leading-relaxed text-ink-soft" data-delay="1">
-            Real businesses, at their real addresses — not mockups, and not screenshots you
-            have to take our word for. Click either one and you are on the live site. They
-            look nothing like each other on purpose, because they are not the same business.
+            {/*
+              * This used to end "and not screenshots you have to take our
+              * word for", which stopped being true the moment these became
+              * screenshots. The claim that matters was never the format — it
+              * is that the business is real and you can go and check.
+              */}
+            Real businesses, at their real addresses. Click either one and you land on the
+            live site, today, exactly as its owner has it. They look nothing like each
+            other on purpose, because they are not the same business.
           </p>
 
           <div className="reveal mt-12" data-delay="2">

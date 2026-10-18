@@ -1,6 +1,10 @@
 'use client';
 
+import Image, { type StaticImageData } from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+
+import classeskin from '@/public/work/classeskin.png';
+import getkickz from '@/public/work/getkickz.png';
 
 /**
  * The proof, in the first screen — two real client sites, cross-fading.
@@ -26,11 +30,18 @@ interface Piece {
   domain: string;
   name: string;
   where: string;
+  shot: StaticImageData;
 }
 
 const PIECES: Piece[] = [
-  { url: 'https://classeskin.com', domain: 'classeskin.com', name: 'Classé Skin & Sculpt', where: 'San Jose' },
-  { url: 'https://getkickz.com', domain: 'getkickz.com', name: 'GetKickz', where: 'Streetwear' },
+  {
+    url: 'https://classeskin.com', domain: 'classeskin.com',
+    name: 'Classé Skin & Sculpt', where: 'San Jose', shot: classeskin,
+  },
+  {
+    url: 'https://getkickz.com', domain: 'getkickz.com',
+    name: 'GetKickz', where: 'Streetwear', shot: getkickz,
+  },
 ];
 
 const INTERVAL = 7000;
@@ -97,19 +108,19 @@ export default function HeroProof() {
               className="absolute inset-0 transition-opacity duration-[900ms] ease-in-out"
               style={{ opacity: i === index ? 1 : 0 }}
             >
-              {visible ? (
-                <iframe
-                  src={piece.url}
-                  title={`${piece.name} — a site we built`}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  sandbox="allow-scripts allow-same-origin"
-                  referrerPolicy="no-referrer"
-                  className="absolute left-0 top-0 origin-top-left border-0"
-                  style={{ width: '200%', height: '200%', transform: 'scale(0.5)' }}
-                />
-              ) : (
-                <div className="absolute inset-0 animate-pulse bg-paper-deep" />
-              )}
+              <Image
+                src={piece.shot}
+                alt={`${piece.name} — a site we built, as it looks today`}
+                /*
+                 * The first one is the thing a visitor sees before anything
+                 * else on the page. Priority rather than lazy, because the
+                 * proof arriving late is the proof arriving after they have
+                 * decided.
+                 */
+                priority={i === 0}
+                sizes="(max-width: 1023px) 100vw, 46vw"
+                className="absolute inset-0 h-full w-full object-cover object-top"
+              />
             </div>
           ))}
 

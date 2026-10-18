@@ -1,6 +1,7 @@
-'use client';
+import Image, { type StaticImageData } from 'next/image';
 
-import { useEffect, useRef, useState } from 'react';
+import classeskin from '@/public/work/classeskin.png';
+import getkickz from '@/public/work/getkickz.png';
 
 /**
  * Real client sites, running.
@@ -11,11 +12,22 @@ import { useEffect, useRef, useState } from 'react';
  * open it and check". For an agency selling websites, the only proof that
  * cannot be argued with is a website belonging to somebody else.
  *
- * Live iframes rather than screenshots, for the same reason: a static image of
- * a site invites the question of whether the site exists.
+ * ## Captures, not live embeds, and this was the other way round
  *
- * They load only once scrolled into view — two embedded sites on first paint
- * would be indefensible on a phone.
+ * These were `<iframe>`s of the running sites, on the reasoning that a static
+ * image invites the question of whether the site exists. The reasoning was
+ * sound and the result was not: an embed is somebody else's page loading over
+ * somebody else's network inside ours, and on the live site both frames were
+ * routinely still blank — so the single strongest argument this business has,
+ * on the page where it makes it, was two empty rectangles.
+ *
+ * The link under each one answers "does it exist" better than an embed ever
+ * did, because it opens the actual site in the actual browser. So: a real
+ * capture that always paints, above a link that always works.
+ *
+ * Recapture with headless Chrome when a client redesigns:
+ *   chrome --headless --window-size=1440,1080 --virtual-time-budget=9000 \
+ *     --screenshot=public/work/<name>.png https://<domain>
  */
 
 interface Piece {
@@ -24,6 +36,7 @@ interface Piece {
   name: string;
   kind: string;
   note: string;
+  shot: StaticImageData;
 }
 
 const PIECES: Piece[] = [
@@ -33,6 +46,7 @@ const PIECES: Piece[] = [
     name: 'Classé Skin & Sculpt',
     kind: 'Wellness · San Jose',
     note: 'A treatment menu people actually read, and a booking path that does not make anyone hunt for it.',
+    shot: classeskin,
   },
   {
     url: 'https://getkickz.com',
@@ -40,33 +54,13 @@ const PIECES: Piece[] = [
     name: 'GetKickz',
     kind: 'Retail · Streetwear',
     note: 'Built around the drop. The thing that matters is above the fold and everything else gets out of its way.',
+    shot: getkickz,
   },
 ];
 
 function Frame({ piece }: { piece: Piece }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '300px' },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <figure ref={ref} className="group">
+    <figure className="group">
       {/* Browser chrome, drawn rather than imaged so it stays crisp. */}
       <div style={{ borderRadius: 'var(--radius-card)' }}
         className="overflow-hidden border border-rule bg-white shadow-[0_1px_2px_rgba(20,18,15,0.06),0_12px_40px_-12px_rgba(20,18,15,0.25)]">
@@ -79,22 +73,13 @@ function Frame({ piece }: { piece: Piece }) {
           </span>
         </div>
 
-        <div className="relative aspect-[4/3] bg-paper">
-          {visible ? (
-            <iframe
-              src={piece.url}
-              title={`${piece.name} — a site we built`}
-              loading="lazy"
-              // Somebody else's live site: give it nothing.
-              sandbox="allow-scripts allow-same-origin"
-              referrerPolicy="no-referrer"
-              className="absolute left-0 top-0 origin-top-left border-0"
-              style={{ width: '200%', height: '200%', transform: 'scale(0.5)' }}
-            />
-          ) : (
-            <div className="absolute inset-0 animate-pulse bg-paper-deep" />
-          )}
-          {/* Keeps the embed from stealing scroll and taps on a phone. */}
+        <div className="relative aspect-[4/3] overflow-hidden bg-paper">
+          <Image
+            src={piece.shot}
+            alt={`${piece.name} — a site we built, as it looks today`}
+            sizes="(max-width: 639px) 100vw, 46vw"
+            className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
           <a
             href={piece.url}
             target="_blank"
