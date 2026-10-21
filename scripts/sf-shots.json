@@ -1,0 +1,7 @@
+[
+  { "src": "public/img/sf/fog.webp", "fx": 0.55, "fy": 0.5 },
+  { "src": "public/img/sf/marin.webp", "fx": 0.6, "fy": 0.45 },
+  { "src": "public/img/sf/sunset.webp", "fx": 0.6, "fy": 0.45 },
+  { "src": "public/img/sf/skyline.webp", "fx": 0.62, "fy": 0.48 },
+  { "src": "public/img/sf/nobhill.webp", "fx": 0.62, "fy": 0.6 }
+]

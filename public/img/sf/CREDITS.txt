@@ -1,0 +1,10 @@
+Via Wikimedia Commons, re-encoded to 2400px WebP (sequence frames are cropped/zoomed adaptations). Credited in the site footer.
+fog        — "Golden Gate Bridge - San Francisco (Karl the Fog)", Faisalmujib, CC BY-SA 4.0
+marin      — "San Francisco skyline from Marin Headlands", Ryan Schwark, CC0
+sunset     — "San Francisco Sunset from the top of SalesForce Tower", Steve Jurvetson, CC BY 2.0
+skyline    — "San Francisco Skyline (15468131291)", Luke Price, CC BY 2.0
+nobhill    — "California Street at Nob Hill", Thomas Hawk, CC BY 2.0
+ladies     — "Painted ladies. San Francisco (19998367723)", Bernard Spragg, CC0
+baybridge  — "Bay Bridge at night by Mikl Barton", Mikl Barton, CC BY 3.0
+cablecar2  — "Cable car 19 on Hyde Street, July 2023", Pi.1415926535, CC BY-SA 4.0
+Cloud frames at the start of the sequence: rendered in three.js by 888 Marketing (scripts in the repo).

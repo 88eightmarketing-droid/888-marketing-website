@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Offline tools (headless-Chrome QA, frame rendering) are not part of the site bundle.
+    "scripts/**",
   ]),
 ]);
 

@@ -1,0 +1,7 @@
+[
+  { "src": "public/img/miami/aerial-miami-beach.webp", "fx": 0.5, "fy": 0.55 },
+  { "src": "public/img/miami/brickell-golden-hour.webp", "fx": 0.55, "fy": 0.5 },
+  { "src": "public/img/miami/ocean-drive.webp", "fx": 0.5, "fy": 0.55 },
+  { "src": "public/img/miami/south-beach-pastel.webp", "fx": 0.5, "fy": 0.5 },
+  { "src": "public/img/miami/essex-hotel.webp", "fx": 0.5, "fy": 0.45 }
+]

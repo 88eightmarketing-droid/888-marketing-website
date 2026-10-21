@@ -16,16 +16,31 @@ npm run dev        # http://localhost:3100
 
 `npm run lint` and `npm run build` should both be clean before pushing.
 
-## What it deliberately does not have
+## The design (October 2026)
 
-**No images.** The page is 55 KB of type, colour and motion. That is not an
-accident and it is worth protecting — we sell fast websites, and the slowest
-thing on our own homepage would be an argument against us.
+Rebuilt in the "café" style: a hero that opens above the clouds and, as you scroll, sinks through
+them into San Francisco (Golden Gate in fog → skyline → sunset → dusk → Nob Hill at night), with
+the three steps as captions; then flat maroon / pink / sky blocks in Anton capitals and Inter.
+Copy is word for word from the previous site. Code: `src/site/` (sections), copy in
+`src/data/content.ts`, effects in `src/effects/`.
 
-**No third-party scripts.** Nothing is loaded from another origin at render
-time. Before adding anything that ships a bundle, check whether the same data
-is available as JSON and fetch it on the server instead. That is exactly how
-the Instagram feed works.
+**It has images now, on purpose.** The old site was 55 KB with none. The fly-through is a
+scroll-scrubbed frame sequence: 192 frames at 1280px (~13 MB) on desktop, 96 at 720px (~2.4 MB)
+on phones, loaded coarse-to-fine so scrubbing works before it finishes. The first frame is a CSS
+backdrop, so the hero paints instantly and still works with JavaScript off; reduced-motion visitors
+get the still frame.
+
+**Photos** are from Wikimedia Commons under CC0 / CC BY / CC BY-SA and are credited in the footer;
+the list is `public/img/sf/CREDITS.txt`. Keep the footer credit if you keep the photos.
+
+**Regenerating the sequence** (if photos change): `scripts/sf-shots.json` lists the stills,
+`scripts/kenburns-sequence.mjs` makes the photo push, and `scripts/compose-sequence.mjs` joins the
+cloud frames to it through a white-out. The cloud frames were rendered from
+`scripts/scenes/CloudDescent.tsx` with three.js via `scripts/render-sequence.mjs`; the full working
+setup for that lives in `~/site-clones/888-sf` (it needs three / R3F, which this site does not ship).
+A real drone or AI clip can replace everything: `scripts/video-to-sequence.sh clip.mp4 public/sequences/sf 192`.
+
+**No third-party scripts.** Still true: nothing loads from another origin at render time.
 
 ## Environment variables
 
@@ -56,8 +71,8 @@ exactly that reason.
 ### It uses Behold, through JSON
 
 [behold.so](https://behold.so) holds the Instagram connection and publishes a
-JSON feed at `feeds.behold.so/<id>`. `lib/instagram.ts` fetches that on the
-server, caches it for an hour, and `components/InstagramFeed.tsx` renders plain
+JSON feed at `feeds.behold.so/<id>`. `src/lib/instagram.ts` fetches that on the
+server, caches it for an hour, and `src/site/sections/Feed.tsx` renders plain
 markup. No client-side JavaScript is involved.
 
 **Use the JSON feed, never their embed script.** Behold's Copy button gives you
@@ -76,7 +91,7 @@ so check the post count before debugging anything.
 
 ### Why not talk to Meta directly
 
-`lib/instagram.ts` still supports it and nothing uses it.
+`src/lib/instagram.ts` still supports it and nothing uses it.
 
 Reading an Instagram account requires the owner's authorisation. For an account
 we do not own that means Meta **App Review** plus **Advanced Access** — business
