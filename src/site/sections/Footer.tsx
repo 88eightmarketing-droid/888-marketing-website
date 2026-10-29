@@ -18,7 +18,7 @@ export default function Footer() {
 }
 
 const layout = {
-  root: "bg-wine px-5 pb-8 pt-20 text-white md:px-10",
+  root: "bg-ink px-5 pb-8 pt-20 text-white md:px-10",
   top: "flex flex-wrap items-baseline justify-between gap-6",
   links: "flex gap-2 text-[14px] font-medium [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center [&_a]:px-2 [&_a:hover]:underline",
   bottom: "mt-6 flex flex-col justify-between gap-3 border-t border-white/15 pt-5 md:flex-row",
@@ -29,6 +29,6 @@ const type = {
   small: "text-[12px] text-white/70",
   top: "inline-flex min-h-11 items-center text-[12px] text-white/70",
   brand: "mt-16 font-display text-[clamp(84px,17vw,300px)] uppercase leading-[0.84]",
-  pink: "text-sand",
+  pink: "text-paper-deep",
   credit: "max-w-[720px] text-[11px] leading-relaxed text-white/65",
 };

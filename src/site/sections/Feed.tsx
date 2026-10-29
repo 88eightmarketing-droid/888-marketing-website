@@ -31,7 +31,7 @@ export default async function Feed() {
 }
 
 const layout = {
-  root: "bg-sky px-5 py-24 md:px-10",
+  root: "bg-paper-deep px-5 py-24 md:px-10",
   head: "flex flex-wrap items-end justify-between gap-6",
   grid: "mt-10 grid grid-cols-3 gap-2 md:grid-cols-6",
   tile: "block overflow-hidden",
@@ -40,8 +40,8 @@ const layout = {
 const media = { img: "aspect-square w-full object-cover transition-transform duration-500 hover:scale-105" };
 
 const type = {
-  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-oxblood",
-  h2: "mt-3 font-display text-[clamp(40px,5vw,72px)] uppercase leading-none text-oxblood",
-  body: "mt-3 max-w-[44ch] text-[15px] text-muted",
-  link: "rounded-full bg-oxblood px-6 py-3 text-[14px] font-semibold text-white",
+  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-faint",
+  h2: "mt-3 font-display text-[clamp(40px,5vw,72px)] uppercase leading-none text-ink",
+  body: "mt-3 max-w-[44ch] text-[15px] text-ink-soft",
+  link: "rounded-full bg-accent px-6 py-3 text-[14px] font-semibold text-white",
 };

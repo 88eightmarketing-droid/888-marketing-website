@@ -11,26 +11,61 @@ export const nav = [
   { label: "Questions", href: "#questions" },
 ];
 
+/*
+ * The page used to say "see your website before you pay" in eight places — the
+ * title tag, the headline, both flight captions, the price note, two of the
+ * three steps and a full-bleed marquee that repeated it twenty times. It had
+ * stopped being a message on the site and become the site.
+ *
+ * It is still how we work, so it still appears: once in How it works, where it
+ * is a description of the process, and once in the questions, where somebody
+ * has asked. Said in its place it is an offer. Said on every surface it reads
+ * as a thing we are trying to convince ourselves of.
+ *
+ * What the page is about instead is the work, which we can show and nobody
+ * else can.
+ */
 export const hero = {
   eyebrow: "Websites for local business",
-  title: ["See your website", "before you pay."],
-  text: "Tell us the name of your business. We build the real thing today and send you the link — not a mockup, not a slide deck. Like it and it’s from $499, live in about a week, with hosting and email included. Don’t, and you close the tab owing nothing.",
+  /*
+   * Two lines, not three. "Real businesses." is sixteen characters and at
+   * 375px the display face broke it after "REAL", which left a widow and
+   * turned a three-beat headline into four. Shrinking the type would have
+   * fixed the wrap and cost the thing that makes a headline read as designed;
+   * the line that would not fit was the one to cut, and what it said is
+   * already said below in a sentence.
+   */
+  title: ["Real sites.", "Open them."],
+  text: "Every site below belongs to a real business and is live right now, at its owner’s own address, exactly as they have it today. From $499, live in about a week, with hosting and a business email on your own domain.",
   cta: "Get my page built",
   note: "No deposit · No contract · Takes two minutes",
 };
 
-/** Captions over the San Francisco fly-through, keyed to scroll progress through the pinned hero. */
-export const captions = [
-  { from: 0.34, to: 0.5, kicker: "01 · Same day", lines: ["We build it", "first."], align: "left" as const },
-  { from: 0.53, to: 0.69, kicker: "02 · Your own time", lines: ["You look", "at it."], align: "right" as const },
-  { from: 0.72, to: 0.87, kicker: "03 · About a week", lines: ["Then you", "decide."], align: "left" as const },
-  { from: 0.9, to: 1.01, kicker: "888 Marketing", lines: ["Websites for", "local business."], align: "center" as const },
+/**
+ * Captions over the San Francisco flight, keyed to scroll progress.
+ *
+ * Two, not four. The flight was six screens carrying a slogan; it is now a
+ * little over two and its whole job is to hand the page to the work. The
+ * second caption says so literally, so the scroll that follows is the thing
+ * it just promised rather than another section.
+ */
+export interface Caption {
+  from: number;
+  to: number;
+  kicker: string;
+  lines: string[];
+  align: "left" | "right" | "center";
+}
+
+export const captions: Caption[] = [
+  { from: 0.22, to: 0.55, kicker: "Websites for local business", lines: ["We build the", "real thing."], align: "left" },
+  { from: 0.62, to: 1.01, kicker: "888 Marketing", lines: ["Now look at", "the work."], align: "left" },
 ];
 
 export const work = {
   eyebrow: "Our work",
   title: "Work we have done. Open it.",
-  text: "Real businesses, at their real addresses. Click either one and you land on the live site, today, exactly as its owner has it. They look nothing like each other on purpose, because they are not the same business.",
+  text: "Scroll each one and you are looking at the real page, not a thumbnail of it. Click and you land on the live site, today, exactly as its owner has it. They look nothing like each other on purpose, because they are not the same business.",
   cta: "Build one for my business",
   note: "Same day, and you owe nothing to look at it.",
   pieces: [
@@ -50,7 +85,7 @@ export const price = {
   ],
   included: ["Twelve months of hosting", "A business email on your own domain", "The domain is yours, in your name", "No deposit, and nothing to cancel"],
   cta: "Get my page built",
-  note: "You see it before you pay a penny.",
+  note: "One price, quoted in writing, with nothing to pay up front.",
   renewal: "We tell you the renewal price in writing on the quote, before you buy — never after.",
 };
 

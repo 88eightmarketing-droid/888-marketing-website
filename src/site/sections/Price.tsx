@@ -27,23 +27,23 @@ export default function Price() {
 }
 
 const layout = {
-  root: "bg-sand px-5 py-28 md:px-10",
+  root: "bg-paper-deep px-5 py-28 md:px-10",
   grid: "mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4",
-  card: "flex flex-col bg-cream p-7 transition-transform duration-500 hover:-translate-y-1",
+  card: "flex flex-col bg-paper p-7 transition-transform duration-500 hover:-translate-y-1",
   included: "mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2",
   ctaRow: "mt-12 flex flex-wrap items-center gap-5",
 };
 
 const type = {
-  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-oxblood",
-  h2: "mt-4 max-w-[16ch] font-display text-[clamp(52px,7.5vw,120px)] uppercase leading-[0.88] text-oxblood",
-  price: "font-display text-[64px] leading-none text-oxblood",
+  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-faint",
+  h2: "mt-4 max-w-[16ch] font-display text-[clamp(52px,7.5vw,120px)] uppercase leading-[0.88] text-ink",
+  price: "font-display text-[64px] leading-none text-ink",
   name: "mt-4 text-[17px] font-semibold",
-  pages: "mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted",
-  line: "mt-3 text-[14px] leading-relaxed text-muted",
+  pages: "mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-soft",
+  line: "mt-3 text-[14px] leading-relaxed text-ink-soft",
   inc: "flex items-baseline gap-3 text-[15px]",
-  check: "text-oxblood",
-  cta: "inline-block rounded-full bg-oxblood px-7 py-3.5 text-[14px] font-semibold text-white",
-  note: "text-[13px] text-muted",
-  renewal: "mt-8 max-w-[60ch] text-[13px] leading-relaxed text-muted",
+  check: "text-ink",
+  cta: "inline-block rounded-full bg-accent px-7 py-3.5 text-[14px] font-semibold text-white",
+  note: "text-[13px] text-ink-soft",
+  renewal: "mt-8 max-w-[60ch] text-[13px] leading-relaxed text-ink-soft",
 };

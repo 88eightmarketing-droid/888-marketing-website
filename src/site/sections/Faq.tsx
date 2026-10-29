@@ -22,18 +22,18 @@ export default function Faq() {
 }
 
 const layout = {
-  root: "grid gap-12 bg-cream px-5 py-28 md:grid-cols-[1fr_1.4fr] md:px-10",
+  root: "grid gap-12 bg-paper px-5 py-28 md:grid-cols-[1fr_1.4fr] md:px-10",
   head: "flex flex-col gap-4",
-  list: "self-start border-t border-oxblood/25",
-  item: "group border-b border-oxblood/25 py-5",
+  list: "self-start border-t border-rule/25",
+  item: "group border-b border-rule/25 py-5",
 };
 
 const media = { photo: "mt-6 aspect-[4/3] w-full object-cover md:aspect-[4/5] md:max-w-[460px]" };
 
 const type = {
-  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-oxblood",
-  h2: "font-display text-[clamp(56px,8vw,128px)] uppercase leading-[0.88] text-oxblood",
+  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-faint",
+  h2: "font-display text-[clamp(56px,8vw,128px)] uppercase leading-[0.88] text-ink",
   q: "flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 text-[clamp(17px,1.5vw,21px)] font-semibold [&::-webkit-details-marker]:hidden",
-  plus: "text-[26px] text-oxblood transition-transform duration-300 group-open:rotate-45",
-  a: "mt-3 max-w-[620px] text-[15px] leading-relaxed text-muted",
+  plus: "text-[26px] text-ink transition-transform duration-300 group-open:rotate-45",
+  a: "mt-3 max-w-[620px] text-[15px] leading-relaxed text-ink-soft",
 };

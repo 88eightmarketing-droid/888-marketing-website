@@ -51,25 +51,25 @@ const layout = {
   root: "relative overflow-hidden px-5 py-28 text-white md:px-10",
   inner: "relative grid gap-12 md:grid-cols-2",
   copy: "flex flex-col gap-5",
-  form: "flex flex-col gap-4 self-start bg-cream p-7 text-ink md:p-10",
+  form: "flex flex-col gap-4 self-start bg-paper p-7 text-ink md:p-10",
   field: "flex flex-col gap-1",
 };
 
 const media = {
   bg: "absolute inset-0 h-full w-full object-cover",
-  tint: "absolute inset-0 bg-wine/85",
+  tint: "absolute inset-0 bg-ink/85",
 };
 
 const type = {
-  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-sand",
+  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-paper-deep",
   h2: "font-display text-[clamp(52px,7vw,116px)] uppercase leading-[0.88]",
   body: "max-w-[440px] text-[16px] leading-relaxed text-white/85",
   small: "max-w-[440px] text-[13px] leading-relaxed text-white/60",
-  small2: "text-[14px] text-muted",
-  label: "text-[12px] font-medium text-muted",
-  input: "border-b border-ink/25 bg-transparent py-2.5 text-[15px] outline-none placeholder:text-ink/35 focus:border-oxblood",
-  submit: "mt-3 rounded-full bg-oxblood px-6 py-3.5 text-[14px] font-semibold text-white transition-transform duration-300 hover:scale-[1.03] disabled:opacity-60",
-  done: "font-display text-[56px] uppercase leading-none text-oxblood",
-  error: "text-[13px] text-oxblood",
+  small2: "text-[14px] text-ink-soft",
+  label: "text-[12px] font-medium text-ink-soft",
+  input: "border-b border-ink/25 bg-transparent py-2.5 text-[15px] outline-none placeholder:text-ink/35 focus:border-rule",
+  submit: "mt-3 rounded-full bg-accent px-6 py-3.5 text-[14px] font-semibold text-white transition-transform duration-300 hover:scale-[1.03] disabled:opacity-60",
+  done: "font-display text-[56px] uppercase leading-none text-ink",
+  error: "text-[13px] text-ink",
   errorLink: "underline",
 };

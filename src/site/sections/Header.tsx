@@ -25,14 +25,14 @@ export default function Header() {
 const layout = {
   root: "fixed inset-x-0 top-0 z-40 flex items-center justify-between px-5 py-4 transition-colors duration-500 md:px-10",
   clear: "text-white",
-  solid: "bg-cream/95 text-oxblood shadow-[0_1px_0_rgba(139,26,58,0.15)] backdrop-blur",
+  solid: "bg-paper/95 text-ink shadow-[0_1px_0_rgba(139,26,58,0.15)] backdrop-blur",
   nav: "hidden gap-2 text-[13px] font-medium md:flex [&>a]:inline-flex [&>a]:min-h-11 [&>a]:items-center [&>a]:px-3",
 };
 
 const type = {
   logo: "inline-flex min-h-11 items-center gap-[0.28em] font-display text-[24px] uppercase tracking-wide",
-  light: "text-sand",
+  light: "text-paper-deep",
   lightSolid: "text-ink",
-  cta: "inline-flex min-h-11 items-center rounded-full bg-white px-5 text-[13px] font-semibold text-oxblood transition-transform duration-300 hover:scale-[1.04]",
-  ctaSolid: "bg-oxblood text-white",
+  cta: "inline-flex min-h-11 items-center rounded-full bg-white px-5 text-[13px] font-semibold text-ink transition-transform duration-300 hover:scale-[1.04]",
+  ctaSolid: "bg-accent text-white",
 };

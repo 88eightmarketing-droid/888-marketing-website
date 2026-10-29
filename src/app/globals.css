@@ -1,29 +1,53 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
 
+/*
+ * The 888 palette.
+ *
+ * Warm paper, never white — `#fff` is the tell of a page nobody art-directed.
+ * One accent, and it marks the thing to do; a screen with three accented
+ * elements has none.
+ *
+ * This replaces a café-study palette that had drifted: `--color-gold` held a
+ * pink, `--color-wine` and `--color-oxblood` were the same hex under two
+ * names, and the result read as a beauty salon rather than as the people who
+ * build sites for taquerias and tree surgeons. Names here say what the colour
+ * is for, so the next person cannot use "gold" and get pink.
+ */
 @theme {
-  /* Café palette (LARK CAFÉ / @designby.abhay study), Miami photography */
-  --color-cream: #f7f4f1;
-  --color-sand: #f3c5d9;
-  --color-sky: #b8d2ec;
-  --color-ink: #1a1210;
-  --color-oxblood: #8b1a3a;
-  --color-wine: #8b1a3a;
-  --color-gold: #f3c5d9;
-  --color-muted: #5e504b;
+  --color-paper: #f6f3ee;
+  --color-paper-deep: #ece7df;
+  --color-ink: #14120f;
+  --color-ink-soft: #4a453d;
+  --color-ink-faint: #8b8377;
+  --color-rule: #ddd6cb;
+  --color-accent: #c8442a;
+  --color-accent-deep: #a4341f;
 
-  --text-eyebrow: 0.75rem;
-  --text-eyebrow--letter-spacing: 0.18em;
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--letter-spacing: 0.16em;
 
   --font-display: var(--font-anton), Impact, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-html { background: var(--color-cream); color: var(--color-ink); }
+html { background: var(--color-paper); color: var(--color-ink); }
 
+/*
+ * Motion is decoration here, so it all goes.
+ *
+ * Every animation on this page restates something the markup already says —
+ * the work is still there, the price is still there. Nothing is lost by
+ * holding still, which is the test for whether an effect was load-bearing.
+ */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @keyframes v-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }

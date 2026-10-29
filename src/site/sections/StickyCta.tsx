@@ -26,8 +26,8 @@ export default function StickyCta() {
 }
 
 const layout = {
-  root: "fixed inset-x-0 bottom-0 z-40 bg-cream/95 p-3 backdrop-blur transition-transform duration-300 md:hidden",
+  root: "fixed inset-x-0 bottom-0 z-40 bg-paper/95 p-3 backdrop-blur transition-transform duration-300 md:hidden",
   on: "translate-y-0",
   off: "translate-y-full",
-  button: "flex min-h-12 items-center justify-center rounded-full bg-oxblood px-6 text-[15px] font-semibold text-white",
+  button: "flex min-h-12 items-center justify-center rounded-full bg-accent px-6 text-[15px] font-semibold text-white",
 };

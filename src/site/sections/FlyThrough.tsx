@@ -66,7 +66,7 @@ export default function FlyThrough() {
 }
 
 const layout = {
-  pin: "relative h-[600vh] bg-ink",
+  pin: "relative h-[240vh] bg-ink",
   sticky: "sticky top-0 h-svh overflow-hidden text-white",
   hero: "absolute inset-x-0 bottom-0 flex flex-col gap-5 px-5 pb-12 transition-[opacity,transform,filter] duration-700 ease-[cubic-bezier(.22,1,.36,1)] md:px-10 md:pb-14",
   ctas: "mt-1 flex flex-wrap items-center gap-5",
@@ -88,12 +88,12 @@ const media = {
 };
 
 const type = {
-  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-sand",
+  eyebrow: "text-[11px] font-semibold uppercase tracking-[0.18em] text-paper-deep",
   h1: "font-display text-[clamp(60px,10.5vw,176px)] uppercase leading-[0.86]",
-  pink: "block text-sand",
+  pink: "block text-paper-deep",
   lede: "max-w-[560px] text-[15px] leading-relaxed text-white/85 md:text-[16px]",
-  primary: "inline-block rounded-full bg-oxblood px-7 py-3.5 text-[14px] font-semibold text-white transition-transform duration-300 hover:scale-[1.04]",
+  primary: "inline-block rounded-full bg-accent px-7 py-3.5 text-[14px] font-semibold text-white transition-transform duration-300 hover:scale-[1.04]",
   note: "text-[13px] text-white/70",
-  kicker: "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-sand",
+  kicker: "mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-paper-deep",
   caption: "font-display text-[clamp(64px,11vw,184px)] uppercase leading-[0.86] drop-shadow-[0_2px_30px_rgba(0,0,0,0.35)]",
 };
