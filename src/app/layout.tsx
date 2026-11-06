@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
+import Opener from "@/site/Opener";
 
 const anton = Anton({ variable: "--font-anton", subsets: ["latin"], weight: "400" });
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -26,8 +27,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={[anton.variable, inter.variable, "antialiased"].join(" ")}>
-      <body className="font-sans">{children}</body>
+    <html lang="en" className={[anton.variable, inter.variable, "antialiased"].join(" ")} suppressHydrationWarning>
+      <body className="font-sans">
+        <Opener />
+        {children}
+      </body>
     </html>
   );
 }
