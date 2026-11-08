@@ -16,31 +16,36 @@ npm run dev        # http://localhost:3100
 
 `npm run lint` and `npm run build` should both be clean before pushing.
 
-## The design (October 2026)
+## The design (November 2026)
 
-Rebuilt in the "café" style: a hero that opens above the clouds and, as you scroll, sinks through
-them into San Francisco (Golden Gate in fog → skyline → sunset → dusk → Nob Hill at night), with
-the three steps as captions; then flat maroon / pink / sky blocks in Anton capitals and Inter.
-Copy is word for word from the previous site. Code: `src/site/` (sections), copy in
-`src/data/content.ts`, effects in `src/effects/`.
+**888 Marketing presents as a design studio.** The public site no longer advertises "we build
+it first and charge after" and shows no prices: every project starts with a conversation and a
+written proposal. Warm paper, Instrument Serif set very large, Inter for reading, one accent
+(the button). No stock imagery — the type is the picture, and the work is one scroll away.
 
-**It has images now, on purpose.** The old site was 55 KB with none. The fly-through is a
-scroll-scrubbed frame sequence: 192 frames at 1280px (~13 MB) on desktop, 96 at 720px (~2.4 MB)
-on phones, loaded coarse-to-fine so scrubbing works before it finishes. The first frame is a CSS
-backdrop, so the hero paints instantly and still works with JavaScript off; reduced-motion visitors
-get the still frame.
+| Section | What it does |
+| --- | --- |
+| Hero | "Built to be the first call." One paragraph, the button, and the four disciplines. |
+| Work | Each live client site scrolls inside a browser frame as you scroll (desktop); a plain card on phones. |
+| Principles | The one dark band: the standard every site is held to. Only things we do on every site. |
+| Services | Strategy, Identity, Websites, Content, Presence — a ruled list, no prices. |
+| Process, Questions, Instagram, Start | Four stages; native `<details>`; the Behold feed; the project form. |
 
-**Photos** are from Wikimedia Commons under CC0 / CC BY / CC BY-SA and are credited in the footer;
-the list is `public/img/sf/CREDITS.txt`. Keep the footer credit if you keep the photos.
+Copy lives in `src/data/site.ts`, sections in `src/site/home/`. **Business email is not
+included** (since 2026-10-30) — the page says we connect Google Workspace and the client pays Google.
+The share card (`src/app/opengraph-image.tsx`) embeds Instrument Serif from `src/app/fonts`.
 
-**Regenerating the sequence** (if photos change): `scripts/sf-shots.json` lists the stills,
-`scripts/kenburns-sequence.mjs` makes the photo push, and `scripts/compose-sequence.mjs` joins the
-cloud frames to it through a white-out. The cloud frames were rendered from
-`scripts/scenes/CloudDescent.tsx` with three.js via `scripts/render-sequence.mjs`; the full working
-setup for that lives in `~/site-clones/888-sf` (it needs three / R3F, which this site does not ship).
-A real drone or AI clip can replace everything: `scripts/video-to-sequence.sh clip.mp4 public/sequences/sf 192`.
+**Work captures** are full-length screenshots of the live client sites:
+`node scripts/capture-work.mjs` re-takes them. Re-run it when a client changes their site.
 
-**No third-party scripts.** Still true: nothing loads from another origin at render time.
+**The previous design** (the San Francisco fly-through, `src/site/Site.tsx` and
+`src/data/content.ts`) is saved on branch `archive/sf-flythrough-2026-11` and tag
+`site-sf-flythrough-2026-11`. Its files are still in the tree, unused, until someone decides to
+remove them; the sequence frames in `public/sequences` and photos in `public/img/sf` are only
+used by it.
+
+**No third-party scripts.** Fonts are self-hosted by `next/font`; nothing loads from another
+origin at render time except the Instagram images.
 
 ## Environment variables
 

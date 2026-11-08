@@ -27,7 +27,8 @@
   --text-eyebrow: 0.6875rem;
   --text-eyebrow--letter-spacing: 0.16em;
 
-  --font-display: var(--font-anton), Impact, sans-serif;
+  --font-display: var(--font-serif), Georgia, serif;
+  --font-poster: var(--font-anton), Impact, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
@@ -51,3 +52,32 @@ html { background: var(--color-paper); color: var(--color-ink); }
 }
 
 @keyframes v-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------------------------------
+ * Home (November 2026). Motion rules: transform and opacity only, ease-out,
+ * nothing longer than 900ms, and content is visible without JavaScript —
+ * the hidden starting state only applies when scripting is on.
+ * ---------------------------------------------------------------------- */
+
+.ease-out-quint { transition-timing-function: cubic-bezier(.22, 1, .36, 1); }
+
+@media (scripting: enabled) {
+  [data-reveal] { opacity: 0; translate: 0 28px; transition: opacity 800ms cubic-bezier(.22, 1, .36, 1), translate 800ms cubic-bezier(.22, 1, .36, 1); transition-delay: var(--d, 0ms); }
+  [data-reveal].is-in { opacity: 1; translate: 0 0; }
+}
+
+/* Hero lines rise out of a mask once the opener has lifted (or at once on a repeat visit). */
+.hero-line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.hero-line > span { display: block; animation: hero-rise 1000ms cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--opener, 1100ms) + var(--i, 0) * 110ms); }
+.hero-fade { animation: hero-fade 900ms cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--opener, 1100ms) + 380ms + var(--i, 0) * 70ms); }
+.opener-off { --opener: 80ms; }
+@keyframes hero-rise { from { translate: 0 105%; } to { translate: 0 0; } }
+@keyframes hero-fade { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+
+/* Questions: native <details>, with the marker drawn as a plus that turns. */
+.q summary { list-style: none; cursor: pointer; }
+.q summary::-webkit-details-marker { display: none; }
+.q .plus { transition: rotate 400ms cubic-bezier(.22, 1, .36, 1); }
+.q[open] .plus { rotate: 45deg; }
+
+::selection { background: var(--color-ink); color: var(--color-paper); }
