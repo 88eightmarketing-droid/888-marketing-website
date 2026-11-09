@@ -85,7 +85,8 @@ export default function Hero() {
   );
 }
 
-const DESKTOP = "inset(36% 5% 7% 54% round 14px)";
+// The window sits below the line, never under it: white type over a light frame of a client site vanished.
+const DESKTOP = "inset(55% 5% 6% 48% round 14px)";
 const PHONE = "inset(62% 5% 6% 5% round 12px)";
 
 const layout = {
@@ -95,7 +96,7 @@ const layout = {
   row2: "flex items-end gap-6 md:pl-[14vw]",
   row3: "block pl-[22vw] md:pl-[42vw]",
   // The starting window is set in CSS too (keep in step with PHONE / DESKTOP), so it is right before JavaScript runs.
-  media: "absolute inset-0 overflow-hidden will-change-[clip-path] [clip-path:inset(62%_5%_6%_5%_round_12px)] md:[clip-path:inset(36%_5%_7%_54%_round_14px)]",
+  media: "absolute inset-0 overflow-hidden will-change-[clip-path] [clip-path:inset(62%_5%_6%_5%_round_12px)] md:[clip-path:inset(55%_5%_6%_48%_round_14px)]",
   video: "h-full w-full object-cover will-change-transform",
   shade: "absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-night/20",
 };
