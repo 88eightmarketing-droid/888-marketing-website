@@ -18,35 +18,29 @@ npm run dev        # http://localhost:3100
 
 ## The design (November 2026)
 
-**888 Marketing presents as a design studio**: cinematic and work-first. No prices and no
-"built first, paid after" on the public site; every project starts with a conversation and a
-written proposal. Why it looks like this, and what was studied: `docs/design-research.md`.
-
-Near-black (`night`), bone type, the flare accent once per screen. Inter Tight for display,
-Geist Mono for labels, Inter for reading.
+**888 Marketing presents as a design studio, in the manner of a product page.** Each service is a
+product tile — a name, one line, two pill buttons and a picture drawn in code — on white, mist
+(`#f5f5f7`) and black, in Inter (its optical-size axis gives the display cut at headline sizes).
+The 888 red is for actions only. No prices and no "built first, paid after": every project is
+quoted in writing after a conversation. Client work is one small strip, by the owner's direction.
 
 | Section | What it does |
 | --- | --- |
-| Hero | "Built to be the first call." staggered; the reel plays in a window that opens to full screen on scroll. |
-| Statement | One sentence, lit word by word as it scrolls. |
-| Work | Five paying clients, each a real recording of their live site, playing while on screen. |
-| Services | Five huge rows; on desktop a clip of client work floats beside the pointer. |
-| Band, Questions, Start | The flare "Start a project" marquee; native `<details>`; the project form (`/api/contact`). |
+| Global + local nav | A thin bar that scrolls away, and a sticky bar with the name and "Start a project". |
+| Hero | "Websites, made like products." over a chrome 888 with a slow light sweep. |
+| Tiles | Website (laptop + phone), Identity, Content, Presence, Care — all illustration of a generic "Your Business", never a real one. |
+| Built like a product | One line and four facts with icons. |
+| How it works, Live now, Questions, Let’s build yours | Four steps; a small strip of client sites; `<details>`; the form (`/api/contact`). |
 
-Copy is in `src/data/site.ts`, sections in `src/site/home/`. **Business email is not included**
-(since 2026-10-30): the page says we connect Google Workspace and the client pays Google.
+Copy is in `src/data/site.ts`, sections in `src/site/home/`. Native scrolling; tiles fade up once.
+**Business email is not included** (since 2026-10-30): we connect Google Workspace, billed by Google.
 
-**Footage.** `node scripts/record-work.mjs [key…]` records each client site being scrolled
-(`public/work/<key>.mp4` + poster); `bash scripts/make-reel.sh` cuts the hero reel from them. The
-list of sites is `scripts/work-sites.mjs`. Only paying clients' sites, live on their own domains.
-Re-record when a client changes their site. Needs Chrome and ffmpeg.
+**Client posters** in the Live now strip are frames from `scripts/record-work.mjs` recordings
+(`public/work/<key>.jpg`). The recordings themselves are not used on this design.
 
-**Share card.** `src/app/opengraph-image.tsx`, with Inter Tight and Geist Mono embedded from
-`src/app/fonts` and a reel still in `src/app/og-reel.jpg`.
-
-**Earlier designs.** The San Francisco fly-through is on branch `archive/sf-flythrough-2026-11`
-(tag `site-sf-flythrough-2026-11`); its files are still in the tree, unused. The paper-and-serif
-first draft of this revamp is commit `d24aa3f`.
+**Earlier designs**, all kept: the San Francisco fly-through (branch `archive/sf-flythrough-2026-11`),
+the paper-and-serif draft (`d24aa3f`) and the dark cinematic draft (`6d66287`). Notes on what was
+studied for each: `docs/design-research.md`.
 
 **No third-party scripts.** Fonts are self-hosted by `next/font`; nothing loads from another
 origin at render time except the Instagram images.

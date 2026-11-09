@@ -43,3 +43,26 @@ Twelve studio sites, screenshotted at three scroll points in Chrome (2026-11-08)
 
 Work shown is paying clients' live sites only (owner's answer, 2026-11-08). No prices, and no
 claims we cannot back. Footage is recorded from the live sites by `scripts/record-work.mjs`.
+
+## Third round: the product page (2026-11-08)
+
+The dark cinematic draft was rejected too ("its trash . horrible"). The owner's direction: a site
+"like apple.com", and client work must not take over the design.
+
+Measured on apple.com and its MacBook Pro page:
+
+| | Apple | Here |
+| --- | --- | --- |
+| Grounds | `#fff`, `#f5f5f7`, black feature tiles | same |
+| Text | `#1d1d1f`, secondary `#6e6e73` | same |
+| Tile headline | 56px / 600, line 1.07 | 56px / 600 (40px on phones) |
+| Tile line | 28px / 400 | 28px / 400 (19px on phones) |
+| Body | 17px, letter-spacing −0.022em | same |
+| Buttons | Pills, 17px; one filled, one outlined | same, in the 888 red |
+| Nav | 44px translucent global bar; sticky 52px local bar | same |
+| Layout | Full-width tiles, then a two-up grid with 12px gaps | same |
+| Type | SF Pro (not licensed for other sites) | Inter with optical sizing |
+
+Apple's pictures are product photography. Ours are drawn in code (a chrome 888, devices showing a
+generic "Your Business", an identity specimen, a viewfinder, a search result, a care panel), so
+they are sharp, light, and show no real business.
