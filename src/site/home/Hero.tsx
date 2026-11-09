@@ -6,89 +6,107 @@ import { useReducedMotion } from "@/lib/motion";
 import { clamp01, createSequence, easeInOut, span } from "./Frames";
 
 /**
- * The opening scene, scrubbed by scroll (white, November 2026).
+ * The opening scene: our work, the way a customer meets it (November 2026).
  *
- *   0 – .42  the foldable unfolds from a tent and turns to face you
- *            (Grok clip, reversed, drawn as frames — Frames.tsx), gliding from
- *            beside the line to the centre; the line slides away
- *   .40 – .48 its display wakes on a real client site
- *   .48 – .74 the camera pushes in until the display fills the screen
- *   .50 – 1   the display scrolls through five live client sites, named as they pass
+ * A laptop and a phone on white. As the page arrives the laptop opens (Grok
+ * clip, reversed, drawn as frames — Frames.tsx), the phone comes up in front
+ * of it and both screens wake on the first site. Scrolling moves the pair to
+ * the centre of the screen, and each further stretch of scroll is one client
+ * site, in the owner's order: both screens play that site's real recording from the moment the
+ * page is requested — its own intro — through its scroll effects
+ * (scripts/record-showcase.mjs), desktop on the laptop, phone on the phone.
  *
- * The scene is pinned (sticky) inside a tall section; everything is placed in
- * pixels from the viewport size so the display lands in the centre of the
- * screen on any shape of window. Reduced motion gets the finished frame.
+ * Everything is placed in pixels from the viewport, so the pair lands centred
+ * on any shape of window. Reduced motion gets the open pair and posters.
  */
 
-const FRAMES = 97;
-// Inner display of /brand/w-fold.jpg, in % of the photo (measured on the 1792×1008 master).
-const S = { l: 31.86, t: 13.0, w: 36.5, h: 71.92 };
-const REEL = { w: 960, h: 4465, shot: 893 }; // public/screens/reel.webp: five site heroes stacked
+const FRAMES = 63; // public/seq/lid
+const SITES = work.pieces.slice(0, 5);
+const BASE_W = 1000, BASE_H = 562.5; // the stage, before scaling (the laptop photo's 16:9)
+// In % of the stage. Laptop screen measured on /brand/w-laptop.jpg; the phone is placed in front of it.
+const LAPTOP = { l: 28.6, t: 16.0, w: 43.0, h: 50.2 };
+const PHONE = { l: 64.5, t: 29, h: 50 }; // height in % of the stage; width follows the cut-out's 416:846
+const PHONE_W = ((PHONE.h / 100) * BASE_H * (416 / 846)) / BASE_W * 100; // % of stage width
+const PHONE_SCREEN = { l: 2.16, t: 1.06, w: 95.7, h: 98.0 }; // in % of the phone
+// The pair's bounding box in stage %, for fitting it to the window.
+const BOX = { l: 25, t: 15, r: PHONE.l + PHONE_W, b: PHONE.t + PHONE.h };
+
+// The arrival, by time once the page opener lifts (0–1 over INTRO_MS): the lid opens,
+// the phone rises, both screens wake and the first site starts from its own intro.
+const INTRO_MS = 1900;
+const OPEN = [0, 0.75] as const;
+const RISE = [0.45, 0.9] as const;
+const WAKE = [0.8, 1] as const;
+// Then the scroll (0–1 over the section): the pair moves to the centre, and each
+// further stretch is one site.
+const PUSH = [0, 0.1] as const;
+const SHOW = 0.1;
 
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
-  const still = useRef<HTMLImageElement>(null);
-  const screen = useRef<HTMLDivElement>(null);
-  const reel = useRef<HTMLImageElement>(null);
+  const phone = useRef<HTMLDivElement>(null);
+  const screens = useRef<HTMLDivElement[]>([]);
+  const laptopVid = useRef<HTMLVideoElement>(null);
+  const phoneVid = useRef<HTMLVideoElement>(null);
   const copy = useRef<HTMLDivElement>(null);
-  const ctas = useRef<HTMLDivElement>(null);
-  const caption = useRef<HTMLDivElement>(null);
+  const hint = useRef<HTMLDivElement>(null);
+  const chapters = useRef<HTMLDivElement>(null);
+  const bars = useRef<HTMLSpanElement[]>([]);
   const [site, setSite] = useState(0);
+  const [awake, setAwake] = useState(false);
   const reduced = useReducedMotion();
 
+  // The scroll scene.
   useEffect(() => {
     const sec = root.current, st = stage.current, cv = canvas.current;
     if (!sec || !st || !cv) return;
-    const seq = createSequence(cv, "/seq/fold", FRAMES);
-    let geo = { vw: 0, vh: 0, fw: 0, fh: 0, xs: 0, x0: 0, y0: 0, cx: 0, cy: 0, z: 1, sw: 0, sh: 0 };
-    let target = reduced ? 1 : 0, current = target, raf = 0, shown = -1;
+    const seq = createSequence(cv, "/seq/lid", FRAMES);
+    let g = { z0: 1, x0: 0, y0: 0, z1: 1, x1: 0, y1: 0 };
+    let target = reduced ? SHOW : 0, current = target, raf = 0, shown = -1;
+    let intro = reduced ? 1 : 0, introRaf = 0, introStart = 0;
 
+    const fit = (bw: number, bh: number, cx: number, cy: number) => {
+      const w = ((BOX.r - BOX.l) / 100) * BASE_W, h = ((BOX.b - BOX.t) / 100) * BASE_H;
+      const z = Math.min(bw / w, bh / h);
+      const mx = ((BOX.l + BOX.r) / 200) * BASE_W, my = ((BOX.t + BOX.b) / 200) * BASE_H;
+      return { z, x: cx - z * mx, y: cy - z * my };
+    };
     const measure = () => {
-      const vw = innerWidth, vh = innerHeight;
-      const fw = Math.min(1.35 * vh, 2.2 * vw), fh = (fw * 9) / 16;
-      const sw = (S.w / 100) * fw, sh = (S.h / 100) * fh;
-      const cx = ((S.l + S.w / 2) / 100) * fw, cy = ((S.t + S.h / 2) / 100) * fh;
-      const contain = Math.min((vw * 0.94) / sw, (vh * 0.9) / sh);
-      const cover = Math.max(vw / sw, vh / sh);
-      const wide = vw >= 768;
-      const z = wide ? Math.min(cover, contain * 1.15) : contain;
-      // Wide screens: the device starts to the right of the line and glides to the centre as it turns.
-      const x0 = vw / 2 - fw / 2;
-      geo = { vw, vh, fw, fh, xs: wide ? x0 + vw * 0.2 : x0, x0, y0: vh * (wide ? 0.55 : 0.64) - fh / 2, cx, cy, z, sw, sh };
-      st.style.width = `${fw}px`;
-      st.style.height = `${fh}px`;
-      if (reel.current) reel.current.style.width = `${sw}px`;
+      const vw = innerWidth, vh = innerHeight, wide = vw >= 768;
+      // Start: beside the line on wide screens, under it on phones. End: centred, as large as fits above the chapter bar.
+      const a = wide ? fit(vw * 0.48, vh * 0.6, vw * 0.73, vh * 0.55) : fit(vw * 0.92, vh * 0.38, vw * 0.5, vh * 0.64);
+      const b = wide ? fit(vw * 0.9, vh * 0.72, vw * 0.52, vh * 0.47) : fit(vw * 0.98, vh * 0.54, vw * 0.5, vh * 0.42);
+      g = { z0: a.z, x0: a.x, y0: a.y, z1: b.z, x1: b.x, y1: b.y };
       seq.resize();
     };
 
+    const arrive = (t: number) => {
+      seq.draw(easeInOut(span(t, OPEN[0], OPEN[1])));
+      const rise = easeInOut(span(t, RISE[0], RISE[1]));
+      if (phone.current) { phone.current.style.opacity = String(rise); phone.current.style.translate = `0 ${(1 - rise) * 30}%`; }
+      const on = String(span(t, WAKE[0], WAKE[1]));
+      screens.current.forEach((s) => { if (s) s.style.opacity = on; });
+    };
+    const introTick = (now: number) => {
+      if (!introStart) introStart = now;
+      intro = clamp01((now - introStart) / INTRO_MS);
+      arrive(intro);
+      if (intro < 1) introRaf = requestAnimationFrame(introTick);
+      else setAwake(true);
+    };
+
     const render = (p: number) => {
-      const g = geo;
-      seq.draw(span(p, 0, 0.42));
-      // The line and the buttons lift away as the device turns.
-      const lift = span(p, 0, 0.22);
+      const lift = span(p, 0, 0.05);
       if (copy.current) { copy.current.style.opacity = String(1 - lift); copy.current.style.translate = `${-lift * 60}px 0`; copy.current.style.visibility = lift >= 1 ? "hidden" : "visible"; }
-      if (ctas.current) { ctas.current.style.opacity = String(1 - span(p, 0, 0.12)); ctas.current.style.visibility = p > 0.13 ? "hidden" : "visible"; }
-      // The display wakes.
-      const on = span(p, 0.4, 0.48);
-      if (still.current) still.current.style.opacity = String(on);
-      if (screen.current) screen.current.style.opacity = String(on);
-      // Push in: scale about the stage origin while moving the display's centre to the screen's.
-      const k = easeInOut(span(p, 0.48, 0.74));
-      const z = 1 + (g.z - 1) * k;
-      const xEnd = g.vw / 2 - g.z * g.cx, yEnd = g.vh / 2 - g.z * g.cy;
-      const xTurn = g.xs + (g.x0 - g.xs) * easeInOut(span(p, 0.05, 0.42));
-      const x = xTurn + (xEnd - xTurn) * k, y = g.y0 + (yEnd - g.y0) * k;
-      if (stage.current) stage.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${z})`;
-      // Scroll the reel through the five sites.
-      const r = span(p, 0.5, 0.98);
-      const reelH = (g.sw * REEL.h) / REEL.w, shotH = (g.sw * REEL.shot) / REEL.w;
-      const off = r * Math.max(0, reelH - g.sh);
-      if (reel.current) reel.current.style.transform = `translate3d(0, ${-off}px, 0)`;
-      const idx = shotH > 0 ? Math.min(4, Math.max(0, Math.floor((off + g.sh * 0.5) / shotH))) : 0;
+      if (hint.current) { hint.current.style.opacity = String(1 - span(p, 0, 0.03)); hint.current.style.visibility = p > 0.03 ? "hidden" : "visible"; }
+      const k = easeInOut(span(p, PUSH[0], PUSH[1]));
+      const z = g.z0 + (g.z1 - g.z0) * k, x = g.x0 + (g.x1 - g.x0) * k, y = g.y0 + (g.y1 - g.y0) * k;
+      st.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${z})`;
+      if (chapters.current) chapters.current.style.opacity = String(span(p, 0.04, SHOW));
+      const idx = Math.min(SITES.length - 1, Math.floor(span(p, SHOW, 1) * SITES.length * 0.9999));
       if (idx !== shown) { shown = idx; setSite(idx); }
-      if (caption.current) caption.current.style.opacity = String(span(p, 0.55, 0.62));
     };
 
     const tick = () => {
@@ -108,38 +126,77 @@ export default function Hero() {
     measure();
     onScroll();
     render(current);
+    if (reduced) { arrive(1); introRaf = requestAnimationFrame(() => setAwake(true)); }
+    else {
+      // Wait for the page opener (first visit) to lift; a repeat visit has none.
+      const opener = document.documentElement.classList.contains("opener-off") ? 60 : 1150;
+      arrive(0);
+      const t = setTimeout(() => { introRaf = requestAnimationFrame(introTick); }, opener);
+      addEventListener("pagehide", () => clearTimeout(t), { once: true });
+    }
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onResize);
-    return () => { cancelAnimationFrame(raf); removeEventListener("scroll", onScroll); removeEventListener("resize", onResize); };
+    return () => { cancelAnimationFrame(raf); cancelAnimationFrame(introRaf); removeEventListener("scroll", onScroll); removeEventListener("resize", onResize); };
   }, [reduced]);
 
-  const piece = work.pieces[site] ?? work.pieces[0];
+  // Each chapter plays its site from the top, so its intro is seen (the first once the screens wake).
+  // The bars follow the laptop clip.
+  useEffect(() => {
+    for (const v of [laptopVid.current, phoneVid.current]) {
+      if (!v) continue;
+      v.currentTime = 0;
+      if (awake && !reduced) v.play().catch(() => {});
+    }
+    let raf = 0;
+    const track = () => {
+      const v = laptopVid.current;
+      const now = v && v.duration ? v.currentTime / v.duration : 0;
+      bars.current.forEach((b, i) => { if (b) b.style.transform = `scaleX(${i < site ? 1 : i > site ? 0 : now})`; });
+      raf = requestAnimationFrame(track);
+    };
+    track();
+    return () => cancelAnimationFrame(raf);
+  }, [site, awake, reduced]);
+
+  const s = SITES[site] ?? SITES[0];
+  const next = SITES[site + 1];
 
   return (
-    <section ref={root} id="top" className={`relative bg-white ${reduced ? "h-[100svh]" : "h-[300vh] md:h-[340vh]"}`}>
+    <section ref={root} id="top" className={`relative bg-white ${reduced ? "h-[100svh]" : "h-[560vh] md:h-[600vh]"}`}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        {/* The device. Placed and scaled from script; the CSS here is the first paint. */}
-        <div
-          ref={stage}
-          aria-hidden
-          className="absolute left-0 top-0 aspect-video w-[min(135svh,220vw)] origin-top-left will-change-transform"
-          style={{ transform: "translate3d(calc(50vw - 50%), calc(60svh - 50%), 0)" }}
-        >
+        {/* The pair. Placed and scaled from script. */}
+        <div ref={stage} aria-hidden className="absolute left-0 top-0 origin-top-left will-change-transform" style={{ width: BASE_W, height: BASE_H, transform: "translate3d(40vw, 30svh, 0) scale(.6)" }}>
           <canvas ref={canvas} className="absolute inset-0 h-full w-full" />
-          {/* eslint-disable-next-line @next/next/no-img-element -- the full-resolution end frame, over the canvas */}
-          <img ref={still} src="/brand/w-fold.jpg" alt="" className="absolute inset-0 h-full w-full opacity-0" />
           <div
-            ref={screen}
-            className="absolute overflow-hidden rounded-[0.4%] bg-black opacity-0"
-            style={{ left: `${S.l}%`, top: `${S.t}%`, width: `${S.w}%`, height: `${S.h}%` }}
+            ref={(el) => { if (el) screens.current[0] = el; }}
+            className="absolute overflow-hidden rounded-t-[4px] bg-black opacity-0"
+            style={{ left: `${LAPTOP.l}%`, top: `${LAPTOP.t}%`, width: `${LAPTOP.w}%`, height: `${LAPTOP.h}%` }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- five client site heroes, stacked */}
-            <img ref={reel} src="/screens/reel.webp" alt="" className="absolute left-0 top-0 h-auto max-w-none will-change-transform" />
-            <div className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-black/10" />
+            <video ref={laptopVid} key={`l-${s.key}`} src={`/showcase/${s.key}-desktop.mp4`} poster={`/showcase/${s.key}-desktop.jpg`} muted playsInline preload="auto" className="h-full w-full object-cover object-top" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.12)_0%,rgba(255,255,255,0)_40%)]" />
           </div>
+          <div ref={phone} className="absolute opacity-0 drop-shadow-[0_24px_24px_rgba(0,0,0,.25)]" style={{ left: `${PHONE.l}%`, top: `${PHONE.t}%`, width: `${PHONE_W}%`, height: `${PHONE.h}%` }}>
+            {/* eslint-disable-next-line @next/next/no-img-element -- the phone, cut out of its Grok still */}
+            <img src="/brand/phone-cut.webp" alt="" className="absolute inset-0 h-full w-full" />
+            <div
+              ref={(el) => { if (el) screens.current[1] = el; }}
+              className="absolute overflow-hidden rounded-[8%/3.9%] bg-black opacity-0"
+              style={{ left: `${PHONE_SCREEN.l}%`, top: `${PHONE_SCREEN.t}%`, width: `${PHONE_SCREEN.w}%`, height: `${PHONE_SCREEN.h}%` }}
+            >
+              <video ref={phoneVid} key={`p-${s.key}`} src={`/showcase/${s.key}-phone.mp4`} poster={`/showcase/${s.key}-phone.jpg`} muted playsInline preload="auto" className="h-full w-full object-cover object-top" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.14)_0%,rgba(255,255,255,0)_45%)]" />
+            </div>
+          </div>
+          {/* The next site's clips, loading ahead. */}
+          {next && (
+            <div className="hidden">
+              <video src={`/showcase/${next.key}-desktop.mp4`} preload="auto" muted playsInline />
+              <video src={`/showcase/${next.key}-phone.mp4`} preload="auto" muted playsInline />
+            </div>
+          )}
         </div>
 
-        {/* The line: left on wide screens, above the device on phones. */}
+        {/* The line: left on wide screens, above the pair on phones. */}
         <div ref={copy} className="relative z-10 mx-auto flex h-full max-w-[1320px] flex-col px-5 pt-[12svh] text-center md:justify-center md:px-8 md:pt-0 md:text-left">
           <p className="appear text-[12px] font-semibold uppercase tracking-[0.16em] text-steel md:text-[13px]" style={{ ["--i" as string]: 0 }}>{hero.eyebrow}</p>
           <h1 className="mt-4 text-[clamp(3rem,13vw,4.2rem)] font-extrabold leading-[0.9] tracking-[-0.055em] text-ink md:text-[clamp(3.8rem,7.4vw,7.4rem)]">
@@ -154,25 +211,36 @@ export default function Hero() {
           </div>
         </div>
 
-        <div ref={ctas} className="appear absolute inset-x-0 bottom-[4svh] z-10 flex flex-col items-center gap-3 px-5" style={{ ["--i" as string]: 2 }}>
+        <div ref={hint} className="appear absolute inset-x-0 bottom-[4svh] z-10 flex flex-col items-center gap-3 px-5" style={{ ["--i" as string]: 2 }}>
           <div className="flex gap-2.5 md:hidden">
             <a href="#proposal" className="inline-flex min-h-12 items-center rounded-full bg-red px-5 text-[15px] font-bold text-white">{cta}</a>
             <a href="#work" className="inline-flex min-h-12 items-center rounded-full border border-hair bg-white px-5 text-[15px] font-bold text-ink">The work</a>
           </div>
           <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">
-            <span className="block h-5 w-px animate-pulse bg-steel/50" /> Scroll
+            <span className="block h-5 w-px animate-pulse bg-steel/50" /> Scroll to see the work
           </p>
         </div>
 
-        {/* The site on the display, named. */}
-        <div ref={caption} className="pointer-events-none absolute inset-x-0 bottom-0 z-10 opacity-0">
-          <div className="mx-auto flex max-w-[1320px] items-end justify-between gap-4 px-5 pb-24 md:px-8 md:pb-8">
-            <div className="pointer-events-auto rounded-[16px] bg-white/90 px-4 py-3 shadow-[0_20px_40px_-20px_rgba(0,0,0,.35)] backdrop-blur-md">
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-red">Live now · {String(site + 1).padStart(2, "0")} / 05</p>
-              <a href={piece.url} target="_blank" rel="noreferrer" className="mt-0.5 block text-[17px] font-extrabold tracking-[-0.02em] text-ink hover:underline">{piece.name}</a>
-              <p className="text-[13px] text-steel">{piece.kind}</p>
+        {/* The chapters: which site is playing, and how far through it. */}
+        <div ref={chapters} className="pointer-events-none absolute inset-x-0 bottom-0 z-10 opacity-0">
+          <div className="mx-auto max-w-[1320px] px-5 pb-24 md:px-8 md:pb-8">
+            <div className="pointer-events-auto flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-red">Live now · {String(site + 1).padStart(2, "0")} / {String(SITES.length).padStart(2, "0")}</p>
+                <a href={s.url} target="_blank" rel="noreferrer" className="mt-1 block text-[clamp(1.4rem,2.6vw,2.2rem)] font-extrabold leading-none tracking-[-0.04em] text-ink hover:underline">{s.name} ↗</a>
+                <p className="mt-1 text-[14px] text-steel">{s.kind}</p>
+              </div>
+              <ol className="flex gap-2" aria-label="Sites in this showcase">
+                {SITES.map((x, i) => (
+                  <li key={x.key} className="w-12 md:w-24">
+                    <span className="block h-[3px] overflow-hidden rounded-full bg-ink/10">
+                      <span ref={(el) => { if (el) bars.current[i] = el; }} className="block h-full origin-left scale-x-0 bg-red" />
+                    </span>
+                    <span className={`mt-2 hidden truncate text-[11px] font-semibold md:block ${i === site ? "text-ink" : "text-steel/70"}`}>{x.name}</span>
+                  </li>
+                ))}
+              </ol>
             </div>
-            <p className="hidden rounded-full bg-white/90 px-4 py-2 text-[12px] font-semibold text-ink shadow-[0_20px_40px_-20px_rgba(0,0,0,.35)] backdrop-blur-md md:block">Real sites we built, on their own domains</p>
           </div>
         </div>
       </div>

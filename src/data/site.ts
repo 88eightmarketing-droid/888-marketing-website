@@ -48,7 +48,7 @@ export const form = {
 
 export const clients = {
   label: "Live on their own domains",
-  names: ["JellyCee Blends", "Clean Puppy Club", "Trees 4 Less", "Classé Skin & Sculpt", "GetKickz"],
+  names: ["Plumbing Art", "GetKickz", "Classé Skin & Sculpt", "Clean Puppy Club", "Trees 4 Less", "JellyCee Blends"],
 };
 
 export interface Service {
@@ -72,7 +72,7 @@ export const services: { title: string; text: string; items: Service[] } = {
       body: "Designed from scratch for your business, fast on a phone, with one clear action on every screen: call, book or order. Built in-house and hosted by us.",
       points: ["Custom design, never a template", "Fast on a phone, found on Google", "Booking, menus and ordering", "Hosting and care after launch"],
       image: "laptop",
-      alt: "A laptop on a white studio floor",
+      alt: "A phone playing the client sites we built",
     },
     {
       id: "google",
@@ -87,10 +87,10 @@ export const services: { title: string; text: string; items: Service[] } = {
       id: "content",
       kicker: "Content",
       title: "Pictures that sell the work.",
-      body: "A photographer at your place, short film for social, and campaign imagery like the pictures on this page, made for your brand.",
+      body: "A photographer at your place, short film for social, and the posts, flyers and campaign imagery that keep you in front of people, made for your brand.",
       points: ["On-site photography", "Short film for social", "Campaign imagery", "Copy written by someone who interviewed you"],
       image: "camera",
-      alt: "A camera on a white studio floor",
+      alt: "Social posts and a flyer we made for Plumbing Art",
     },
     {
       id: "brand",
@@ -99,7 +99,7 @@ export const services: { title: string; text: string; items: Service[] } = {
       body: "A mark, colours and type that hold up on a sign, a van and a phone screen, with cards and print to match.",
       points: ["Logo and identity", "Colour and type", "Business cards and print", "A one-page brand guide"],
       image: "cards",
-      alt: "A stack of blank cards with red edges on a white floor",
+      alt: "Plumbing Art's business card and logo, designed by 888",
     },
   ],
 };
@@ -148,12 +148,15 @@ export interface Piece {
 export const work: { title: string; text: string; pieces: Piece[] } = {
   title: "Live work.",
   text: "Real businesses, running on their own domains today. Open any of them.",
+  // The first five are the opening showcase, in the owner's order (2026-11-08);
+  // their recordings are public/showcase/<key>-desktop|phone.mp4 (scripts/record-showcase.mjs).
   pieces: [
-    { key: "jellyceeblends", name: "JellyCee Blends", kind: "Barber & colorist · San Francisco", url: "https://jellyceeblends.com", domain: "jellyceeblends.com" },
+    { key: "plumbingart", name: "Plumbing Art", kind: "Licensed plumber · San Jose", url: "https://plumbingartbayarea.com", domain: "plumbingartbayarea.com" },
+    { key: "getkickz", name: "GetKickz", kind: "Streetwear retail", url: "https://getkickz.com", domain: "getkickz.com" },
+    { key: "classeskin", name: "Classé Skin & Sculpt", kind: "Wellness studio · San Jose", url: "https://www.classeskin.com", domain: "classeskin.com" },
     { key: "cleanpuppy", name: "Clean Puppy Club", kind: "Dog grooming · San Jose", url: "https://thecleanpuppyclub.com", domain: "thecleanpuppyclub.com" },
     { key: "tree4less", name: "Trees 4 Less", kind: "Tree service · Monterey County", url: "https://www.tree4less.com", domain: "tree4less.com" },
-    { key: "classeskin", name: "Classé Skin & Sculpt", kind: "Wellness studio · San Jose", url: "https://www.classeskin.com", domain: "classeskin.com" },
-    { key: "getkickz", name: "GetKickz", kind: "Streetwear retail", url: "https://getkickz.com", domain: "getkickz.com" },
+    { key: "jellyceeblends", name: "JellyCee Blends", kind: "Barber & colorist · San Francisco", url: "https://jellyceeblends.com", domain: "jellyceeblends.com" },
   ],
 };
 

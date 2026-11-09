@@ -40,7 +40,7 @@ export function Work() {
             <a href={p.url} target="_blank" rel="noreferrer" className="group block">
               <div className="aspect-[16/10] overflow-hidden rounded-[18px] bg-white shadow-[0_20px_40px_-24px_rgba(0,0,0,.35)]">
                 {/* eslint-disable-next-line @next/next/no-img-element -- poster frame from the live-site recording */}
-                <img src={`/work/${p.key}.jpg`} alt={`${p.name}, the site we built`} width={1280} height={800} loading="lazy" className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
+                <img src={p.key === "jellyceeblends" ? `/work/${p.key}.jpg` : `/showcase/${p.key}-desktop.jpg`} alt={`${p.name}, the site we built`} width={1280} height={800} loading="lazy" className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
               </div>
               <div className="mt-4 flex items-baseline justify-between gap-4">
                 <div>

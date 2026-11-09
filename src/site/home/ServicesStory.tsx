@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cta, services } from "@/data/site";
-import { Laptop, LidLaptop } from "./Device";
+import { PhonePlayer } from "./Device";
 
 /**
  * The services as a pinned story. On desktop the picture column holds still
@@ -40,21 +40,14 @@ export default function ServicesStory() {
           {/* Pinned picture column (desktop) */}
           <div className="hidden md:col-span-7 md:block">
             <div className="sticky top-[12vh] h-[76vh]">
-              <div className="relative h-full overflow-hidden rounded-[32px] bg-white ring-1 ring-hair">
+              <div className="relative h-full overflow-hidden rounded-[32px] bg-mist">
                 {services.items.map((s, n) => (
                   <div
                     key={s.id}
                     aria-hidden={n !== active}
                     className={`absolute inset-0 transition-[opacity,scale] duration-[1200ms] ease-[cubic-bezier(.2,.7,.2,1)] ${n === active ? "scale-100 opacity-100" : "scale-[1.12] opacity-0"}`}
                   >
-                    {s.id === "websites" ? (
-                      <LidLaptop trigger="#websites" />
-                    ) : (
-                      <picture>
-                        <source srcSet={`/brand/w-${s.image}.avif`} type="image/avif" />
-                        <img src={`/brand/w-${s.image}.jpg`} alt={n === active ? s.alt : ""} loading={n === 0 ? "eager" : "lazy"} className="absolute inset-0 h-full w-full object-cover" />
-                      </picture>
-                    )}
+                    <ServiceVisual id={s.id} />
                   </div>
                 ))}
                 <div className="absolute inset-x-8 bottom-8 flex items-end justify-between text-ink">
@@ -81,13 +74,8 @@ export default function ServicesStory() {
                 ref={(el) => { panels.current[n] = el; }}
                 className={`scroll-mt-24 transition-opacity duration-500 md:flex md:min-h-[88vh] md:flex-col md:justify-center ${n === active ? "md:opacity-100" : "md:opacity-30"}`}
               >
-                <div className="relative mb-8 aspect-[16/11] overflow-hidden rounded-[24px] bg-white ring-1 ring-hair md:hidden" data-wipe>
-                  {s.id === "websites" ? (
-                    <Laptop />
-                  ) : (
-                    // eslint-disable-next-line @next/next/no-img-element -- campaign still, pre-encoded at 1600w
-                    <img src={`/brand/w-${s.image}.jpg`} alt={s.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-                  )}
+                <div className="relative mb-8 aspect-[4/5] overflow-hidden rounded-[24px] bg-mist md:hidden" data-wipe>
+                  <ServiceVisual id={s.id} />
                 </div>
                 <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-red">{String(n + 1).padStart(2, "0")} · {s.kicker}</p>
                 <h3 className="mt-4 text-[clamp(2.2rem,4vw,3.6rem)] font-extrabold leading-[0.98] tracking-[-0.05em]">{s.title}</h3>
@@ -111,5 +99,58 @@ export default function ServicesStory() {
       </div>
       <div className="h-24 md:h-[12vh]" />
     </section>
+  );
+}
+
+/**
+ * What each service looks like when we do it — our own work, not stock:
+ * the client sites on a phone, and for content and brand the real pieces we
+ * made for Plumbing Art (public/made, from its brand package).
+ */
+function ServiceVisual({ id }: { id: string }) {
+  if (id === "websites") {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center pb-[8%]">
+        <PhonePlayer className="h-[78%]" />
+      </div>
+    );
+  }
+  if (id === "content") {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center pb-[10%]">
+        <div className="relative h-[66%] w-full">
+          <Piece src="/made/pa-insta.webp" alt="An Instagram post we made for Plumbing Art" className="left-[14%] top-[8%] -rotate-[8deg]" />
+          <Piece src="/made/pa-flyer.webp" alt="A flyer we made for Plumbing Art" className="left-[34%] top-0 z-10 rotate-[1deg]" />
+          <Piece src="/made/pa-live.webp" alt="A launch post we made for Plumbing Art" className="left-[54%] top-[8%] rotate-[8deg]" />
+        </div>
+      </div>
+    );
+  }
+  if (id === "google") {
+    return (
+      <picture>
+        <source srcSet="/brand/w-pin.avif" type="image/avif" />
+        <img src="/brand/w-pin.jpg" alt="A red map pin on a white studio floor" loading="lazy" className="absolute inset-0 h-full w-full object-cover mix-blend-multiply" />
+      </picture>
+    );
+  }
+  return (
+    <div className="absolute inset-0 flex items-center justify-center pb-[10%]">
+      <div className="relative h-[70%] w-[86%]">
+        {/* eslint-disable-next-line @next/next/no-img-element -- brand work from the client's package */}
+        <img src="/made/pa-seal.webp" alt="Plumbing Art's seal, designed by 888" loading="lazy" className="absolute right-[2%] top-0 w-[38%] rounded-full shadow-[0_30px_50px_-25px_rgba(0,0,0,.45)]" />
+        {/* eslint-disable-next-line @next/next/no-img-element -- brand work from the client's package */}
+        <img src="/made/pa-card-back.webp" alt="" loading="lazy" className="absolute left-[4%] top-[14%] w-[62%] -rotate-[6deg] rounded-[10px] shadow-[0_30px_50px_-25px_rgba(0,0,0,.5)]" />
+        {/* eslint-disable-next-line @next/next/no-img-element -- brand work from the client's package */}
+        <img src="/made/pa-card-front.webp" alt="Plumbing Art's business card, designed by 888" loading="lazy" className="absolute bottom-0 left-[22%] w-[62%] rotate-[3deg] rounded-[10px] shadow-[0_40px_60px_-25px_rgba(0,0,0,.5)]" />
+      </div>
+    </div>
+  );
+}
+
+function Piece({ src, alt, className }: { src: string; alt: string; className: string }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- content we made, from the client's package
+    <img src={src} alt={alt} loading="lazy" className={`absolute aspect-[4/5] h-full rounded-[12px] object-cover shadow-[0_40px_60px_-30px_rgba(0,0,0,.55)] ${className}`} />
   );
 }

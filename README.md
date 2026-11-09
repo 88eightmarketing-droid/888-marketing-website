@@ -18,31 +18,39 @@ npm run dev        # http://localhost:3100
 
 ## The design (November 2026)
 
-**A campaign landing page.** The structure is borrowed from agency landing pages that convert
-(studied: SmartSites' digital-marketing LP): the proposal form above the fold, a call to action in
-every section, services tied to outcomes, and a strong close. The finish is ours: one art-directed
-campaign, hyper-real objects on crimson seamless, generated in Grok (stills and the hero film), and a
-live preview that puts the visitor's business name on a site as they type it.
+**White, clean, and our work up front.** The structure is borrowed from agency landing pages that
+convert (studied: SmartSites' digital-marketing LP): the proposal form straight after the opening,
+a call to action in every section, services tied to outcomes, a strong close. The finish is ours:
+white, ink type, red only for actions, Grok stills and film shot on white seamless, and real client
+sites playing on the devices.
 
 | Section | What it does |
 | --- | --- |
 | Top bar + mobile bar | "Get a free proposal" always one tap away; pinned to the bottom on phones. |
-| Hero | The campaign film (phone taking a call), "Make your phone ring.", and the proposal form. |
+| Opening scene (`Hero.tsx`) | A laptop opens and a phone rises as the page arrives; scrolling centres them and steps through five client sites, each playing from its own intro through its scroll effects. |
+| Proposal | What we do, lit word by word on scroll, and the proposal form. |
 | Client strip | Names of clients whose sites are live — names, not logos we do not hold. |
-| Services | Websites, Google and local search, Content, Brand — each with a campaign still. |
-| See your business here | The name typed in the hero form, on a sample first screen. Labelled Illustration. |
+| Services | Websites (the phone playing the sites), Google (Grok pin), Content and Brand (real pieces we made for Plumbing Art). |
+| See your business here | The name typed in the proposal form, on a sample first screen. Labelled Illustration. |
 | Live work, Process, In writing, Questions, Closing | Client sites; four steps; promises we keep; FAQ; the form again. |
 
 **What we do not copy from SmartSites:** awards, ratings, testimonial walls and results figures.
 We have none we can stand behind, and inventing them breaks the claims rule.
 
-**Imagery.** `public/brand/` holds the Grok campaign stills (AVIF + JPEG, 1600w). **Real client work
-is laid onto the devices in them** by `src/site/home/Device.tsx`: a perspective transform maps a
-flat screen onto the four corners of the glass, measured in percent of the photo. The hero
-foldable scrolls `public/screens/<key>.webp` (five real screens of each client site, stacked;
-`node scripts/capture-screens.mjs`) across both panels in step; the services laptop plays the
-`public/work/<key>.mp4` recordings (`node scripts/record-work.mjs`). If a device photo changes,
-re-measure its corners.
+**The showcase.** The order is the owner's (2026-11-08): Plumbing Art, GetKickz, Classé, Clean
+Puppy Club, Trees 4 Less — `SHOWCASE_SITES` in `scripts/work-sites.mjs`, and the first five
+`work.pieces` in `src/data/site.ts` (keep the two in the same order). Each site is recorded twice by
+`node scripts/record-showcase.mjs [key]`: desktop 1280×800 for the laptop, phone 390×844 for the
+phone, starting the moment the page is requested in a fresh profile, so the site's first-visit
+intro is in the clip, then a steady scroll. Output in `public/showcase/`. Re-record a site after it
+changes; if one scrolls too fast and sits on its footer, lower its `speed`.
+
+**Imagery.** `public/brand/w-*` are the Grok stills on white (AVIF + JPEG, 1600w);
+`public/brand/phone-cut.webp` is the phone cut out of its still; `public/seq/lid/` is the laptop
+opening, cut from a Grok clip of the lid closing, reversed, drawn on a canvas (`Frames.tsx`).
+Screen positions are measured in percent of the photos (constants at the top of `Hero.tsx`); if a
+photo changes, re-measure. `public/made/` is real work from Plumbing Art's brand package (cards,
+seal, flyer, posts).
 
 **Systems section.** AI chat assistant, booking, ordering, owner dashboard, automations and
 integrations, with a scripted chat demo and a dashboard, both labelled Demo: a generic business,
