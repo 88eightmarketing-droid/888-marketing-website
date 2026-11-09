@@ -1,39 +1,39 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect } from "react";
 import SmoothScroll from "@/effects/smooth-scroll/SmoothScroll";
+import Cursor from "./Cursor";
 import Header from "./Header";
 import Hero from "./Hero";
+import Statement from "./Statement";
 import Work from "./Work";
-import Principles from "./Principles";
 import Services from "./Services";
-import Process from "./Process";
+import Band from "./Band";
 import Questions from "./Questions";
 import Start from "./Start";
 import Footer from "./Footer";
 
 /**
- * The homepage, November 2026.
+ * The studio homepage, November 2026 — cinematic and work-first, after
+ * Basic/Dept and makemepulse (see docs/design-research.md).
  *
- * A design studio's front door: the promise in the hero, then the evidence —
- * live work, the standard every site is held to, what we do, how a project
- * runs — then the form. No prices; every project is quoted in writing.
- *
- * The Instagram feed is a server component, passed in as `feed`.
+ * The reel of client sites opens the page and expands to full screen; then a
+ * statement, the work index (real recordings of live client sites), the
+ * services, the call to action, questions and the form.
  */
-export default function Home({ feed }: { feed: ReactNode }) {
-  useReveal();
+export default function Home() {
+  useInView();
   return (
-    <SmoothScroll lerp={0.1}>
+    <SmoothScroll lerp={0.09}>
+      <Cursor />
       <Header />
       <main id="top">
         <Hero />
+        <Statement />
         <Work />
-        <Principles />
         <Services />
-        <Process />
+        <Band />
         <Questions />
-        {feed}
         <Start />
       </main>
       <Footer />
@@ -41,21 +41,37 @@ export default function Home({ feed }: { feed: ReactNode }) {
   );
 }
 
-/** Adds `is-in` to every `[data-reveal]` the first time it scrolls into view. */
-function useReveal() {
+/**
+ * Two observers: one adds `is-in` to `[data-split]`, `[data-fade]` and
+ * `[data-media]` the first time each scrolls into view; the other plays
+ * `video[data-autoplay]` while on screen and pauses it off screen.
+ */
+function useInView() {
   useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    const io = new IntersectionObserver(
+    const reveal = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (!e.isIntersecting) continue;
           e.target.classList.add("is-in");
-          io.unobserve(e.target);
+          reveal.unobserve(e.target);
         }
       },
-      { rootMargin: "0px 0px -8% 0px" },
+      { rootMargin: "0px 0px -10% 0px" },
     );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    document.querySelectorAll("[data-split],[data-fade],[data-media]").forEach((el) => reveal.observe(el));
+
+    const play = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) void v.play().catch(() => {});
+          else v.pause();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+    document.querySelectorAll<HTMLVideoElement>("video[data-autoplay]").forEach((v) => play.observe(v));
+
+    return () => { reveal.disconnect(); play.disconnect(); };
   }, []);
 }

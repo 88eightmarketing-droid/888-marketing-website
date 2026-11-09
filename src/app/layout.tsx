@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Anton, Inter, Instrument_Serif } from "next/font/google";
+import { Anton, Inter, Inter_Tight, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Opener from "@/site/Opener";
 
 // Anton is kept only for the archived sections still in the tree; it is not preloaded.
 const anton = Anton({ variable: "--font-anton", subsets: ["latin"], weight: "400", preload: false });
-const serif = Instrument_Serif({ variable: "--font-serif", subsets: ["latin"], weight: "400", style: ["normal", "italic"] });
+const tight = Inter_Tight({ variable: "--font-tight", subsets: ["latin"], weight: ["400", "500", "600"] });
+const mono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], weight: ["400", "500"] });
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 const SITE = "https://888marketing.net";
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={[anton.variable, serif.variable, inter.variable, "antialiased"].join(" ")} suppressHydrationWarning>
+    <html lang="en" className={[anton.variable, tight.variable, mono.variable, inter.variable, "antialiased"].join(" ")} suppressHydrationWarning>
       <body className="font-sans">
         <Opener />
         {children}

@@ -1,21 +1,12 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { nav } from "@/data/site";
-import { cn } from "@/lib/utils";
 
-/** Clear over the hero, then paper with a hairline. The action is ink here; the accent belongs to the hero's button. */
+/**
+ * Fixed, and drawn in difference blend so it reads over the reel, the dark
+ * page and the flare band alike without changing state on scroll.
+ */
 export default function Header() {
-  const [solid, setSolid] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setSolid(scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <header className={cn(layout.root, solid && layout.solid)}>
+    <header className={layout.root}>
       <a href="#top" className={type.logo} aria-label="888 Marketing, back to top">
         <span className={type.mark}>888</span>
         <span className={type.word}>Marketing</span>
@@ -31,15 +22,14 @@ export default function Header() {
 }
 
 const layout = {
-  root: "fixed inset-x-0 top-0 z-40 flex items-center justify-between border-b border-transparent px-5 py-3 transition-[background-color,border-color] duration-500 md:px-10",
-  solid: "border-rule bg-paper/90 backdrop-blur-md",
-  nav: "hidden items-center gap-1 md:flex",
+  root: "fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-4 text-bone mix-blend-difference md:px-10",
+  nav: "hidden items-center gap-8 md:flex",
 };
 
 const type = {
-  logo: "inline-flex min-h-11 items-baseline gap-2",
-  mark: "font-display text-[28px] leading-none tracking-[-0.02em]",
-  word: "text-[11px] font-medium uppercase tracking-[0.2em] text-ink-soft",
-  link: "inline-flex min-h-11 items-center px-3 text-[13px] text-ink-soft transition-colors hover:text-ink",
-  cta: "inline-flex min-h-11 items-center rounded-full border border-ink px-5 text-[13px] font-medium transition-colors duration-300 hover:bg-ink hover:text-paper",
+  logo: "inline-flex min-h-11 items-center gap-2.5",
+  mark: "font-display text-[22px] font-semibold tracking-[-0.04em]",
+  word: "font-mono text-[11px] uppercase tracking-[0.12em]",
+  link: "inline-flex min-h-11 items-center font-mono text-[11px] uppercase tracking-[0.12em] opacity-70 transition-opacity hover:opacity-100",
+  cta: "inline-flex min-h-11 items-center font-mono text-[11px] uppercase tracking-[0.12em] underline decoration-1 underline-offset-[6px]",
 };

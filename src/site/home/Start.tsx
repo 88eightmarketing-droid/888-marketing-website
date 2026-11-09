@@ -76,20 +76,20 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const layout = {
-  root: "grid gap-14 border-t border-rule px-5 py-24 md:grid-cols-12 md:px-10 md:py-36",
-  copy: "flex flex-col gap-5 md:col-span-5",
-  form: "flex flex-col gap-8 md:col-span-6 md:col-start-7",
-  pair: "flex flex-col gap-8 sm:flex-row",
+  root: "grid gap-14 bg-night px-5 py-24 md:grid-cols-12 md:px-10 md:py-40",
+  copy: "flex flex-col gap-6 md:col-span-5",
+  form: "flex flex-col gap-9 md:col-span-6 md:col-start-7 md:pt-3",
+  pair: "flex flex-col gap-9 sm:flex-row",
 };
 
 const type = {
-  eyebrow: "text-eyebrow font-medium uppercase tracking-[0.16em] text-ink-faint",
-  h2: "font-display text-[clamp(2.75rem,6vw,6rem)] leading-[0.95] tracking-[-0.025em]",
-  body: "max-w-[28rem] text-[17px] leading-[1.6] text-ink-soft",
-  small: "max-w-[28rem] text-[14px] leading-[1.6] text-ink-faint",
-  label: "text-[12px] font-medium uppercase tracking-[0.12em] text-ink-faint",
-  input: "w-full rounded-none border-0 border-b border-ink/25 bg-transparent py-2.5 text-[17px] text-ink outline-none transition-colors placeholder:text-ink/30 focus:border-ink",
-  submit: "mt-2 inline-flex min-h-13 w-fit items-center gap-3 rounded-full bg-accent px-8 text-[15px] font-medium text-paper transition-colors duration-300 hover:bg-accent-deep disabled:opacity-60",
-  done: "font-display text-[clamp(3rem,6vw,5rem)] leading-none",
-  error: "text-[14px] text-ink",
+  eyebrow: "font-mono text-[11px] uppercase tracking-[0.12em] text-dim",
+  h2: "font-display text-[clamp(2.75rem,6.4vw,7rem)] font-medium leading-[0.92] tracking-[-0.05em] text-bone",
+  body: "max-w-[28rem] text-[17px] leading-[1.6] text-bone/70",
+  small: "max-w-[28rem] text-[14px] leading-[1.6] text-dim",
+  label: "font-mono text-[11px] uppercase tracking-[0.12em] text-dim",
+  input: "w-full rounded-none border-0 border-b border-line bg-transparent py-3 text-[18px] text-bone outline-none transition-colors placeholder:text-bone/25 focus:border-bone",
+  submit: "mt-2 inline-flex min-h-14 w-fit items-center gap-4 rounded-full bg-bone px-9 font-mono text-[12px] uppercase tracking-[0.12em] text-night transition-colors duration-300 hover:bg-flare disabled:opacity-60",
+  done: "font-display text-[clamp(3rem,6vw,5rem)] font-medium leading-none tracking-[-0.05em] text-bone",
+  error: "text-[14px] text-bone",
 };

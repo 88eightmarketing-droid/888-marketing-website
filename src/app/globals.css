@@ -24,16 +24,24 @@
   --color-accent: #c8442a;
   --color-accent-deep: #a4341f;
 
+  /* The studio site (November 2026): near-black ground, bone type. */
+  --color-night: #0b0b0a;
+  --color-night-2: #151513;
+  --color-bone: #efebe4;
+  --color-dim: #8f8a82;
+  --color-line: #2a2926;
+  --color-flare: #ef5a36;
+
   --text-eyebrow: 0.6875rem;
   --text-eyebrow--letter-spacing: 0.16em;
 
-  --font-display: var(--font-serif), Georgia, serif;
+  --font-display: var(--font-tight), var(--font-inter), system-ui, sans-serif;
   --font-poster: var(--font-anton), Impact, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-html { background: var(--color-paper); color: var(--color-ink); }
+html { background: var(--color-night); color: var(--color-bone); }
 
 /*
  * Motion is decoration here, so it all goes.
@@ -54,30 +62,49 @@ html { background: var(--color-paper); color: var(--color-ink); }
 @keyframes v-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ------------------------------------------------------------------------
- * Home (November 2026). Motion rules: transform and opacity only, ease-out,
- * nothing longer than 900ms, and content is visible without JavaScript —
- * the hidden starting state only applies when scripting is on.
+ * Studio homepage (November 2026).
+ *
+ * Motion rules: transform, opacity and clip-path only; ease-out; content is
+ * visible without JavaScript — hidden starting states apply only while
+ * scripting is on, and reduced motion gets the finished page.
  * ---------------------------------------------------------------------- */
 
-.ease-out-quint { transition-timing-function: cubic-bezier(.22, 1, .36, 1); }
+.ease-out-expo { transition-timing-function: cubic-bezier(.16, 1, .3, 1); }
 
-@media (scripting: enabled) {
-  [data-reveal] { opacity: 0; translate: 0 28px; transition: opacity 800ms cubic-bezier(.22, 1, .36, 1), translate 800ms cubic-bezier(.22, 1, .36, 1); transition-delay: var(--d, 0ms); }
-  [data-reveal].is-in { opacity: 1; translate: 0 0; }
+/* Masked word reveal. <Reveal> wraps each word in .w > span. */
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+.w > span { display: inline-block; }
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-split] .w > span { translate: 0 110%; transition: translate 1100ms cubic-bezier(.16, 1, .3, 1); transition-delay: calc(var(--d, 0ms) + var(--wi, 0) * 45ms); }
+  [data-split].is-in .w > span { translate: 0 0; }
+  [data-fade] { opacity: 0; translate: 0 24px; transition: opacity 900ms cubic-bezier(.16, 1, .3, 1), translate 900ms cubic-bezier(.16, 1, .3, 1); transition-delay: var(--d, 0ms); }
+  [data-fade].is-in { opacity: 1; translate: 0 0; }
 }
 
-/* Hero lines rise out of a mask once the opener has lifted (or at once on a repeat visit). */
-.hero-line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
-.hero-line > span { display: block; animation: hero-rise 1000ms cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--opener, 1100ms) + var(--i, 0) * 110ms); }
-.hero-fade { animation: hero-fade 900ms cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--opener, 1100ms) + 380ms + var(--i, 0) * 70ms); }
-.opener-off { --opener: 80ms; }
-@keyframes hero-rise { from { translate: 0 105%; } to { translate: 0 0; } }
-@keyframes hero-fade { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+/* The hero plays once the opener has lifted, or at once on a repeat visit. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-in .w > span { animation: rise 1200ms cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--opener, 1150ms) + var(--wi, 0) * 70ms); }
+  .hero-fade { animation: fade 1000ms cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--opener, 1150ms) + 500ms + var(--i, 0) * 80ms); }
+}
+.opener-off { --opener: 60ms; }
+@keyframes rise { from { translate: 0 110%; } to { translate: 0 0; } }
+@keyframes fade { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
 
-/* Questions: native <details>, with the marker drawn as a plus that turns. */
+/* Questions: native <details>, marker drawn as a plus that turns. */
 .q summary { list-style: none; cursor: pointer; }
 .q summary::-webkit-details-marker { display: none; }
-.q .plus { transition: rotate 400ms cubic-bezier(.22, 1, .36, 1); }
+.q .plus { transition: rotate 500ms cubic-bezier(.16, 1, .3, 1); }
 .q[open] .plus { rotate: 45deg; }
 
-::selection { background: var(--color-ink); color: var(--color-paper); }
+/* The marquee band. */
+@keyframes marquee { to { translate: -50% 0; } }
+.marquee { animation: marquee 28s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
+
+/* Custom cursor: fine pointers only; the native cursor stays everywhere else. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+  .has-cursor input, .has-cursor textarea { cursor: text; }
+}
+
+::selection { background: var(--color-flare); color: var(--color-night); }

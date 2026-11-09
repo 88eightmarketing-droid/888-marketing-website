@@ -18,31 +18,35 @@ npm run dev        # http://localhost:3100
 
 ## The design (November 2026)
 
-**888 Marketing presents as a design studio.** The public site no longer advertises "we build
-it first and charge after" and shows no prices: every project starts with a conversation and a
-written proposal. Warm paper, Instrument Serif set very large, Inter for reading, one accent
-(the button). No stock imagery — the type is the picture, and the work is one scroll away.
+**888 Marketing presents as a design studio**: cinematic and work-first. No prices and no
+"built first, paid after" on the public site; every project starts with a conversation and a
+written proposal. Why it looks like this, and what was studied: `docs/design-research.md`.
+
+Near-black (`night`), bone type, the flare accent once per screen. Inter Tight for display,
+Geist Mono for labels, Inter for reading.
 
 | Section | What it does |
 | --- | --- |
-| Hero | "Built to be the first call." One paragraph, the button, and the four disciplines. |
-| Work | Each live client site scrolls inside a browser frame as you scroll (desktop); a plain card on phones. |
-| Principles | The one dark band: the standard every site is held to. Only things we do on every site. |
-| Services | Strategy, Identity, Websites, Content, Presence — a ruled list, no prices. |
-| Process, Questions, Instagram, Start | Four stages; native `<details>`; the Behold feed; the project form. |
+| Hero | "Built to be the first call." staggered; the reel plays in a window that opens to full screen on scroll. |
+| Statement | One sentence, lit word by word as it scrolls. |
+| Work | Five paying clients, each a real recording of their live site, playing while on screen. |
+| Services | Five huge rows; on desktop a clip of client work floats beside the pointer. |
+| Band, Questions, Start | The flare "Start a project" marquee; native `<details>`; the project form (`/api/contact`). |
 
-Copy lives in `src/data/site.ts`, sections in `src/site/home/`. **Business email is not
-included** (since 2026-10-30) — the page says we connect Google Workspace and the client pays Google.
-The share card (`src/app/opengraph-image.tsx`) embeds Instrument Serif from `src/app/fonts`.
+Copy is in `src/data/site.ts`, sections in `src/site/home/`. **Business email is not included**
+(since 2026-10-30): the page says we connect Google Workspace and the client pays Google.
 
-**Work captures** are full-length screenshots of the live client sites:
-`node scripts/capture-work.mjs` re-takes them. Re-run it when a client changes their site.
+**Footage.** `node scripts/record-work.mjs [key…]` records each client site being scrolled
+(`public/work/<key>.mp4` + poster); `bash scripts/make-reel.sh` cuts the hero reel from them. The
+list of sites is `scripts/work-sites.mjs`. Only paying clients' sites, live on their own domains.
+Re-record when a client changes their site. Needs Chrome and ffmpeg.
 
-**The previous design** (the San Francisco fly-through, `src/site/Site.tsx` and
-`src/data/content.ts`) is saved on branch `archive/sf-flythrough-2026-11` and tag
-`site-sf-flythrough-2026-11`. Its files are still in the tree, unused, until someone decides to
-remove them; the sequence frames in `public/sequences` and photos in `public/img/sf` are only
-used by it.
+**Share card.** `src/app/opengraph-image.tsx`, with Inter Tight and Geist Mono embedded from
+`src/app/fonts` and a reel still in `src/app/og-reel.jpg`.
+
+**Earlier designs.** The San Francisco fly-through is on branch `archive/sf-flythrough-2026-11`
+(tag `site-sf-flythrough-2026-11`); its files are still in the tree, unused. The paper-and-serif
+first draft of this revamp is commit `d24aa3f`.
 
 **No third-party scripts.** Fonts are self-hosted by `next/font`; nothing loads from another
 origin at render time except the Instagram images.
