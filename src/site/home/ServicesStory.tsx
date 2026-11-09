@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cta, services } from "@/data/site";
-import { Laptop } from "./Device";
+import { Laptop, LidLaptop } from "./Device";
 
 /**
  * The services as a pinned story. On desktop the picture column holds still
@@ -40,7 +40,7 @@ export default function ServicesStory() {
           {/* Pinned picture column (desktop) */}
           <div className="hidden md:col-span-7 md:block">
             <div className="sticky top-[12vh] h-[76vh]">
-              <div className="relative h-full overflow-hidden rounded-[32px] bg-crimson">
+              <div className="relative h-full overflow-hidden rounded-[32px] bg-white ring-1 ring-hair">
                 {services.items.map((s, n) => (
                   <div
                     key={s.id}
@@ -48,22 +48,21 @@ export default function ServicesStory() {
                     className={`absolute inset-0 transition-[opacity,scale] duration-[1200ms] ease-[cubic-bezier(.2,.7,.2,1)] ${n === active ? "scale-100 opacity-100" : "scale-[1.12] opacity-0"}`}
                   >
                     {s.id === "websites" ? (
-                      <Laptop />
+                      <LidLaptop trigger="#websites" />
                     ) : (
                       <picture>
-                        <source srcSet={`/brand/${s.image}.avif`} type="image/avif" />
-                        <img src={`/brand/${s.image}.jpg`} alt={n === active ? s.alt : ""} loading={n === 0 ? "eager" : "lazy"} className="absolute inset-0 h-full w-full object-cover" />
+                        <source srcSet={`/brand/w-${s.image}.avif`} type="image/avif" />
+                        <img src={`/brand/w-${s.image}.jpg`} alt={n === active ? s.alt : ""} loading={n === 0 ? "eager" : "lazy"} className="absolute inset-0 h-full w-full object-cover" />
                       </picture>
                     )}
                   </div>
                 ))}
-                <div className="sweep pointer-events-none absolute inset-0" />
-                <div className="absolute inset-x-8 bottom-8 flex items-end justify-between text-white">
+                <div className="absolute inset-x-8 bottom-8 flex items-end justify-between text-ink">
                   <p className="text-[96px] font-extrabold leading-[0.8] tracking-[-0.06em] tabular-nums">{String(active + 1).padStart(2, "0")}</p>
                   <div className="flex gap-2 pb-2">
                     {services.items.map((s, n) => (
-                      <span key={s.id} className="h-1 w-10 overflow-hidden rounded-full bg-white/30">
-                        <span className={`block h-full bg-white transition-[width] duration-700 ${n <= active ? "w-full" : "w-0"}`} />
+                      <span key={s.id} className="h-1 w-10 overflow-hidden rounded-full bg-ink/10">
+                        <span className={`block h-full bg-red transition-[width] duration-700 ${n <= active ? "w-full" : "w-0"}`} />
                       </span>
                     ))}
                   </div>
@@ -82,12 +81,12 @@ export default function ServicesStory() {
                 ref={(el) => { panels.current[n] = el; }}
                 className={`scroll-mt-24 transition-opacity duration-500 md:flex md:min-h-[88vh] md:flex-col md:justify-center ${n === active ? "md:opacity-100" : "md:opacity-30"}`}
               >
-                <div className="relative mb-8 aspect-[16/11] overflow-hidden rounded-[24px] bg-crimson md:hidden" data-wipe>
+                <div className="relative mb-8 aspect-[16/11] overflow-hidden rounded-[24px] bg-white ring-1 ring-hair md:hidden" data-wipe>
                   {s.id === "websites" ? (
                     <Laptop />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element -- campaign still, pre-encoded at 1600w
-                    <img src={`/brand/${s.image}.jpg`} alt={s.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                    <img src={`/brand/w-${s.image}.jpg`} alt={s.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
                   )}
                 </div>
                 <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-red">{String(n + 1).padStart(2, "0")} · {s.kicker}</p>

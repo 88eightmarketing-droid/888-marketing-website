@@ -30,11 +30,11 @@ export default function Kinetic() {
   }, [still]);
 
   return (
-    <section ref={root} aria-hidden className="overflow-hidden bg-ink py-16 text-white md:py-24">
+    <section ref={root} aria-hidden className="overflow-hidden bg-white py-16 text-ink md:py-24">
       <div data-row-a className="flex w-max gap-[0.35em] whitespace-nowrap text-[clamp(4rem,13vw,12rem)] font-extrabold leading-[0.95] tracking-[-0.06em]">
         {ROW_A.map((w, n) => (
           <span key={n} className="flex items-center gap-[0.35em]">
-            <span className={n % 2 ? "text-transparent [-webkit-text-stroke:2px_rgba(255,255,255,.55)]" : ""}>{w}</span>
+            <span className={n % 2 ? "text-transparent [-webkit-text-stroke:2px_rgba(11,11,12,.35)]" : ""}>{w}</span>
             <span className="inline-block size-[0.18em] rounded-full bg-red" />
           </span>
         ))}
@@ -43,7 +43,7 @@ export default function Kinetic() {
         {ROW_B.map((w, n) => (
           <span key={n} className="flex items-center gap-[0.35em]">
             {w}
-            <span className="inline-block size-[0.18em] rounded-full bg-white" />
+            <span className="inline-block size-[0.18em] rounded-full bg-ink" />
           </span>
         ))}
       </div>

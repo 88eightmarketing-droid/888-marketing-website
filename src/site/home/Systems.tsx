@@ -11,19 +11,19 @@ import { systems } from "@/data/site";
  */
 export default function Systems() {
   return (
-    <section id="systems" className="scroll-mt-20 overflow-hidden bg-ink py-24 text-white md:py-36">
+    <section id="systems" className="scroll-mt-20 overflow-hidden bg-mist py-24 text-ink md:py-36">
       <div className="mx-auto grid max-w-[1320px] gap-14 px-5 md:grid-cols-12 md:gap-12 md:px-8">
         <div className="md:col-span-6">
           <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-red" data-fade>{systems.eyebrow}</p>
           <h2 className="mt-4 text-[clamp(2.6rem,5.6vw,5.2rem)] font-extrabold leading-[0.95] tracking-[-0.055em]" data-fade>{systems.title}</h2>
-          <p className="mt-5 max-w-[30rem] text-[18px] leading-[1.55] text-white/65" data-fade>{systems.text}</p>
+          <p className="mt-5 max-w-[30rem] text-[18px] leading-[1.55] text-steel" data-fade>{systems.text}</p>
 
-          <ul className="mt-12 grid gap-px overflow-hidden rounded-[22px] bg-white/10 sm:grid-cols-2">
+          <ul className="mt-12 grid gap-px overflow-hidden rounded-[22px] bg-hair sm:grid-cols-2">
             {systems.items.map((it, n) => (
-              <li key={it.title} className="group bg-ink p-6 transition-colors duration-300 hover:bg-[#151517]" data-fade style={{ "--d": `${n * 60}ms` } as CSSProperties}>
+              <li key={it.title} className="group bg-white p-6 transition-colors duration-300 hover:bg-[#fbfbfb]" data-fade style={{ "--d": `${n * 60}ms` } as CSSProperties}>
                 <Icon name={it.icon} />
                 <p className="mt-4 text-[18px] font-bold tracking-[-0.02em]">{it.title}</p>
-                <p className="mt-1.5 text-[14.5px] leading-[1.55] text-white/55">{it.body}</p>
+                <p className="mt-1.5 text-[14.5px] leading-[1.55] text-steel">{it.body}</p>
               </li>
             ))}
           </ul>
@@ -83,38 +83,38 @@ function ChatDemo() {
   const done = shown >= systems.chat.length;
 
   return (
-    <div ref={root} className="overflow-hidden rounded-[26px] border border-white/10 bg-[#121214] shadow-[0_50px_100px_-40px_rgba(212,10,16,.45)]" aria-label="Demo of an AI chat assistant booking a table">
-      <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+    <div ref={root} className="overflow-hidden rounded-[26px] border border-hair bg-white shadow-[0_50px_100px_-50px_rgba(11,11,12,.35)]" aria-label="Demo of an AI chat assistant booking a table">
+      <div className="flex items-center justify-between border-b border-hair px-5 py-4">
         <div className="flex items-center gap-3">
-          <span className="relative flex size-9 items-center justify-center rounded-full bg-red text-[13px] font-extrabold">YB</span>
+          <span className="relative flex size-9 items-center justify-center rounded-full bg-red text-[13px] font-extrabold text-white">YB</span>
           <div>
             <p className="text-[15px] font-bold leading-tight">Your Business</p>
-            <p className="flex items-center gap-1.5 text-[12px] text-white/50"><span className="size-1.5 rounded-full bg-[#30d158]" />Assistant · replies instantly</p>
+            <p className="flex items-center gap-1.5 text-[12px] text-steel"><span className="size-1.5 rounded-full bg-[#30d158]" />Assistant · replies instantly</p>
           </div>
         </div>
-        <span className="rounded-full border border-white/15 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">{systems.demo}</span>
+        <span className="rounded-full border border-hair px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-steel">{systems.demo}</span>
       </div>
       <div className="flex min-h-[340px] flex-col justify-end gap-3 p-5">
         {systems.chat.slice(0, shown).map((m, n) => (
-          <div key={n} className={`bubble max-w-[82%] rounded-[18px] px-4 py-2.5 text-[15px] leading-[1.4] ${m.from === "bot" ? "self-start rounded-bl-[6px] bg-white/[0.08] text-white" : "self-end rounded-br-[6px] bg-red text-white"}`}>
+          <div key={n} className={`bubble max-w-[82%] rounded-[18px] px-4 py-2.5 text-[15px] leading-[1.4] ${m.from === "bot" ? "self-start rounded-bl-[6px] bg-mist text-ink" : "self-end rounded-br-[6px] bg-red text-white"}`}>
             {m.text}
           </div>
         ))}
         {done && (
-          <div className="bubble flex items-center gap-3 self-start rounded-[14px] border border-white/10 bg-white/[0.04] px-4 py-3 text-[13px]">
-            <span className="flex size-8 items-center justify-center rounded-full bg-[#30d158] text-black">
+          <div className="bubble flex items-center gap-3 self-start rounded-[14px] border border-hair bg-white px-4 py-3 text-[13px]">
+            <span className="flex size-8 items-center justify-center rounded-full bg-[#30d158] text-white">
               <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="3"><path d="m5 12 5 5 9-10" /></svg>
             </span>
             <span><span className="font-bold">Booked</span> · Sunday 11:00 · 2 people</span>
           </div>
         )}
         {typing && (
-          <div className="flex gap-1 self-start rounded-[18px] rounded-bl-[6px] bg-white/[0.08] px-4 py-3.5" aria-hidden>
-            {[0, 1, 2].map((d) => <span key={d} className="dot size-1.5 rounded-full bg-white/70" style={{ animationDelay: `${d * 150}ms` }} />)}
+          <div className="flex gap-1 self-start rounded-[18px] rounded-bl-[6px] bg-mist px-4 py-3.5" aria-hidden>
+            {[0, 1, 2].map((d) => <span key={d} className="dot size-1.5 rounded-full bg-steel" style={{ animationDelay: `${d * 150}ms` }} />)}
           </div>
         )}
       </div>
-      <div className="flex items-center gap-3 border-t border-white/10 px-5 py-3.5 text-[14px] text-white/35">
+      <div className="flex items-center gap-3 border-t border-hair px-5 py-3.5 text-[14px] text-steel/70">
         Ask a question…
         <span className="ml-auto flex size-8 items-center justify-center rounded-full bg-red text-white">↑</span>
       </div>
@@ -131,20 +131,20 @@ function Dashboard() {
     { what: "Call tap", detail: "From Google Maps", via: "Tracked" },
   ];
   return (
-    <div className="mt-4 rounded-[22px] border border-white/10 bg-[#121214] p-5" aria-label="Demo of an owner dashboard">
+    <div className="mt-4 rounded-[22px] border border-hair bg-white p-5" aria-label="Demo of an owner dashboard">
       <div className="flex items-center justify-between">
         <p className="text-[14px] font-bold">Today</p>
-        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">{systems.demo}</span>
+        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-steel">{systems.demo}</span>
       </div>
-      <ul className="mt-3 divide-y divide-white/10">
+      <ul className="mt-3 divide-y divide-hair">
         {rows.map((r) => (
           <li key={r.what} className="flex items-center justify-between gap-4 py-3 text-[14px]">
             <span className="flex items-center gap-3">
               <span className="size-2 rounded-full bg-red" />
               <span className="font-semibold">{r.what}</span>
-              <span className="hidden text-white/45 sm:inline">{r.detail}</span>
+              <span className="hidden text-steel sm:inline">{r.detail}</span>
             </span>
-            <span className="text-[12.5px] text-white/45">{r.via}</span>
+            <span className="text-[12.5px] text-steel">{r.via}</span>
           </li>
         ))}
       </ul>
@@ -164,7 +164,7 @@ function Icon({ name }: { name: string }) {
     plug: <><path d="M9 7V2M15 7V2M6 7h12v4a6 6 0 0 1-12 0z" /><path d="M12 17v5" /></>,
   };
   return (
-    <span className="flex size-11 items-center justify-center rounded-[12px] bg-red/15 text-red transition-colors duration-300 group-hover:bg-red group-hover:text-white">
+    <span className="flex size-11 items-center justify-center rounded-[12px] bg-red/10 text-red transition-colors duration-300 group-hover:bg-red group-hover:text-white">
       <svg aria-hidden viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{p[name]}</svg>
     </span>
   );

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { MobileCta, TopBar } from "./Top";
 import Hero from "./Hero";
+import Proposal from "./Proposal";
 import Preview from "./Preview";
 import Closing from "./Closing";
 import { Clients, Faq, Footer, Process, Work } from "./Sections";
@@ -13,13 +14,14 @@ import Systems from "./Systems";
 /**
  * The homepage, November 2026: a campaign landing page.
  *
- * Built like the agency landing pages that convert (proposal form above the
- * fold, a call to action in every section, a strong close — see
- * docs/design-research.md) and finished like a brand campaign: one
- * art-directed series of Grok stills and film on crimson seamless, and a live
- * preview of the visitor's own business name.
+ * White and clean, built like the agency landing pages that convert (the
+ * proposal form straight after the opening, a call to action in every
+ * section, a strong close — see docs/design-research.md) and finished like a
+ * product launch: Grok film on white seamless scrubbed by scroll, with real
+ * client sites on the devices, and a live preview of the visitor's own
+ * business name.
  *
- * The business name typed in the hero form feeds the preview section.
+ * The business name typed in the proposal form feeds the preview section.
  */
 export default function Home() {
   const [business, setBusiness] = useState("");
@@ -28,7 +30,8 @@ export default function Home() {
     <>
       <TopBar />
       <main>
-        <Hero onBusiness={setBusiness} />
+        <Hero />
+        <Proposal onBusiness={setBusiness} />
         <Clients />
         <ServicesStory />
         <Kinetic />

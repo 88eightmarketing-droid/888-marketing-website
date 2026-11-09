@@ -23,8 +23,9 @@
   --color-accent: #c8442a;
   --color-accent-deep: #a4341f;
 
-  /* The campaign (November 2026). The reds are sampled from the Grok
-     stills and film, so a red section and a photograph read as one surface. */
+  /* The campaign (November 2026): white, ink, and one red for the thing
+     to do. The Grok stills and film are shot on white seamless so they sit
+     on the page without a frame. Crimson is kept for the archived drafts. */
   --color-crimson: #b5040a;
   --color-crimson-dark: #6a0404;
   --color-red: #d40a10;
@@ -80,7 +81,7 @@ html { background: #fff; color: var(--color-ink); -webkit-font-smoothing: antial
 
 /* Hero lines rise once the opener has lifted (or at once on a repeat visit). */
 /* Each headline line is its own block and never wraps inside itself. */
-.rise { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.rise { display: block; overflow: hidden; padding-bottom: .16em; margin-bottom: -.16em; }
 .rise > span { display: block; white-space: nowrap; }
 @media (prefers-reduced-motion: no-preference) {
   .rise > span { animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--opener, 1100ms) + var(--i, 0) * 110ms); }
@@ -103,31 +104,6 @@ html { background: #fff; color: var(--color-ink); -webkit-font-smoothing: antial
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
 ::selection { background: var(--color-red); color: #fff; }
-
-/* A slow band of light across the campaign film and stills, like a studio
-   strobe catching glass. Screen blend so it only ever brightens. */
-.sweep { background-image: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.22) 50%, transparent 62%); background-size: 260% 100%; background-position: 130% 0; mix-blend-mode: screen; }
-@media (prefers-reduced-motion: no-preference) {
-  .sweep { animation: band 7s cubic-bezier(.45,0,.2,1) 1.6s infinite; }
-}
-@keyframes band { 0% { background-position: 130% 0; } 40%, 100% { background-position: -30% 0; } }
-
-/* Client sites scrolling on the campaign devices (Device.tsx). Both panels of
-   the foldable run the same animation from the same mount, so they stay in
-   step; each new site fades in. */
-.screen-scroll { transform: translateY(0); }
-@media (prefers-reduced-motion: no-preference) {
-  .screen-scroll { animation: screen-scroll var(--dwell, 13s) cubic-bezier(.5,0,.35,1) both; }
-  .drift { animation: drift 18s ease-in-out infinite alternate; }
-}
-@keyframes screen-scroll {
-  0% { transform: translateY(0); opacity: 0; }
-  5% { opacity: 1; }
-  12% { transform: translateY(0); }
-  90% { transform: translateY(var(--travel)); opacity: 1; }
-  100% { transform: translateY(var(--travel)); opacity: 1; }
-}
-@keyframes drift { from { transform: scale(1); } to { transform: scale(1.045) translateY(-1%); } }
 
 /* Chat demo (Systems.tsx): bubbles pop in, the typing dots bounce. */
 @media (prefers-reduced-motion: no-preference) {

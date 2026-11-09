@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { clamp01, createSequence } from "./Frames";
 
 /**
  * Real work on photographed devices.
@@ -86,76 +87,86 @@ export function DeviceStage({ photo, alt, screens, className = "" }: {
   );
 }
 
-/* ----------------------------------------------------------- the foldable ---- */
-
 const SITES = ["jellyceeblends", "cleanpuppy", "tree4less", "classeskin", "getkickz"];
-const STRIP_W = 960, STRIP_H = 4468, PANEL_W = 480, PANEL_H = 893; // one panel = half the strip's width
-// Inner display corners, measured on /brand/foldable.jpg (1792×1008).
-const LEFT: Quad = [[29.85, 16.07], [50.11, 20.04], [50.11, 80.95], [29.85, 83.13]];
-const RIGHT: Quad = [[50.17, 20.04], [70.48, 16.17], [70.54, 83.23], [50.17, 80.95]];
-const DWELL = 13000;
 
-/** The hero device: both panels of the foldable scroll a real client site, in step, then move to the next. */
-export function Foldable({ className = "" }: { className?: string }) {
+/* ------------------------------------------------------------- the laptop ---- */
+
+// Screen of /brand/w-laptop.jpg (white seamless, straight on), % of the 1792×1008 master.
+const LAPTOP: Quad = [[28.6, 16.0], [71.6, 16.0], [71.6, 66.2], [28.6, 66.2]];
+const LAPTOP_W = 1216, LAPTOP_H = 800; // the screen's own shape, so the recordings are not stretched
+
+/** The client-site recordings, one after another. */
+function Recordings({ className = "" }: { className?: string }) {
   const [i, setI] = useState(0);
-  useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setI((n) => (n + 1) % SITES.length), DWELL);
-    return () => clearInterval(t);
-  }, []);
-  const panel = (offset: number) => (
-    <div className="absolute inset-0 bg-white">
-      {/* eslint-disable-next-line @next/next/no-img-element -- client-site screen strip */}
-      <img
-        key={SITES[i]}
-        src={`/screens/${SITES[i]}.webp`}
-        alt=""
-        className="screen-scroll absolute left-0 top-0 max-w-none"
-        style={{ width: STRIP_W, height: STRIP_H, translate: `${-offset}px 0`, ["--travel" as string]: `${-(STRIP_H - PANEL_H)}px`, ["--dwell" as string]: `${DWELL}ms` }}
-      />
-    </div>
-  );
   return (
-    <DeviceStage
-      className={className}
-      photo="/brand/foldable.jpg"
-      alt="A titanium foldable phone showing a client website we built"
-      screens={[
-        { quad: LEFT, w: PANEL_W, h: PANEL_H, content: panel(0) },
-        { quad: RIGHT, w: PANEL_W, h: PANEL_H, content: panel(PANEL_W) },
-      ]}
+    <video
+      key={SITES[i]}
+      src={`/work/${SITES[i]}.mp4`}
+      poster={`/work/${SITES[i]}.jpg`}
+      className={`h-full w-full object-cover object-top ${className}`}
+      autoPlay
+      muted
+      playsInline
+      preload="metadata"
+      onEnded={() => setI((n) => (n + 1) % SITES.length)}
     />
   );
 }
 
-/* ------------------------------------------------------------- the laptop ---- */
-
-const LAPTOP: Quad = [[25.0, 23.41], [60.83, 24.8], [63.62, 65.28], [27.29, 68.15]];
-
-/** The laptop still, its screen playing the client-site recordings one after another. */
+/** The laptop still, its screen playing the client-site recordings. */
 export function Laptop({ className = "" }: { className?: string }) {
-  const [i, setI] = useState(0);
   return (
     <DeviceStage
       className={className}
-      photo="/brand/laptop.jpg"
+      photo="/brand/w-laptop.jpg"
       alt="A laptop showing client websites we built"
-      screens={[{
-        quad: LAPTOP, w: 1280, h: 800,
-        content: (
-          <video
-            key={SITES[i]}
-            src={`/work/${SITES[i]}.mp4`}
-            poster={`/work/${SITES[i]}.jpg`}
-            className="h-full w-full object-cover object-top"
-            autoPlay
-            muted
-            playsInline
-            preload="metadata"
-            onEnded={() => setI((n) => (n + 1) % SITES.length)}
-          />
-        ),
-      }]}
+      screens={[{ quad: LAPTOP, w: LAPTOP_W, h: LAPTOP_H, radius: 6, content: <Recordings /> }]}
     />
+  );
+}
+
+/**
+ * The laptop opening as you scroll (Grok clip of the lid closing, reversed and
+ * cut to frames), then its screen waking on the recordings. `trigger` is the
+ * element whose passage up the screen drives it.
+ */
+export function LidLaptop({ trigger }: { trigger: string }) {
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const cv = canvas.current;
+    const el = document.querySelector(trigger);
+    if (!cv || !el) return;
+    const seq = createSequence(cv, "/seq/lid", 63);
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let raf = 0;
+    const paint = () => {
+      raf = 0;
+      const r = el.getBoundingClientRect();
+      // From the panel's top entering the screen to its middle reaching 60% down. Reduced motion: open.
+      const p = still ? 1 : clamp01((innerHeight - r.top) / (innerHeight * 0.4 + r.height / 2));
+      seq.draw(p);
+      setOpen(p > 0.97);
+    };
+    const on = () => { if (!raf) raf = requestAnimationFrame(paint); };
+    const ro = new ResizeObserver(() => { seq.resize(); on(); });
+    ro.observe(cv);
+    on();
+    addEventListener("scroll", on, { passive: true });
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); removeEventListener("scroll", on); };
+  }, [trigger]);
+
+  const [[l, t], [r], [, b]] = [LAPTOP[0], LAPTOP[1], LAPTOP[2]];
+  return (
+    <div className="absolute left-1/2 top-0 aspect-video h-full -translate-x-1/2">
+      <canvas ref={canvas} aria-label="A laptop opening on client websites we built" role="img" className="absolute inset-0 h-full w-full" />
+      <div
+        className={`absolute overflow-hidden rounded-t-[0.5%] bg-black transition-opacity duration-700 ${open ? "opacity-100" : "opacity-0"}`}
+        style={{ left: `${l}%`, top: `${t}%`, width: `${r - l}%`, height: `${b - t}%` }}
+      >
+        {open && <Recordings />}
+      </div>
+    </div>
   );
 }

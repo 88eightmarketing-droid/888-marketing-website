@@ -5,8 +5,8 @@
  * SmartSites digital-marketing LP): the proposal form above the fold, a
  * call to action in every section, services tied to outcomes, and a strong
  * close. Craft is ours: one art-directed campaign (Grok stills and film on
- * crimson seamless, masters noted in docs/design-research.md) and a live
- * preview of the visitor's own business name.
+ * white seamless, scrubbed by scroll; masters noted in docs/design-research.md)
+ * and a live preview of the visitor's own business name.
  *
  * Claims rules, which SmartSites-style pages break and we do not:
  * - No awards, ratings, review counts, client counts, testimonials, years in
@@ -72,7 +72,7 @@ export const services: { title: string; text: string; items: Service[] } = {
       body: "Designed from scratch for your business, fast on a phone, with one clear action on every screen: call, book or order. Built in-house and hosted by us.",
       points: ["Custom design, never a template", "Fast on a phone, found on Google", "Booking, menus and ordering", "Hosting and care after launch"],
       image: "laptop",
-      alt: "A laptop on a crimson studio floor",
+      alt: "A laptop on a white studio floor",
     },
     {
       id: "google",
@@ -81,7 +81,7 @@ export const services: { title: string; text: string; items: Service[] } = {
       body: "Your Google Business Profile, Maps, Yelp and the structured data that Google and AI assistants read, set up properly and handed to you. Google Ads when you want calls this week.",
       points: ["Google Business Profile and Maps", "Yelp, Facebook and Instagram listings", "Ready for AI search", "Google Ads, managed"],
       image: "pin",
-      alt: "A white map pin rising from a crimson floor",
+      alt: "A red map pin on a white studio floor",
     },
     {
       id: "content",
@@ -90,7 +90,7 @@ export const services: { title: string; text: string; items: Service[] } = {
       body: "A photographer at your place, short film for social, and campaign imagery like the pictures on this page, made for your brand.",
       points: ["On-site photography", "Short film for social", "Campaign imagery", "Copy written by someone who interviewed you"],
       image: "camera",
-      alt: "A cinema camera on a crimson studio floor",
+      alt: "A camera on a white studio floor",
     },
     {
       id: "brand",
@@ -99,7 +99,7 @@ export const services: { title: string; text: string; items: Service[] } = {
       body: "A mark, colours and type that hold up on a sign, a van and a phone screen, with cards and print to match.",
       points: ["Logo and identity", "Colour and type", "Business cards and print", "A one-page brand guide"],
       image: "cards",
-      alt: "Blank business cards and a stamp on a crimson floor",
+      alt: "A stack of blank cards with red edges on a white floor",
     },
   ],
 };
