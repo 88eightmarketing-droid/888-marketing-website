@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, type PointerEvent } from "react";
 import { preview } from "@/data/site";
 
 /**
@@ -12,6 +13,16 @@ import { preview } from "@/data/site";
  */
 export default function Preview({ name, setName }: { name: string; setName: (v: string) => void }) {
   const shown = name.trim() || "Your Business";
+  const tilt = useRef<HTMLDivElement>(null);
+  // The laptop leans toward the pointer (fine pointers only; CSS transition does the easing).
+  const move = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse" || !tilt.current || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    tilt.current.style.transform = `perspective(1400px) rotateY(${x * 14}deg) rotateX(${-y * 10}deg) translateZ(0)`;
+  };
+  const reset = () => { if (tilt.current) tilt.current.style.transform = "perspective(1400px) rotateY(-8deg) rotateX(4deg)"; };
   const long = shown.length > 18;
   return (
     <section className="overflow-hidden bg-crimson-dark py-24 text-white md:py-32">
@@ -33,12 +44,12 @@ export default function Preview({ name, setName }: { name: string; setName: (v: 
         </div>
 
         {/* Laptop showing the first screen */}
-        <div className="md:col-span-7" data-fade style={{ ["--d" as string]: "120ms" }} aria-live="polite">
-          <div className="relative mx-auto w-full max-w-[720px]">
+        <div className="md:col-span-7" data-fade style={{ ["--d" as string]: "120ms" }} aria-live="polite" onPointerMove={move} onPointerLeave={reset}>
+          <div ref={tilt} className="relative mx-auto w-full max-w-[720px] transition-transform duration-500 ease-out [transform:perspective(1400px)_rotateY(-8deg)_rotateX(4deg)] [transform-style:preserve-3d]">
             <div className="rounded-t-[18px] bg-[#111] p-[1.6%] pb-[1.2%] shadow-[0_50px_100px_-40px_rgba(0,0,0,.8)]">
               <div className="relative aspect-[16/10] overflow-hidden rounded-[6px] bg-crimson">
                 {/* eslint-disable-next-line @next/next/no-img-element -- campaign still used as the sample site's backdrop */}
-                <img src="/brand/phone.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full translate-x-[22%] scale-[1.15] object-cover opacity-90" />
+                <img src="/brand/foldable.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full translate-x-[26%] scale-[1.2] object-cover" />
                 <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(60,0,2,.85)_0%,rgba(60,0,2,.35)_55%,rgba(60,0,2,0)_100%)]" />
                 <div className="absolute inset-x-0 top-0 flex items-center justify-between px-[4%] py-[3%] text-[clamp(7px,1.1vw,11px)] font-semibold">
                   <span className="max-w-[45%] truncate text-[clamp(9px,1.4vw,14px)] font-extrabold tracking-[-0.02em]">{shown}</span>

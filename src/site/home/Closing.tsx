@@ -6,8 +6,8 @@ export default function Closing() {
   return (
     <section className="relative overflow-hidden bg-crimson text-white">
       <picture>
-        <source srcSet="/brand/phone.avif" type="image/avif" />
-        <img src="/brand/phone.jpg" alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-70 md:object-[30%_50%]" />
+        <source srcSet="/brand/foldable.avif" type="image/avif" />
+        <img src="/brand/foldable.jpg" alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-80 md:object-[20%_50%]" />
       </picture>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(80,2,4,.2)_0%,rgba(80,2,4,.55)_55%,rgba(80,2,4,.85)_100%)]" />
       <div className="relative mx-auto grid max-w-[1320px] gap-10 px-5 py-24 md:grid-cols-12 md:items-center md:px-8 md:py-32">

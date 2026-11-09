@@ -5,7 +5,9 @@ import { MobileCta, TopBar } from "./Top";
 import Hero from "./Hero";
 import Preview from "./Preview";
 import Closing from "./Closing";
-import { Clients, Faq, Footer, Process, Services, Work } from "./Sections";
+import { Clients, Faq, Footer, Process, Work } from "./Sections";
+import ServicesStory from "./ServicesStory";
+import Kinetic from "./Kinetic";
 
 /**
  * The homepage, November 2026: a campaign landing page.
@@ -27,7 +29,8 @@ export default function Home() {
       <main>
         <Hero onBusiness={setBusiness} />
         <Clients />
-        <Services />
+        <ServicesStory />
+        <Kinetic />
         <Preview name={business} setName={setBusiness} />
         <Work />
         <Process />

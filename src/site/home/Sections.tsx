@@ -25,51 +25,6 @@ export function Clients() {
   );
 }
 
-/* --------------------------------------------------------------- services ---- */
-
-export function Services() {
-  return (
-    <section id="services" className="scroll-mt-20 bg-white py-24 md:py-36">
-      <div className="mx-auto max-w-[1320px] px-5 md:px-8">
-        <div className="grid gap-6 md:grid-cols-12 md:items-end">
-          <h2 className="text-[clamp(2.6rem,6vw,5.6rem)] font-extrabold leading-[0.95] tracking-[-0.055em] md:col-span-8" data-fade>{services.title}</h2>
-          <p className="max-w-[24rem] text-[18px] leading-[1.5] text-steel md:col-span-4 md:justify-self-end" data-fade style={d(100)}>{services.text}</p>
-        </div>
-
-        <div className="mt-16 flex flex-col gap-20 md:mt-28 md:gap-32">
-          {services.items.map((s, n) => (
-            <article key={s.id} id={s.id} className="grid scroll-mt-24 items-center gap-10 md:grid-cols-12 md:gap-12">
-              <div className={`overflow-hidden rounded-[28px] md:col-span-7 ${n % 2 ? "md:order-2 md:col-start-6" : ""}`} data-wipe>
-                <picture>
-                  <source srcSet={`/brand/${s.image}.avif`} type="image/avif" />
-                  <img src={`/brand/${s.image}.jpg`} alt={s.alt} width={1600} height={900} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
-                </picture>
-              </div>
-              <div className={`md:col-span-5 ${n % 2 ? "md:order-1 md:col-start-1 md:pr-6" : "md:pl-6"}`} data-fade style={d(120)}>
-                <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-red">{String(n + 1).padStart(2, "0")} · {s.kicker}</p>
-                <h3 className="mt-4 text-[clamp(2rem,3.6vw,3.25rem)] font-extrabold leading-[1] tracking-[-0.045em]">{s.title}</h3>
-                <p className="mt-5 text-[17px] leading-[1.6] text-steel">{s.body}</p>
-                <ul className="mt-6 grid gap-2.5">
-                  {s.points.map((p) => (
-                    <li key={p} className="flex items-start gap-3 text-[16px] font-medium">
-                      <svg aria-hidden viewBox="0 0 24 24" className="mt-0.5 size-5 shrink-0 text-red" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-                <a href="#proposal" className="group mt-8 inline-flex min-h-11 items-center gap-2 text-[16px] font-bold text-ink">
-                  <span className="border-b-2 border-red pb-0.5">{cta}</span>
-                  <span aria-hidden className="text-red transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ------------------------------------------------------------------- work ---- */
 
 export function Work() {

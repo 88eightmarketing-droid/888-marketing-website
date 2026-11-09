@@ -13,10 +13,12 @@ import { form, socials } from "@/data/site";
  * The business-name field reports what is typed (`onBusiness`) so the live
  * preview further down the page can show it.
  */
-export default function LeadForm({ id, onBusiness, tone = "light" }: {
+export default function LeadForm({ id, onBusiness, tone = "light", compact = false }: {
   id: string;
   onBusiness?: (name: string) => void;
   tone?: "light" | "dark";
+  /** Hero version: three fields and the button, nothing else. Phone and needs are asked in the conversation. */
+  compact?: boolean;
 }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
 
@@ -42,6 +44,30 @@ export default function LeadForm({ id, onBusiness, tone = "light" }: {
         <p className={`text-[30px] font-extrabold tracking-[-0.03em] ${dark ? "text-white" : "text-ink"}`}>Thank you.</p>
         <p className={`mt-2 text-[16px] ${dark ? "text-white/70" : "text-steel"}`}>We will be in touch to set up a first conversation.</p>
       </div>
+    );
+  }
+
+  if (compact) {
+    return (
+      <form id={id} onSubmit={submit} className="flex flex-col gap-2.5">
+        <div className="grid gap-2.5 sm:grid-cols-2">
+          <input name="business" required autoComplete="organization" aria-label="Business name" placeholder="Business name" className={field} onChange={(e) => onBusiness?.(e.target.value)} />
+          <input name="name" required autoComplete="name" aria-label="Your name" placeholder="Your name" className={field} />
+        </div>
+        <div className="flex flex-col gap-2.5 sm:flex-row">
+          <input name="email" type="email" required autoComplete="email" aria-label="Email" placeholder="Email" className={`${field} sm:flex-1`} />
+          <button disabled={state === "sending"} className="group inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2.5 rounded-[10px] bg-red px-6 text-[16px] font-bold text-white transition-colors hover:bg-red-deep disabled:opacity-60">
+            {state === "sending" ? "Sending…" : "Get my proposal"}
+            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </button>
+        </div>
+        {state === "failed" && (
+          <p role="alert" className="text-[14px] text-ink">
+            That did not send. Message us on{" "}
+            <a href={socials[0].href} target="_blank" rel="noreferrer" className="font-semibold underline">Instagram @88eightmarketing</a> and we will pick it up there.
+          </p>
+        )}
+      </form>
     );
   }
 
