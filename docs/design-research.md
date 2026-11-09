@@ -66,3 +66,33 @@ Measured on apple.com and its MacBook Pro page:
 Apple's pictures are product photography. Ours are drawn in code (a chrome 888, devices showing a
 generic "Your Business", an identity specimen, a viewfinder, a search result, a care panel), so
 they are sharp, light, and show no real business.
+
+## Fourth round: the campaign landing page (2026-11-08)
+
+The Apple-style tiles were rejected ("horrible, how is this a 25k website"). The owner pointed at
+SmartSites' digital-marketing landing page and gave creative freedom, with Grok for imagery.
+
+**What SmartSites does:** a full-service agency (PPC, SEO, web design). The page is pure lead
+generation: phone number in the header, a claim and a "Get Your Free Proposal" form above the fold,
+a bar of award badges, services each paired with a statistic, a logo wall, a wall of named
+testimonials, and a closing call to action with arrows pointing at it.
+
+**What we took:** the structure. Form above the fold, a call to action in every section, services
+tied to outcomes, the form again at the close, a pinned call to action on phones.
+
+**What we did not take:** awards, ratings, statistics and testimonials. We have none, and the
+claims rule forbids inventing them. Proof here is live client work and what goes in writing.
+
+**What makes it better than theirs:** one art-directed campaign instead of stock — a phone, a
+laptop, a map pin, a cinema camera and business cards, each a hyper-real object on crimson
+seamless — and a live preview of the visitor's business name.
+
+**How the imagery was made (Grok Imagine, 16:9, image mode then Make Video):** every still used
+the same prompt frame — "National advertising campaign product photograph. [object, no logos].
+Seamless saturated vermilion red studio background, smooth gradient falloff, mirror reflection
+beneath. Studio lighting, crisp white rim light. Hyperreal, ultra sharp, premium product
+photography, centered, generous negative space. No text." The hero film animated the phone still
+with "very slow, smooth camera push-in and gentle orbit … locked, elegant, no new objects"; it
+holds for about 7 s, so the loop is 0–7 s forward then reversed. The page reds (`crimson`
+`#b5040a`, `crimson-dark` `#6a0404`) were sampled from the stills so sections and photographs
+read as one surface.

@@ -1,67 +1,113 @@
 /*
- * 888 Marketing homepage copy — November 2026, product-page style.
+ * 888 Marketing homepage copy — November 2026, the campaign landing page.
  *
- * Positioning: a design studio. No prices and no "built first, paid after";
- * every project is quoted in writing after a conversation. (The sales engine in
- * agency-previews still works as it does.)
+ * Structure follows what converts on agency landing pages (studied: the
+ * SmartSites digital-marketing LP): the proposal form above the fold, a
+ * call to action in every section, services tied to outcomes, and a strong
+ * close. Craft is ours: one art-directed campaign (Grok stills and film on
+ * crimson seamless, masters noted in docs/design-research.md) and a live
+ * preview of the visitor's own business name.
  *
- * The page treats each service as a product: a name, one line, two actions,
- * and a picture drawn in code. Client work appears in one small strip, by the
- * owner's direction (2026-11-08): it supports the design, it does not take it
- * over.
+ * Claims rules, which SmartSites-style pages break and we do not:
+ * - No awards, ratings, review counts, client counts, testimonials, years in
+ *   business or results figures. Proof is the live work and what we put in
+ *   writing.
+ * - "Free proposal" is true: the proposal costs nothing.
+ * - Business email is NOT included (since 2026-10-30): Google Workspace,
+ *   billed by Google.
+ * - Client work: paying clients' sites, live on their own domains.
  *
- * Earlier designs: the San Francisco fly-through (branch
- * `archive/sf-flythrough-2026-11`), the paper-and-serif draft (d24aa3f) and the
- * dark cinematic draft (6d66287), both on `revamp-2026-11`.
- *
- * Rules: no testimonials, client counts, ratings, awards, years in business or
- * uptime figures. The UI drawn inside the product pictures is illustration of
- * a generic business, never a real one. Business email is NOT included (since
- * 2026-10-30) — we connect Google Workspace and the client pays Google.
+ * Earlier designs: branch `archive/sf-flythrough-2026-11`; on
+ * `revamp-2026-11`, d24aa3f (paper), 6d66287 (dark cinematic), beef4b0
+ * (Apple-style tiles).
  */
 
 export const nav = [
-  { label: "Websites", href: "#websites" },
-  { label: "Identity", href: "#identity" },
-  { label: "Content", href: "#content" },
-  { label: "Presence", href: "#presence" },
+  { label: "Services", href: "#services" },
   { label: "Work", href: "#work" },
-  { label: "Questions", href: "#questions" },
+  { label: "Process", href: "#process" },
+  { label: "FAQ", href: "#faq" },
 ];
 
+export const cta = "Get a free proposal";
+
 export const hero = {
-  name: "888 Marketing",
-  title: "Websites, made like products.",
-  cta: "Start a project",
-  secondary: "How it works",
+  eyebrow: "Websites · Google · Content · Brand",
+  title: ["Make your", "phone ring."],
+  text: "888 Marketing designs the website, the Google presence and the content that make a local business the first call in town. Premium work, one written price, and a site that is yours.",
 };
 
-export const tiles = {
-  websites: { name: "Website", line: "Fast on a phone. Found on Google. Made to turn a visit into a call." },
-  identity: { name: "Identity", line: "Look like you mean it." },
-  content: { name: "Content", line: "Photos and film that sell the work." },
-  presence: { name: "Presence", line: "Everywhere people look for you." },
-  care: { name: "Care", line: "Hosted. Updated. Looked after." },
+export const form = {
+  title: "Get your free proposal",
+  text: "Tell us about the business. We reply with a plan and one price, in writing.",
+  needs: ["A new website", "Google, Maps and listings", "Photos and video", "Logo and brand", "Not sure yet"],
+  button: "Get my free proposal",
+  small: "No obligation. Nothing is charged before you agree to a written proposal.",
 };
 
-export const difference = {
-  title: "Built like a product.\nNot like a template.",
+export const clients = {
+  label: "Live on their own domains",
+  names: ["JellyCee Blends", "Clean Puppy Club", "Trees 4 Less", "Classé Skin & Sculpt", "GetKickz"],
+};
+
+export interface Service {
+  id: string;
+  kicker: string;
+  title: string;
+  body: string;
+  points: string[];
+  image: string;
+  alt: string;
+}
+
+export const services: { title: string; text: string; items: Service[] } = {
+  title: "Everything that makes the phone ring.",
+  text: "Four services, one team, one written price. Take one or all four.",
   items: [
-    { icon: "pencil", title: "Designed from scratch", body: "Every site is drawn for the one business it belongs to. No themes, no page builders." },
-    { icon: "target", title: "One action per screen", body: "Call, book or order. Nothing on the page competes with the thing you want people to do." },
-    { icon: "search", title: "Ready for search and AI", body: "Structured data for Google and the assistants people now ask first, on every page." },
-    { icon: "key", title: "Yours, in your name", body: "The domain is registered to you, and everything another developer would need is handed over." },
+    {
+      id: "websites",
+      kicker: "Websites",
+      title: "A website that wins the call.",
+      body: "Designed from scratch for your business, fast on a phone, with one clear action on every screen: call, book or order. Built in-house and hosted by us.",
+      points: ["Custom design, never a template", "Fast on a phone, found on Google", "Booking, menus and ordering", "Hosting and care after launch"],
+      image: "laptop",
+      alt: "A laptop on a crimson studio floor",
+    },
+    {
+      id: "google",
+      kicker: "Google and local search",
+      title: "Be the pin they tap.",
+      body: "Your Google Business Profile, Maps, Yelp and the structured data that Google and AI assistants read, set up properly and handed to you. Google Ads when you want calls this week.",
+      points: ["Google Business Profile and Maps", "Yelp, Facebook and Instagram listings", "Ready for AI search", "Google Ads, managed"],
+      image: "pin",
+      alt: "A white map pin rising from a crimson floor",
+    },
+    {
+      id: "content",
+      kicker: "Content",
+      title: "Pictures that sell the work.",
+      body: "A photographer at your place, short film for social, and campaign imagery like the pictures on this page, made for your brand.",
+      points: ["On-site photography", "Short film for social", "Campaign imagery", "Copy written by someone who interviewed you"],
+      image: "camera",
+      alt: "A cinema camera on a crimson studio floor",
+    },
+    {
+      id: "brand",
+      kicker: "Brand",
+      title: "Look like the leader.",
+      body: "A mark, colours and type that hold up on a sign, a van and a phone screen, with cards and print to match.",
+      points: ["Logo and identity", "Colour and type", "Business cards and print", "A one-page brand guide"],
+      image: "cards",
+      alt: "Blank business cards and a stamp on a crimson floor",
+    },
   ],
 };
 
-export const process = {
-  title: "How it works.",
-  steps: [
-    { n: "1", title: "Talk", body: "We learn the business, the customer and the goal." },
-    { n: "2", title: "Proposal", body: "Scope, timeline and one price, in writing, before any work starts." },
-    { n: "3", title: "Design and build", body: "Shown on your phone the way your customers will see it." },
-    { n: "4", title: "Launch", body: "Live on your domain, listings connected, and looked after." },
-  ],
+export const preview = {
+  title: "See your business here.",
+  text: "Type your business name. This is how the first screen of a site designed for you could open — and where every project starts.",
+  placeholder: "Your business name",
+  label: "Illustration",
 };
 
 export interface Piece {
@@ -72,9 +118,9 @@ export interface Piece {
   domain: string;
 }
 
-export const work: { title: string; line: string; pieces: Piece[] } = {
-  title: "Live now.",
-  line: "A few of the businesses we have built for, running on their own domains today.",
+export const work: { title: string; text: string; pieces: Piece[] } = {
+  title: "Live work.",
+  text: "Real businesses, running on their own domains today. Open any of them.",
   pieces: [
     { key: "jellyceeblends", name: "JellyCee Blends", kind: "Barber & colorist · San Francisco", url: "https://jellyceeblends.com", domain: "jellyceeblends.com" },
     { key: "cleanpuppy", name: "Clean Puppy Club", kind: "Dog grooming · San Jose", url: "https://thecleanpuppyclub.com", domain: "thecleanpuppyclub.com" },
@@ -84,20 +130,41 @@ export const work: { title: string; line: string; pieces: Piece[] } = {
   ],
 };
 
-export const questions = {
-  title: "Questions.",
-  items: [
-    { q: "What does a project cost?", a: "It depends on what the business needs. After a first conversation you get a written proposal with the scope, the timeline and one price, before any work starts." },
-    { q: "How long does it take?", a: "The proposal gives you the timeline in writing. Most of the waiting on a project is for photographs and decisions, so we plan around both from the start." },
-    { q: "Do I own it?", a: "Yes. The domain is registered in your name, the site is yours, and we hand over everything another developer would need to take it on." },
-    { q: "Is business email included?", a: "No. If you want an address at your own domain, we connect Google Workspace for you. You pay Google directly for the mailbox, so it is yours and not tied to us." },
-    { q: "What happens after launch?", a: "We host the site and look after it. The renewal price is in the proposal before you sign, never after." },
+export const process = {
+  title: "From first call to live, in four steps.",
+  steps: [
+    { n: "01", title: "Talk", body: "A short call about the business, the customer and what you want to change." },
+    { n: "02", title: "Written proposal", body: "The plan, the timeline and one price. Free, and yours to keep either way." },
+    { n: "03", title: "Design and build", body: "Shown on your phone as it takes shape, the way your customers will see it." },
+    { n: "04", title: "Launch and care", body: "Live on your domain, listings connected, and looked after from then on." },
   ],
 };
 
-export const start = {
-  title: "Let’s build yours.",
-  text: "Tell us what you do and what you want the site to change. Every project starts with a conversation and a written proposal, and nothing is charged before you agree to it.",
+export const promises = {
+  title: "What you get in writing.",
+  items: [
+    { title: "One price, before any work", body: "The proposal names the price. It does not move." },
+    { title: "Your domain, in your name", body: "Registered to you, not to us." },
+    { title: "The site is yours", body: "Everything another developer would need is handed over." },
+    { title: "Renewal price up front", body: "Hosting after the first year is on the proposal, before you sign." },
+  ],
+};
+
+export const faq = {
+  title: "Questions.",
+  items: [
+    { q: "What does a project cost?", a: "It depends on what the business needs. After a first conversation you get a written proposal with the scope, the timeline and one price, before any work starts. The proposal is free." },
+    { q: "How long does it take?", a: "The proposal gives you the timeline in writing. Most of the waiting on a project is for photographs and decisions, so we plan around both from the start." },
+    { q: "Do I own it?", a: "Yes. The domain is registered in your name, the site is yours, and we hand over everything another developer would need to take it on." },
+    { q: "Is business email included?", a: "No. If you want an address at your own domain, we connect Google Workspace for you. You pay Google directly for the mailbox, so it is yours and not tied to us." },
+    { q: "Do you run Google Ads?", a: "Yes, when they make sense for the business. We set them up, run them and show you what the money did. We will tell you if ads are not worth it yet." },
+    { q: "Who made the pictures on this page?", a: "We did — art-directed and generated for this campaign. We make the same kind of imagery for clients, alongside real photography of your work." },
+  ],
+};
+
+export const closing = {
+  title: ["Let’s make your", "phone ring."],
+  text: "One conversation, one written proposal, no obligation.",
 };
 
 export const socials = [

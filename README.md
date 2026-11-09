@@ -18,29 +18,36 @@ npm run dev        # http://localhost:3100
 
 ## The design (November 2026)
 
-**888 Marketing presents as a design studio, in the manner of a product page.** Each service is a
-product tile — a name, one line, two pill buttons and a picture drawn in code — on white, mist
-(`#f5f5f7`) and black, in Inter (its optical-size axis gives the display cut at headline sizes).
-The 888 red is for actions only. No prices and no "built first, paid after": every project is
-quoted in writing after a conversation. Client work is one small strip, by the owner's direction.
+**A campaign landing page.** The structure is borrowed from agency landing pages that convert
+(studied: SmartSites' digital-marketing LP): the proposal form above the fold, a call to action in
+every section, services tied to outcomes, and a strong close. The finish is ours: one art-directed
+campaign, hyper-real objects on crimson seamless, generated in Grok (stills and the hero film), and a
+live preview that puts the visitor's business name on a site as they type it.
 
 | Section | What it does |
 | --- | --- |
-| Global + local nav | A thin bar that scrolls away, and a sticky bar with the name and "Start a project". |
-| Hero | "Websites, made like products." over a chrome 888 with a slow light sweep. |
-| Tiles | Website (laptop + phone), Identity, Content, Presence, Care — all illustration of a generic "Your Business", never a real one. |
-| Built like a product | One line and four facts with icons. |
-| How it works, Live now, Questions, Let’s build yours | Four steps; a small strip of client sites; `<details>`; the form (`/api/contact`). |
+| Top bar + mobile bar | "Get a free proposal" always one tap away; pinned to the bottom on phones. |
+| Hero | The campaign film (phone taking a call), "Make your phone ring.", and the proposal form. |
+| Client strip | Names of clients whose sites are live — names, not logos we do not hold. |
+| Services | Websites, Google and local search, Content, Brand — each with a campaign still. |
+| See your business here | The name typed in the hero form, on a sample first screen. Labelled Illustration. |
+| Live work, Process, In writing, Questions, Closing | Client sites; four steps; promises we keep; FAQ; the form again. |
 
-Copy is in `src/data/site.ts`, sections in `src/site/home/`. Native scrolling; tiles fade up once.
-**Business email is not included** (since 2026-10-30): we connect Google Workspace, billed by Google.
+**What we do not copy from SmartSites:** awards, ratings, testimonial walls and results figures.
+We have none we can stand behind, and inventing them breaks the claims rule.
 
-**Client posters** in the Live now strip are frames from `scripts/record-work.mjs` recordings
-(`public/work/<key>.jpg`). The recordings themselves are not used on this design.
+**Imagery.** `public/brand/` holds the encoded campaign: `hero.mp4` (desktop, 1600×900) and
+`hero-square.mp4` (phones), both the first 7 s of the Grok clip played forward then back for a
+seamless 14 s loop, plus stills as AVIF and JPEG at 1600w. Prompts and the method are in
+`docs/design-research.md`; generated output is a master, never edited in place.
+
+The form posts to `/api/contact` with the service choice in the message. Copy is in
+`src/data/site.ts`, sections in `src/site/home/`. **Business email is not included** (since
+2026-10-30). The share card is still the dark-draft one and needs redrawing for this design.
 
 **Earlier designs**, all kept: the San Francisco fly-through (branch `archive/sf-flythrough-2026-11`),
-the paper-and-serif draft (`d24aa3f`) and the dark cinematic draft (`6d66287`). Notes on what was
-studied for each: `docs/design-research.md`.
+and on `revamp-2026-11` the paper draft (`d24aa3f`), the dark cinematic draft (`6d66287`) and the
+Apple-style tiles (`beef4b0`).
 
 **No third-party scripts.** Fonts are self-hosted by `next/font`; nothing loads from another
 origin at render time except the Instagram images.

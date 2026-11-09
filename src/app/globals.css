@@ -17,22 +17,22 @@
 @theme {
   --color-paper: #f6f3ee;
   --color-paper-deep: #ece7df;
-  --color-ink: #14120f;
   --color-ink-soft: #4a453d;
   --color-ink-faint: #8b8377;
   --color-rule: #ddd6cb;
   --color-accent: #c8442a;
   --color-accent-deep: #a4341f;
 
-  /* The homepage (November 2026): product-page clean. White and mist tiles,
-     black feature tiles, graphite text, the 888 red for actions only. */
-  --color-mist: #f5f5f7;
-  --color-graphite: #1d1d1f;
-  --color-steel: #6e6e73;
-  --color-steel-2: #86868b;
-  --color-hair: #d2d2d7;
-  --color-red: #e0402a;
-  --color-red-deep: #c4331f;
+  /* The campaign (November 2026). The reds are sampled from the Grok
+     stills and film, so a red section and a photograph read as one surface. */
+  --color-crimson: #b5040a;
+  --color-crimson-dark: #6a0404;
+  --color-red: #d40a10;
+  --color-red-deep: #a8060b;
+  --color-ink: #0b0b0c;
+  --color-mist: #f4f3f1;
+  --color-steel: #6b6b70;
+  --color-hair: #e3e1dd;
 
   --text-eyebrow: 0.6875rem;
   --text-eyebrow--letter-spacing: 0.16em;
@@ -43,7 +43,7 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-html { background: #fff; color: var(--color-graphite); -webkit-font-smoothing: antialiased; }
+html { background: #fff; color: var(--color-ink); -webkit-font-smoothing: antialiased; }
 
 /*
  * Motion is decoration here, so it all goes.
@@ -64,40 +64,42 @@ html { background: #fff; color: var(--color-graphite); -webkit-font-smoothing: a
 @keyframes v-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ------------------------------------------------------------------------
- * Homepage (November 2026), product-page style.
+ * Homepage (November 2026), the campaign landing page.
  *
- * Motion: opacity and transform only, ease-out, under a second. Content is
- * visible without JavaScript; the hidden start state applies only while
- * scripting is on, and reduced motion gets the finished page.
+ * Motion: opacity, transform and clip-path only, ease-out, under a second.
+ * Content is visible without JavaScript; the hidden start states apply only
+ * while scripting is on, and reduced motion gets the finished page.
  * ---------------------------------------------------------------------- */
 
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  [data-fade] { opacity: 0; translate: 0 40px; transition: opacity 1s cubic-bezier(.25, .1, .25, 1), translate 1s cubic-bezier(.25, .1, .25, 1); transition-delay: var(--d, 0ms); }
+  [data-fade] { opacity: 0; translate: 0 36px; transition: opacity .9s cubic-bezier(.2,.7,.2,1), translate .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
   [data-fade].is-in { opacity: 1; translate: 0 0; }
+  [data-wipe] { clip-path: inset(12% 6% 12% 6% round 28px); transition: clip-path 1.2s cubic-bezier(.2,.7,.2,1); }
+  [data-wipe].is-in { clip-path: inset(0 0 0 0 round 28px); }
 }
 
-/* The chrome 888: a brushed-metal gradient clipped to the type, with a slow
-   light sweep. On black, like a product shot. */
-.chrome {
-  background-image:
-    linear-gradient(100deg, transparent 35%, rgba(255,255,255,.85) 48%, transparent 60%),
-    linear-gradient(180deg, #fdfdfd 0%, #c9c9ce 22%, #6c6c72 46%, #f2f2f4 54%, #9d9da3 72%, #3b3b40 100%);
-  background-size: 250% 100%, 100% 100%;
-  background-position: 120% 0, 0 0;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+/* Hero lines rise once the opener has lifted (or at once on a repeat visit). */
+/* Each headline line is its own block and never wraps inside itself. */
+.rise { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.rise > span { display: block; white-space: nowrap; }
 @media (prefers-reduced-motion: no-preference) {
-  .chrome { animation: sweep 6s cubic-bezier(.45, 0, .2, 1) 1.4s infinite; }
+  .rise > span { animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--opener, 1100ms) + var(--i, 0) * 110ms); }
+  .appear { animation: appear 1s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--opener, 1100ms) + 350ms + var(--i, 0) * 90ms); }
 }
-@keyframes sweep { 0% { background-position: 120% 0, 0 0; } 45%, 100% { background-position: -30% 0, 0 0; } }
+.opener-off { --opener: 60ms; }
+@keyframes rise { from { translate: 0 105%; } to { translate: 0 0; } }
+@keyframes appear { from { opacity: 0; translate: 0 18px; } to { opacity: 1; translate: 0 0; } }
 
-/* Questions: native <details> with a chevron that turns. */
+@keyframes marquee { to { translate: -50% 0; } }
+.marquee { animation: marquee 40s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
+
 .q summary { list-style: none; cursor: pointer; }
 .q summary::-webkit-details-marker { display: none; }
-.q .chev { transition: rotate 400ms cubic-bezier(.25, .1, .25, 1); }
-.q[open] .chev { rotate: 180deg; }
+.q .chev { transition: rotate 400ms cubic-bezier(.2,.7,.2,1); }
+.q[open] .chev { rotate: 45deg; }
 
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
-::selection { background: #b3d7ff; }
+::selection { background: var(--color-red); color: #fff; }
