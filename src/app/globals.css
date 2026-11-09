@@ -111,3 +111,28 @@ html { background: #fff; color: var(--color-ink); -webkit-font-smoothing: antial
   .sweep { animation: band 7s cubic-bezier(.45,0,.2,1) 1.6s infinite; }
 }
 @keyframes band { 0% { background-position: 130% 0; } 40%, 100% { background-position: -30% 0; } }
+
+/* Client sites scrolling on the campaign devices (Device.tsx). Both panels of
+   the foldable run the same animation from the same mount, so they stay in
+   step; each new site fades in. */
+.screen-scroll { transform: translateY(0); }
+@media (prefers-reduced-motion: no-preference) {
+  .screen-scroll { animation: screen-scroll var(--dwell, 13s) cubic-bezier(.5,0,.35,1) both; }
+  .drift { animation: drift 18s ease-in-out infinite alternate; }
+}
+@keyframes screen-scroll {
+  0% { transform: translateY(0); opacity: 0; }
+  5% { opacity: 1; }
+  12% { transform: translateY(0); }
+  90% { transform: translateY(var(--travel)); opacity: 1; }
+  100% { transform: translateY(var(--travel)); opacity: 1; }
+}
+@keyframes drift { from { transform: scale(1); } to { transform: scale(1.045) translateY(-1%); } }
+
+/* Chat demo (Systems.tsx): bubbles pop in, the typing dots bounce. */
+@media (prefers-reduced-motion: no-preference) {
+  .bubble { animation: bubble .45s cubic-bezier(.2,.8,.2,1.2) both; transform-origin: bottom; }
+  .dot { animation: dot 1s ease-in-out infinite; }
+}
+@keyframes bubble { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes dot { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }

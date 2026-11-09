@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cta, services } from "@/data/site";
+import { Laptop } from "./Device";
 
 /**
  * The services as a pinned story. On desktop the picture column holds still
@@ -41,16 +42,20 @@ export default function ServicesStory() {
             <div className="sticky top-[12vh] h-[76vh]">
               <div className="relative h-full overflow-hidden rounded-[32px] bg-crimson">
                 {services.items.map((s, n) => (
-                  <picture key={s.id}>
-                    <source srcSet={`/brand/${s.image}.avif`} type="image/avif" />
-                    <img
-                      src={`/brand/${s.image}.jpg`}
-                      alt={n === active ? s.alt : ""}
-                      aria-hidden={n !== active}
-                      loading={n === 0 ? "eager" : "lazy"}
-                      className={`absolute inset-0 h-full w-full object-cover transition-[opacity,scale] duration-[1200ms] ease-[cubic-bezier(.2,.7,.2,1)] ${n === active ? "scale-100 opacity-100" : "scale-[1.12] opacity-0"}`}
-                    />
-                  </picture>
+                  <div
+                    key={s.id}
+                    aria-hidden={n !== active}
+                    className={`absolute inset-0 transition-[opacity,scale] duration-[1200ms] ease-[cubic-bezier(.2,.7,.2,1)] ${n === active ? "scale-100 opacity-100" : "scale-[1.12] opacity-0"}`}
+                  >
+                    {s.id === "websites" ? (
+                      <Laptop />
+                    ) : (
+                      <picture>
+                        <source srcSet={`/brand/${s.image}.avif`} type="image/avif" />
+                        <img src={`/brand/${s.image}.jpg`} alt={n === active ? s.alt : ""} loading={n === 0 ? "eager" : "lazy"} className="absolute inset-0 h-full w-full object-cover" />
+                      </picture>
+                    )}
+                  </div>
                 ))}
                 <div className="sweep pointer-events-none absolute inset-0" />
                 <div className="absolute inset-x-8 bottom-8 flex items-end justify-between text-white">
@@ -77,9 +82,13 @@ export default function ServicesStory() {
                 ref={(el) => { panels.current[n] = el; }}
                 className={`scroll-mt-24 transition-opacity duration-500 md:flex md:min-h-[88vh] md:flex-col md:justify-center ${n === active ? "md:opacity-100" : "md:opacity-30"}`}
               >
-                <div className="mb-8 overflow-hidden rounded-[24px] md:hidden" data-wipe>
-                  {/* eslint-disable-next-line @next/next/no-img-element -- campaign still, pre-encoded at 1600w */}
-                  <img src={`/brand/${s.image}.jpg`} alt={s.alt} loading="lazy" className="aspect-[16/11] w-full object-cover" />
+                <div className="relative mb-8 aspect-[16/11] overflow-hidden rounded-[24px] bg-crimson md:hidden" data-wipe>
+                  {s.id === "websites" ? (
+                    <Laptop />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element -- campaign still, pre-encoded at 1600w
+                    <img src={`/brand/${s.image}.jpg`} alt={s.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                  )}
                 </div>
                 <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-red">{String(n + 1).padStart(2, "0")} · {s.kicker}</p>
                 <h3 className="mt-4 text-[clamp(2.2rem,4vw,3.6rem)] font-extrabold leading-[0.98] tracking-[-0.05em]">{s.title}</h3>

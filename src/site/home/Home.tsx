@@ -8,6 +8,7 @@ import Closing from "./Closing";
 import { Clients, Faq, Footer, Process, Work } from "./Sections";
 import ServicesStory from "./ServicesStory";
 import Kinetic from "./Kinetic";
+import Systems from "./Systems";
 
 /**
  * The homepage, November 2026: a campaign landing page.
@@ -31,6 +32,7 @@ export default function Home() {
         <Clients />
         <ServicesStory />
         <Kinetic />
+        <Systems />
         <Preview name={business} setName={setBusiness} />
         <Work />
         <Process />

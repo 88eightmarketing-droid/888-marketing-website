@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "@/lib/motion";
 import { form, hero } from "@/data/site";
 import LeadForm from "./LeadForm";
+import { Foldable } from "./Device";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,11 +14,12 @@ const i = (n: number) => ({ "--i": n }) as CSSProperties;
 
 /**
  * Above the fold, the whole pitch. Left: the line and a short proposal form.
- * Right: the campaign film — a thin titanium foldable standing open on crimson
- * seamless, its screen alive with colour — with a light sweep crossing it.
+ * Right: the campaign photograph of a thin titanium foldable standing open on
+ * crimson seamless, its display scrolling real client sites we built (Device.tsx),
+ * with a slow drift and a light sweep crossing it.
  * Scrolling pushes the film in and lifts the line away.
  *
- * Phones: the film as a square, then the line and the form on crimson.
+ * Phones: the device as a square, then the line and the form on crimson.
  */
 export default function Hero({ onBusiness }: { onBusiness: (name: string) => void }) {
   const root = useRef<HTMLElement>(null);
@@ -40,8 +42,9 @@ export default function Hero({ onBusiness }: { onBusiness: (name: string) => voi
       {/* Film: right side on desktop, a square on phones. */}
       <div className="relative aspect-square w-full overflow-hidden md:absolute md:inset-y-0 md:left-auto md:right-0 md:aspect-auto md:w-[58%]" aria-hidden>
         <div data-hero-film className="absolute inset-0 will-change-transform">
-          <video className="hidden h-full w-full object-cover md:block" src="/brand/hero.mp4" poster="/brand/hero.jpg" autoPlay muted loop playsInline preload="auto" />
-          <video className="h-full w-full object-cover md:hidden" src="/brand/hero-square.mp4" poster="/brand/hero.jpg" autoPlay muted loop playsInline preload="auto" />
+          <div className="drift absolute inset-0">
+            <Foldable />
+          </div>
         </div>
         <div className="sweep pointer-events-none absolute inset-0" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,var(--color-crimson)_0%,rgba(181,4,10,0)_35%)] md:bg-[linear-gradient(90deg,var(--color-crimson)_0%,rgba(181,4,10,0)_28%)]" />

@@ -24,6 +24,7 @@
 
 export const nav = [
   { label: "Services", href: "#services" },
+  { label: "Systems", href: "#systems" },
   { label: "Work", href: "#work" },
   { label: "Process", href: "#process" },
   { label: "FAQ", href: "#faq" },
@@ -101,6 +102,32 @@ export const services: { title: string; text: string; items: Service[] } = {
       alt: "Blank business cards and a stamp on a crimson floor",
     },
   ],
+};
+
+/**
+ * Systems beyond the website. The demo conversation and dashboard are
+ * illustrations of a generic business, labelled "Demo" on the page — never a
+ * real client's data, and never our own leads (privacy rule).
+ */
+export const systems = {
+  eyebrow: "Systems",
+  title: "Not just a website. The systems behind it.",
+  text: "We build the tools that answer, book, take orders and follow up, so the phone rings and nothing slips through.",
+  items: [
+    { icon: "chat", title: "AI chat assistant", body: "Answers questions, quotes and books around the clock, in your words, trained on your business." },
+    { icon: "calendar", title: "Online booking", body: "Your real calendar on your site. Clients pick a time without a phone call." },
+    { icon: "bag", title: "Ordering and payments", body: "Menus, carts and pickup orders that land straight with you." },
+    { icon: "chart", title: "Owner dashboard", body: "Change hours, prices and photos yourself, and see every enquiry in one place." },
+    { icon: "bolt", title: "Automations", body: "Instant replies, reminders and review requests that run on their own." },
+    { icon: "plug", title: "Integrations", body: "Google, Instagram, Booksy and the tools you already use, connected to your site." },
+  ],
+  chat: [
+    { from: "them", text: "Hi! Are you open Sunday?" },
+    { from: "bot", text: "We are, 9 am to 5 pm. Want me to book you a time?" },
+    { from: "them", text: "Yes please, 11 am for two." },
+    { from: "bot", text: "Done. You are booked for Sunday at 11:00. I will text you a reminder the day before." },
+  ],
+  demo: "Demo",
 };
 
 export const preview = {

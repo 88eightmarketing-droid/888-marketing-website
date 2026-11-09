@@ -36,10 +36,17 @@ live preview that puts the visitor's business name on a site as they type it.
 **What we do not copy from SmartSites:** awards, ratings, testimonial walls and results figures.
 We have none we can stand behind, and inventing them breaks the claims rule.
 
-**Imagery.** `public/brand/` holds the encoded campaign: `hero.mp4` (desktop, 1600×900) and
-`hero-square.mp4` (phones), both the first 7 s of the Grok clip played forward then back for a
-seamless 14 s loop, plus stills as AVIF and JPEG at 1600w. Prompts and the method are in
-`docs/design-research.md`; generated output is a master, never edited in place.
+**Imagery.** `public/brand/` holds the Grok campaign stills (AVIF + JPEG, 1600w). **Real client work
+is laid onto the devices in them** by `src/site/home/Device.tsx`: a perspective transform maps a
+flat screen onto the four corners of the glass, measured in percent of the photo. The hero
+foldable scrolls `public/screens/<key>.webp` (five real screens of each client site, stacked;
+`node scripts/capture-screens.mjs`) across both panels in step; the services laptop plays the
+`public/work/<key>.mp4` recordings (`node scripts/record-work.mjs`). If a device photo changes,
+re-measure its corners.
+
+**Systems section.** AI chat assistant, booking, ordering, owner dashboard, automations and
+integrations, with a scripted chat demo and a dashboard, both labelled Demo: a generic business,
+never real client data or our own leads.
 
 The form posts to `/api/contact` with the service choice in the message. Copy is in
 `src/data/site.ts`, sections in `src/site/home/`. **Business email is not included** (since
