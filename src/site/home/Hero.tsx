@@ -21,7 +21,7 @@ import { clamp01, createSequence, easeInOut, span } from "./Frames";
  */
 
 const FRAMES = 63; // public/seq/lid
-const SITES = work.pieces.slice(0, 5);
+const SITES = work.pieces.slice(0, 6);
 const BASE_W = 1000, BASE_H = 562.5; // the stage, before scaling (the laptop photo's 16:9)
 // In % of the stage. Laptop screen measured on /brand/w-laptop.jpg; the phone is placed in front of it.
 const LAPTOP = { l: 28.6, t: 16.0, w: 43.0, h: 50.2 };

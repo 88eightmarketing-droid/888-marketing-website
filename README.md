@@ -30,15 +30,15 @@ sites playing on the devices.
 | Opening scene (`Hero.tsx`) | A laptop opens and a phone rises as the page arrives; scrolling centres them and steps through five client sites, each playing from its own intro through its scroll effects. |
 | Proposal | What we do, lit word by word on scroll, and the proposal form. |
 | Client strip | Names of clients whose sites are live — names, not logos we do not hold. |
-| Services | Websites (the phone playing the sites), Google (Grok pin), Content and Brand (real pieces we made for Plumbing Art). |
+| Services | Websites (the phone playing the sites), Google (Grok pin), Content (real posts we made for Plumbing Art), Brand (a film animated from its real logo files). |
 | See your business here | The name typed in the proposal form, on a sample first screen. Labelled Illustration. |
 | Live work, Process, In writing, Questions, Closing | Client sites; four steps; promises we keep; FAQ; the form again. |
 
 **What we do not copy from SmartSites:** awards, ratings, testimonial walls and results figures.
 We have none we can stand behind, and inventing them breaks the claims rule.
 
-**The showcase.** The order is the owner's (2026-11-08): Plumbing Art, GetKickz, Classé, Clean
-Puppy Club, Trees 4 Less — `SHOWCASE_SITES` in `scripts/work-sites.mjs`, and the first five
+**The showcase.** The order is the owner's (2026-11-08): Plumbing Art, GetKickz, Classé, JellyCee
+Blends, Trees 4 Less, Clean Puppy Club — `SHOWCASE_SITES` in `scripts/work-sites.mjs`, and the first six
 `work.pieces` in `src/data/site.ts` (keep the two in the same order). Each site is recorded twice by
 `node scripts/record-showcase.mjs [key]`: desktop 1280×800 for the laptop, phone 390×844 for the
 phone, starting the moment the page is requested in a fresh profile, so the site's first-visit
@@ -49,8 +49,10 @@ changes; if one scrolls too fast and sits on its footer, lower its `speed`.
 `public/brand/phone-cut.webp` is the phone cut out of its still; `public/seq/lid/` is the laptop
 opening, cut from a Grok clip of the lid closing, reversed, drawn on a canvas (`Frames.tsx`).
 Screen positions are measured in percent of the photos (constants at the top of `Hero.tsx`); if a
-photo changes, re-measure. `public/made/` is real work from Plumbing Art's brand package (cards,
-seal, flyer, posts).
+photo changes, re-measure. `public/made/` is real work from Plumbing Art's brand package (posts,
+flyer) and `plumbingart-brand.mp4`, its brand film: `scripts/brand-film/plumbingart/film.html`
+animates the real SVG logos (never generated, so no letter warps), recorded by
+`node scripts/record-brand-film.mjs plumbingart`. Business cards are deliberately not shown.
 
 **Systems section.** AI chat assistant, booking, ordering, owner dashboard, automations and
 integrations, with a scripted chat demo and a dashboard, both labelled Demo: a generic business,

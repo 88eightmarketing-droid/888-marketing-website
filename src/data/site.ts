@@ -48,7 +48,7 @@ export const form = {
 
 export const clients = {
   label: "Live on their own domains",
-  names: ["Plumbing Art", "GetKickz", "Classé Skin & Sculpt", "Clean Puppy Club", "Trees 4 Less", "JellyCee Blends"],
+  names: ["Plumbing Art", "GetKickz", "Classé Skin & Sculpt", "JellyCee Blends", "Trees 4 Less", "Clean Puppy Club"],
 };
 
 export interface Service {
@@ -99,7 +99,7 @@ export const services: { title: string; text: string; items: Service[] } = {
       body: "A mark, colours and type that hold up on a sign, a van and a phone screen, with cards and print to match.",
       points: ["Logo and identity", "Colour and type", "Business cards and print", "A one-page brand guide"],
       image: "cards",
-      alt: "Plumbing Art's business card and logo, designed by 888",
+      alt: "Plumbing Art's brand, designed by 888, animated",
     },
   ],
 };
@@ -148,15 +148,15 @@ export interface Piece {
 export const work: { title: string; text: string; pieces: Piece[] } = {
   title: "Live work.",
   text: "Real businesses, running on their own domains today. Open any of them.",
-  // The first five are the opening showcase, in the owner's order (2026-11-08);
+  // The first six are the opening showcase, in the owner's order (2026-11-08);
   // their recordings are public/showcase/<key>-desktop|phone.mp4 (scripts/record-showcase.mjs).
   pieces: [
     { key: "plumbingart", name: "Plumbing Art", kind: "Licensed plumber · San Jose", url: "https://plumbingartbayarea.com", domain: "plumbingartbayarea.com" },
     { key: "getkickz", name: "GetKickz", kind: "Streetwear retail", url: "https://getkickz.com", domain: "getkickz.com" },
     { key: "classeskin", name: "Classé Skin & Sculpt", kind: "Wellness studio · San Jose", url: "https://www.classeskin.com", domain: "classeskin.com" },
-    { key: "cleanpuppy", name: "Clean Puppy Club", kind: "Dog grooming · San Jose", url: "https://thecleanpuppyclub.com", domain: "thecleanpuppyclub.com" },
-    { key: "tree4less", name: "Trees 4 Less", kind: "Tree service · Monterey County", url: "https://www.tree4less.com", domain: "tree4less.com" },
     { key: "jellyceeblends", name: "JellyCee Blends", kind: "Barber & colorist · San Francisco", url: "https://jellyceeblends.com", domain: "jellyceeblends.com" },
+    { key: "tree4less", name: "Trees 4 Less", kind: "Tree service · Monterey County", url: "https://www.tree4less.com", domain: "tree4less.com" },
+    { key: "cleanpuppy", name: "Clean Puppy Club", kind: "Dog grooming · San Jose", url: "https://thecleanpuppyclub.com", domain: "thecleanpuppyclub.com" },
   ],
 };
 

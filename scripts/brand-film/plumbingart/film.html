@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+:root { --navy:#0E1A2B; --copper:#D98A57; --cream:#F4EFE8; --blue:#1E9BEA; --ease: cubic-bezier(.65,0,.25,1); --out: cubic-bezier(.2,.8,.2,1); }
+* { margin:0; box-sizing:border-box; }
+html,body { width:1080px; height:1080px; overflow:hidden; background:var(--navy); }
+.stage { position:absolute; inset:0; overflow:hidden; background:var(--navy); }
+.grid { position:absolute; inset:-2px; background-image: linear-gradient(rgba(244,239,232,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(244,239,232,.05) 1px, transparent 1px); background-size: 54px 54px; }
+.seal { position:absolute; left:50%; top:50%; width:500px; translate:-50% -50%; -webkit-mask-image: conic-gradient(#000 var(--a), transparent 0); mask-image: conic-gradient(#000 var(--a), transparent 0); }
+.strap { position:absolute; left:50%; top:640px; width:700px; translate:-50% 0; clip-path: inset(0 100% 0 0); }
+.bar { position:absolute; left:0; right:0; height:100%; top:100%; }
+.cream { position:absolute; left:0; right:0; height:100%; background:var(--cream); top:100%; }
+.post { position:absolute; width:380px; aspect-ratio:4/5; border-radius:18px; object-fit:cover; box-shadow: 0 50px 80px -30px rgba(14,26,43,.55); top:1200px; }
+.mono { position:absolute; width:150px; right:70px; top:70px; scale:0; }
+.back { position:absolute; left:0; right:0; height:100%; background:var(--navy); top:-100%; }
+
+.go .seal { animation: draw 1.6s var(--ease) .2s both, settle 1s var(--ease) 2.6s both; }
+.go .strap { animation: reveal 1s var(--ease) 2.9s both; }
+.go .b1 { background:var(--copper); animation: up 0.9s var(--ease) 4.6s both; }
+.go .b2 { background:var(--blue); animation: up 0.9s var(--ease) 4.72s both; }
+.go .cream { animation: up 0.9s var(--ease) 4.86s both; }
+.go .p1 { left:90px;  rotate:-9deg; animation: fly 1s var(--out) 5.5s both; }
+.go .p2 { left:350px; rotate:2deg;  animation: fly 1s var(--out) 5.7s both; z-index:2; }
+.go .p3 { left:610px; rotate:9deg;  animation: fly 1s var(--out) 5.9s both; }
+.go .mono { animation: stamp .6s cubic-bezier(.3,1.6,.5,1) 6.9s both; }
+.go .back { animation: down 0.8s var(--ease) 8.2s both; }
+
+@keyframes draw { from { --a:0deg; rotate:-60deg; scale:.82; } to { --a:360deg; rotate:0deg; scale:1; } }
+@keyframes settle { to { translate:-50% -86%; scale:.72; } }
+@keyframes reveal { to { clip-path: inset(0 0 0 0); } }
+@keyframes up { to { top:0; } }
+@keyframes fly { from { top:1200px; } to { top:330px; } }
+@keyframes stamp { to { scale:1; } }
+@keyframes down { to { top:0; } }
+</style></head>
+<body>
+<div class="stage" id="s">
+  <div class="grid"></div>
+  <img class="seal" src="seal.svg" alt="">
+  <img class="strap" src="strap.svg" alt="">
+  <div class="bar b1"></div>
+  <div class="bar b2"></div>
+  <div class="cream"></div>
+  <img class="post p1" src="insta.png" alt="">
+  <img class="post p2" src="flyer.jpg" alt="">
+  <img class="post p3" src="live.jpg" alt="">
+  <img class="mono" src="mono.svg" alt="">
+  <div class="back"><div class="grid"></div></div>
+</div>
+</body></html>

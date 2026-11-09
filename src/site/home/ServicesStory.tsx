@@ -104,8 +104,8 @@ export default function ServicesStory() {
 
 /**
  * What each service looks like when we do it — our own work, not stock:
- * the client sites on a phone, and for content and brand the real pieces we
- * made for Plumbing Art (public/made, from its brand package).
+ * the client sites on a phone, Plumbing Art's real posts for content, and for
+ * brand a film animated from its real logo files (public/made).
  */
 function ServiceVisual({ id }: { id: string }) {
   if (id === "websites") {
@@ -134,17 +134,19 @@ function ServiceVisual({ id }: { id: string }) {
       </picture>
     );
   }
+  // Brand: a short film animated from Plumbing Art's real logo files (scripts/record-brand-film.mjs).
   return (
-    <div className="absolute inset-0 flex items-center justify-center pb-[10%]">
-      <div className="relative h-[70%] w-[86%]">
-        {/* eslint-disable-next-line @next/next/no-img-element -- brand work from the client's package */}
-        <img src="/made/pa-seal.webp" alt="Plumbing Art's seal, designed by 888" loading="lazy" className="absolute right-[2%] top-0 w-[38%] rounded-full shadow-[0_30px_50px_-25px_rgba(0,0,0,.45)]" />
-        {/* eslint-disable-next-line @next/next/no-img-element -- brand work from the client's package */}
-        <img src="/made/pa-card-back.webp" alt="" loading="lazy" className="absolute left-[4%] top-[14%] w-[62%] -rotate-[6deg] rounded-[10px] shadow-[0_30px_50px_-25px_rgba(0,0,0,.5)]" />
-        {/* eslint-disable-next-line @next/next/no-img-element -- brand work from the client's package */}
-        <img src="/made/pa-card-front.webp" alt="Plumbing Art's business card, designed by 888" loading="lazy" className="absolute bottom-0 left-[22%] w-[62%] rotate-[3deg] rounded-[10px] shadow-[0_40px_60px_-25px_rgba(0,0,0,.5)]" />
-      </div>
-    </div>
+    <video
+      src="/made/plumbingart-brand.mp4"
+      poster="/made/plumbingart-brand.jpg"
+      className="absolute inset-0 h-full w-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-label="Plumbing Art's brand, designed by 888: the seal, the wordmark, its colours and its posts"
+    />
   );
 }
 

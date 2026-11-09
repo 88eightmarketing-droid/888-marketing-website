@@ -7,7 +7,7 @@ import { useState } from "react";
  * lives in Hero.tsx; this is the phone on its own, for the services story.
  */
 
-const PHONE_SITES = ["plumbingart", "getkickz", "classeskin", "cleanpuppy", "tree4less"];
+const PHONE_SITES = ["plumbingart", "getkickz", "classeskin", "jellyceeblends", "tree4less", "cleanpuppy"];
 
 /**
  * The phone cut-out (Grok still, white seamless) playing the phone recordings
