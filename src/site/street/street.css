@@ -1,0 +1,15 @@
+/* Main Street. --p is scroll progress (0–1); each beat has --at and --hold. */
+.ms-shade { background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 50%, rgba(0,0,0,.7) 100%); }
+
+.ms-beat {
+  --in: clamp(0, (var(--p) - var(--at) + .035) / .035, 1);
+  --out: clamp(0, (var(--p) - var(--at) - var(--hold)) / .03, 1);
+  opacity: calc(var(--in) - var(--out));
+}
+.ms-line { transform: translateY(calc((1 - clamp(0, var(--in) * 1.4 - var(--k) * .25, 1)) * 105%)) translateY(calc(var(--out) * -20%)); }
+.ms-small { opacity: var(--in); }
+.ms-cta { opacity: clamp(0, (var(--p) - .1) * 20, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-line { transform: none; }
+}
