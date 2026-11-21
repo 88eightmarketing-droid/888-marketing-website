@@ -23,10 +23,8 @@
  */
 
 export const nav = [
-  { label: "Services", href: "#services" },
-  { label: "Systems", href: "#systems" },
+  { label: "How it works", href: "#how" },
   { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
   { label: "FAQ", href: "#faq" },
 ];
 

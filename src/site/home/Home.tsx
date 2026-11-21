@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { MobileCta, TopBar } from "./Top";
 import Hero from "./Hero";
 import Proposal from "./Proposal";
-import Preview from "./Preview";
 import Closing from "./Closing";
-import { Clients, Faq, Footer, Process, Work } from "./Sections";
-import ServicesStory from "./ServicesStory";
-import Kinetic from "./Kinetic";
-import Systems from "./Systems";
+import { Clients, Faq, Footer, Work } from "./Sections";
+import System from "@/site/system/System";
+import NameIntro from "@/site/system/NameIntro";
+import { chapters } from "@/site/system/chapters";
+import "@/site/system/system.css";
 
 /**
  * The homepage, November 2026: a campaign landing page.
@@ -33,12 +33,9 @@ export default function Home() {
         <Hero />
         <Proposal onBusiness={setBusiness} />
         <Clients />
-        <ServicesStory />
-        <Kinetic />
-        <Systems />
-        <Preview name={business} setName={setBusiness} />
+        <NameIntro name={business} setName={setBusiness} />
+        <System chapters={chapters} name={business} />
         <Work />
-        <Process />
         <Faq />
         <Closing />
       </main>

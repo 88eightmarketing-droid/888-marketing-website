@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Mark } from "@/brand/mark";
-import { clients, cta, faq, nav, process, promises, services, socials, work } from "@/data/site";
+import { chapters } from "@/site/system/chapters";
+import { clients, cta, faq, nav, process, promises, socials, work } from "@/data/site";
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -126,7 +127,7 @@ export function Footer() {
             <p className="mt-3 max-w-[22rem] text-[15px] leading-[1.55] text-steel">Websites, Google presence, content and brand for local businesses that want to be the first call.</p>
           </div>
           <div className="grid grid-cols-2 gap-10 text-[14px] sm:grid-cols-3">
-            <FooterCol title="Services" links={services.items.map((s) => ({ label: s.kicker, href: `#${s.id}` }))} />
+            <FooterCol title="How it works" links={chapters.map((c) => ({ label: c.label, href: "#how" }))} />
             <FooterCol title="Studio" links={[...nav, { label: cta, href: "#proposal" }]} />
             <FooterCol title="Follow" links={socials} />
           </div>
