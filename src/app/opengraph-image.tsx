@@ -1,51 +1,41 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
+import { EIGHT, GAP, STROKE } from "@/brand/mark";
 
 /**
- * The share card links unfurl into: the hero, on night, with a still from the
- * reel of client work in its window.
- *
- * Satori cannot see browser fonts, so Inter Tight and Geist Mono are embedded
- * from src/app/fonts (static instances — Satori renders a variable font at its
- * default weight). Flat fills only: Satori draws nothing for gradients.
- * The still is cut from public/work/reel.mp4 into src/app/og-reel.jpg.
+ * The card links unfurl into: white, the mark, the line, the address —
+ * the same layout as the social covers built by scripts/brand.mjs.
+ * Satori cannot see browser fonts, so Inter is embedded from src/app/fonts.
  */
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "888 Marketing — design studio. Built to be the first call.";
+export const alt = "888 Marketing. Make your phone ring.";
 
 export default async function OpengraphImage() {
-  const dir = path.join(process.cwd(), "src/app");
-  const [tight, mono, still] = await Promise.all([
-    readFile(path.join(dir, "fonts/InterTight-Medium.ttf")),
-    readFile(path.join(dir, "fonts/GeistMono-Regular.ttf")),
-    readFile(path.join(dir, "og-reel.jpg")),
-  ]);
-  const src = `data:image/jpeg;base64,${still.toString("base64")}`;
+  const dir = path.join(process.cwd(), "src/app/fonts");
+  const [bold, medium] = await Promise.all([readFile(path.join(dir, "Inter-Bold.ttf")), readFile(path.join(dir, "Inter-Medium.ttf"))]);
+  const w = 2 * GAP + 100;
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", backgroundColor: "#0b0b0a", color: "#efebe4", padding: "48px 56px", fontFamily: "Inter Tight" }}>
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flexGrow: 1 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ fontSize: 34, letterSpacing: -1.5 }}>888</div>
-            <div style={{ fontFamily: "Geist Mono", fontSize: 16, letterSpacing: 2, color: "#8f8a82" }}>MARKETING</div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", fontSize: 112, lineHeight: 0.88, letterSpacing: -6 }}>
-            <div>Built to be</div>
-            <div>the first</div>
-            <div style={{ display: "flex" }}>call<span style={{ color: "#ef5a36" }}>.</span></div>
-          </div>
-          <div style={{ fontFamily: "Geist Mono", fontSize: 18, letterSpacing: 2, color: "#8f8a82" }}>DESIGN STUDIO · WEBSITES · IDENTITY · CONTENT</div>
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", backgroundColor: "#ffffff", color: "#0b0b0c", padding: "72px 80px", fontFamily: "Inter" }}>
+        <svg width={w * 0.62} height={172 * 0.62} viewBox={`0 12 ${w} 172`} fill="none" strokeWidth={STROKE} strokeLinecap="round" strokeLinejoin="round">
+          <path d={EIGHT} stroke="#0b0b0c" />
+          <path d={EIGHT} stroke="#0b0b0c" transform={`translate(${GAP})`} />
+          <path d={EIGHT} stroke="#d40a10" transform={`translate(${2 * GAP})`} />
+        </svg>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ fontSize: 124, fontWeight: 700, lineHeight: 0.95, letterSpacing: -5 }}>Make your</div>
+          <div style={{ fontSize: 124, fontWeight: 700, lineHeight: 0.95, letterSpacing: -5 }}>phone ring.</div>
+          <div style={{ marginTop: 34, fontSize: 30, fontWeight: 500, color: "#6b6b70" }}>Websites · Google · Content · Brand — 888marketing.net</div>
         </div>
-        <img src={src} width={420} height={534} style={{ width: 420, height: 534, objectFit: "cover", borderRadius: 14 }} alt="" />
       </div>
     ),
     {
       ...size,
       fonts: [
-        { name: "Inter Tight", data: tight, style: "normal", weight: 500 },
-        { name: "Geist Mono", data: mono, style: "normal", weight: 400 },
+        { name: "Inter", data: bold, style: "normal", weight: 700 },
+        { name: "Inter", data: medium, style: "normal", weight: 500 },
       ],
     },
   );

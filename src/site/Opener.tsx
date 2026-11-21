@@ -1,4 +1,5 @@
 import "./opener.css";
+import { EIGHT, GAP } from "@/brand/mark";
 
 /**
  * First-visit opening: three eights drawn on paper in one stroke each, the last in the accent,
@@ -8,17 +9,16 @@ import "./opener.css";
  */
 const SKIP = `(function(){var d=document.documentElement;try{if(matchMedia("(prefers-reduced-motion: reduce)").matches||sessionStorage.getItem("opener-seen")){d.classList.add("opener-off")}else{sessionStorage.setItem("opener-seen","1")}}catch(e){d.classList.add("opener-off")}})();`;
 
-const EIGHT = "M50 92A36 36 0 0 1 50 20A36 36 0 0 1 50 92A42 42 0 0 0 50 176A42 42 0 0 0 50 92";
 
 export default function Opener() {
   return (
     <>
       <script dangerouslySetInnerHTML={{ __html: SKIP }} />
       <div className="opener" aria-hidden="true">
-        <svg className="opener-eights" viewBox="0 0 300 196" fill="none">
+        <svg className="opener-eights" viewBox={`0 0 ${2 * GAP + 100} 196`} fill="none">
           <path className="opener-eight" pathLength={1} d={EIGHT} />
-          <path className="opener-eight opener-eight-2" pathLength={1} d={EIGHT} transform="translate(100)" />
-          <path className="opener-eight opener-eight-3" pathLength={1} d={EIGHT} transform="translate(200)" />
+          <path className="opener-eight opener-eight-2" pathLength={1} d={EIGHT} transform={`translate(${GAP})`} />
+          <path className="opener-eight opener-eight-3" pathLength={1} d={EIGHT} transform={`translate(${2 * GAP})`} />
         </svg>
         <span className="opener-name">Marketing</span>
       </div>

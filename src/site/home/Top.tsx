@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { cta, nav } from "@/data/site";
+import { Mark } from "@/brand/mark";
 
 /**
  * The top bar: clear over the white opening scene, frosted once you scroll. The proposal
@@ -19,8 +20,8 @@ export function TopBar() {
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ${solid ? "bg-white/85 shadow-[0_1px_0_rgba(11,11,12,.08)] backdrop-blur-xl" : ""}`}>
       <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between px-5 md:h-[72px] md:px-8">
-        <a href="#top" className="inline-flex min-h-11 items-baseline gap-2 text-ink" aria-label="888 Marketing, top of page">
-          <span className="text-[24px] font-extrabold tracking-[-0.05em]">888</span>
+        <a href="#top" className="inline-flex min-h-11 items-center gap-2 text-ink" aria-label="888 Marketing, top of page">
+          <Mark className="h-[22px] w-auto" />
           <span className="text-[13px] font-semibold tracking-[0.02em] text-steel">Marketing</span>
         </a>
         <nav aria-label="Sections" className="hidden items-center gap-8 md:flex">

@@ -197,7 +197,5 @@ export const closing = {
   text: "One conversation, one written proposal, no obligation.",
 };
 
-export const socials = [
-  { label: "Instagram", href: "https://www.instagram.com/88eightmarketing/" },
-  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61592828743883" },
-];
+// One list for every profile: src/brand/profiles.ts.
+export { profiles as socials } from "@/brand/profiles";
