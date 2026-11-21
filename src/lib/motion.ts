@@ -20,3 +20,6 @@ export const useReducedMotion = () => useMediaQuery("(prefers-reduced-motion: re
 
 /** Coarse pointer = touch device: skip cursor-driven effects. */
 export const useCoarsePointer = () => useMediaQuery("(pointer: coarse)");
+
+/** False in the server HTML and during hydration, true after: for client-only media choices. */
+export const useHydrated = () => useSyncExternalStore(() => () => {}, () => true, () => false);

@@ -23,8 +23,8 @@
  */
 
 export const nav = [
+  { label: "Work", href: "#work-film" },
   { label: "How it works", href: "#how" },
-  { label: "Work", href: "#work" },
   { label: "FAQ", href: "#faq" },
 ];
 

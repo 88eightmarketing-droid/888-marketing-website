@@ -5,11 +5,10 @@ import { MobileCta, TopBar } from "./Top";
 import Hero from "./Hero";
 import Proposal from "./Proposal";
 import Closing from "./Closing";
-import { Clients, Faq, Footer, Work } from "./Sections";
-import System from "@/site/system/System";
-import NameIntro from "@/site/system/NameIntro";
-import { chapters } from "@/site/system/chapters";
-import "@/site/system/system.css";
+import { Clients, Faq, Footer } from "./Sections";
+import WorkFilm from "@/site/film/WorkFilm";
+import HowItWorks from "@/site/film/HowItWorks";
+import "@/site/film/film.css";
 
 /**
  * The homepage, November 2026: a campaign landing page.
@@ -24,7 +23,7 @@ import "@/site/system/system.css";
  * The business name typed in the proposal form feeds the preview section.
  */
 export default function Home() {
-  const [business, setBusiness] = useState("");
+  const [, setBusiness] = useState("");
   useFadeIn();
   return (
     <>
@@ -33,9 +32,8 @@ export default function Home() {
         <Hero />
         <Proposal onBusiness={setBusiness} />
         <Clients />
-        <NameIntro name={business} setName={setBusiness} />
-        <System chapters={chapters} name={business} />
-        <Work />
+        <WorkFilm />
+        <HowItWorks />
         <Faq />
         <Closing />
       </main>

@@ -1,0 +1,52 @@
+/*
+ * The work film. Per layer: --e entering (0–1), --h holding (0–1), --x leaving (0–1).
+ * Opacity, transform and clip-path only.
+ */
+
+.film-layer { --e: 0; --h: 0; --x: 0; --s: 0; }
+
+/* The frame opens from a card to the full screen. */
+.film-media {
+  clip-path: inset(calc((1 - var(--e)) * 18%) calc((1 - var(--e)) * 22%) calc((1 - var(--e)) * 18%) calc((1 - var(--e)) * 22%) round calc((1 - var(--e)) * 28px + var(--s) * 26px));
+  opacity: calc(1 - var(--x) * .75);
+  /* Beat two: the whole frame moves aside into a window (desktop: right; phones: up). */
+  transform: translateX(calc(var(--s) * 19vw)) scale(calc(1 - var(--s) * .44));
+  transform-origin: 50% 50%;
+}
+@media (max-width: 767px) {
+  .film-media { transform: translateY(calc(var(--s) * -24svh)) scale(calc(1 - var(--s) * .54)); }
+}
+/* Slow push while it holds; a little extra drift as it leaves. */
+.film-push { transform: scale(calc(1.12 - var(--e) * .04 - var(--h) * .06 + var(--x) * .03)) translateY(var(--lift, 0)); transform-origin: 50% 45%; }
+.film-float { transform: translateY(calc((0.5 - var(--h)) * 60px * var(--d))) rotate(var(--r)); opacity: var(--e); }
+
+.film-scrim { background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 25%); opacity: calc(var(--e) * (1 - var(--s))); }
+
+/* Title lines rise out of their masks once the frame is open. */
+.film-line { transform: translateY(calc((1 - clamp(0, (var(--s) - .35) * 2.6 - var(--k) * .16, 1)) * 105%)); }
+.film-rise { opacity: clamp(0, (var(--s) - .45) * 2.6 - var(--k) * .14, 1); transform: translateY(calc((1 - clamp(0, (var(--s) - .45) * 2.6 - var(--k) * .14, 1)) * 14px)); }
+.film-caption { opacity: calc(1 - var(--x) * 1.6); }
+
+/* Cinema bars. */
+.film-bar { height: 6.5vh; }
+@media (max-width: 767px) { .film-bar { height: 3.5vh; } }
+
+/* Grain: a tiny noise tile, shifted every frame. */
+.film-grain {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: .07; mix-blend-mode: overlay; animation: film-grain .5s steps(4) infinite;
+}
+@keyframes film-grain { 0% { transform: translate(0,0) } 25% { transform: translate(-3%,2%) } 50% { transform: translate(2%,-3%) } 75% { transform: translate(-2%,-1%) } 100% { transform: translate(0,0) } }
+.film-rec { animation: film-rec 1.2s steps(2) infinite; }
+@keyframes film-rec { 50% { opacity: .2 } }
+
+@media (prefers-reduced-motion: reduce) {
+  .film-push, .film-float { transform: none; }
+  .film-grain, .film-rec { animation: none; }
+}
+
+/* How it works: each line lights as it crosses the middle. --a is 0–1. */
+.how-line { color: color-mix(in srgb, var(--color-ink) calc(18% + var(--a) * 82%), #ffffff); transform: translateX(calc((1 - var(--a)) * -1.2%)); }
+.how-note { opacity: calc(.35 + var(--a) * .65); }
+.how-step:has(.how-line) { transition: none; }
+@media (prefers-reduced-motion: reduce) { .how-line { color: var(--color-ink); transform: none; } .how-note { opacity: 1; } }
