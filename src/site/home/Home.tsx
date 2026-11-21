@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { MobileCta, TopBar } from "./Top";
-import Hero from "./Hero";
+import Opener3D from "@/site/three/Opener3D";
+import "@/site/three/opener3d.css";
 import Proposal from "./Proposal";
 import Closing from "./Closing";
 import { Clients, Faq, Footer } from "./Sections";
@@ -29,7 +30,7 @@ export default function Home() {
     <>
       <TopBar />
       <main>
-        <Hero />
+        <Opener3D />
         <Proposal onBusiness={setBusiness} />
         <Clients />
         <WorkFilm />

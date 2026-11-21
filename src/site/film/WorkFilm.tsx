@@ -85,7 +85,7 @@ export default function WorkFilm() {
   }, [active, wide, mounted]);
 
   return (
-    <section ref={root} id="work-film" aria-label="Our work, in motion" className="relative bg-black text-white" style={{ height: `${n * VH_PER_REEL * 100 + 100}svh` }}>
+    <section ref={root} id="work-film" data-dark aria-label="Our work, in motion" className="relative bg-black text-white" style={{ height: `${n * VH_PER_REEL * 100 + 100}svh` }}>
       <div className="sticky top-0 h-svh overflow-hidden">
         {reels.map((r, i) => (
           <div key={r.id} ref={(el) => { if (el) layers.current[i] = el; }} className="film-layer absolute inset-0" style={{ zIndex: i + 1, visibility: i === 0 ? "visible" : "hidden" }} aria-hidden={i !== active}>
