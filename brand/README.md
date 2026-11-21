@@ -23,6 +23,10 @@ Rules:
 - Clear space: one eight's width on every side. Smallest: 24 px tall on screen, 8 mm in print.
 - No outlines, shadows, gradients, or the eights stretched, italicised or touching.
 
+## Email signature
+
+`out/email-signature.html`: open it in Chrome, select all, copy, paste into Gmail or Zoho's signature box, then replace NAME and ROLE. Its logo loads from `888marketing.net/brand/888-logo-horizontal.png`, so keep that file in `public/brand/`.
+
 ## Colour
 
 White page, ink type, **one red, and only on the thing to do** (and the third eight).
