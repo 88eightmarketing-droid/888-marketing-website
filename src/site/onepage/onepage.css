@@ -13,7 +13,7 @@
 .wr-tall { height: min(62svh, 120vw); aspect-ratio: 9 / 16; object-fit: cover; border-radius: 18px; box-shadow: 0 40px 80px -40px rgba(0,0,0,.8); }
 @media (max-width: 767px) { .wr-second { display: none; } }
 
-.wr-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.62) 28%, rgba(0,0,0,0) 58%); pointer-events: none; }
+.wr-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.92), rgba(0,0,0,.82) 34%, rgba(0,0,0,.35) 52%, rgba(0,0,0,0) 66%); pointer-events: none; }
 
 .wr-copy { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 20px 28px; }
 @media (min-width: 768px) { .wr-copy { padding: 0 48px 48px; } }
