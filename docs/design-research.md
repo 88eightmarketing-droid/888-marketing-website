@@ -96,3 +96,20 @@ with "very slow, smooth camera push-in and gentle orbit … locked, elegant, no 
 holds for about 7 s, so the loop is 0–7 s forward then reversed. The page reds (`crimson`
 `#b5040a`, `crimson-dark` `#6a0404`) were sampled from the stills so sections and photographs
 read as one surface.
+
+## Seventh round: one page (2026-11-25)
+
+The owner said the site "still sucks" after seeing both the white live build and the dark revamp. The audit (agency-previews `docs/888-audit/AUDIT.md`) found that both were **the same page underneath**: the identical proposal block, client strip, FAQ, closing form and footer, every heading Inter at 80–86 px desktop. About 960 words in 11 sections, 23 phone screens. Six looks had repainted one skeleton.
+
+Studied the same day, headless Chrome at 1440 and 390 (screens in agency-previews `docs/888-audit/refs`):
+- **Locomotive** (locomotive.ca): a full-bleed hero with one line, then the work as a list of huge client names on hairlines. About 300 words. Taken: the work is the page; one line per piece.
+- **Unseen** (unseen.co): about 100 words on the first screen and one action. Taken: say one thing.
+- **Obys** (obys.agency): tiny labels, imagery carries the page. Taken: small uppercase labels (01 / 05 · Website), big type only for the one line.
+
+Built on branch `onepage-2026-11`, inside the brand rules (white page, Inter only, red only on the action):
+1. The 3D 888 opener, flying through the red eight into white.
+2. Five client films, full screen, pinned and stacking, one line each. The first rises into the opener's white.
+3. Three lines on how it works.
+4. One form.
+
+The services, systems block, the early form, the client strip and the pinned mobile bar are gone from the home page; the FAQ moved to `/faq`. About 300 words with the footer, 9,900 px tall on a phone (was 19,100).
