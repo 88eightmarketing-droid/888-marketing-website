@@ -1,45 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MobileCta, TopBar } from "./Top";
+import { useEffect } from "react";
+import { TopBar } from "./Top";
 import Opener3D from "@/site/three/Opener3D";
 import "@/site/three/opener3d.css";
-import Proposal from "./Proposal";
 import Closing from "./Closing";
-import { Clients, Faq, Footer } from "./Sections";
-import WorkFilm from "@/site/film/WorkFilm";
-import HowItWorks from "@/site/film/HowItWorks";
-import "@/site/film/film.css";
+import { Footer } from "./Sections";
+import WorkReel from "@/site/onepage/WorkReel";
+import How from "@/site/onepage/How";
+import "@/site/onepage/onepage.css";
 
 /**
- * The homepage, November 2026: a campaign landing page.
+ * The homepage, one page (25 Nov 2026; audit in agency-previews docs/888-audit/AUDIT.md).
  *
- * White and clean, built like the agency landing pages that convert (the
- * proposal form straight after the opening, a call to action in every
- * section, a strong close — see docs/design-research.md) and finished like a
- * product launch: Grok film on white seamless scrubbed by scroll, with real
- * client sites on the devices, and a live preview of the visitor's own
- * business name.
- *
- * The business name typed in the proposal form feeds the preview section.
+ * One idea: the 888 mark as objects, the camera flies through the red eight
+ * into a white page, then the work itself, full screen, one line per piece,
+ * three lines on how it works, and one form. About 250 words. The services,
+ * FAQ and "in writing" detail no longer sit on the home page.
  */
 export default function Home() {
-  const [, setBusiness] = useState("");
   useFadeIn();
   return (
     <>
       <TopBar />
       <main>
         <Opener3D />
-        <Proposal onBusiness={setBusiness} />
-        <Clients />
-        <WorkFilm />
-        <HowItWorks />
-        <Faq />
-        <Closing />
+        <WorkReel />
+        <How />
+        <div id="proposal">
+          <Closing />
+        </div>
       </main>
       <Footer />
-      <MobileCta />
     </>
   );
 }

@@ -127,8 +127,8 @@ export function Footer() {
             <p className="mt-3 max-w-[22rem] text-[15px] leading-[1.55] text-steel">Websites, Google presence, content and brand for local businesses that want to be the first call.</p>
           </div>
           <div className="grid grid-cols-2 gap-10 text-[14px] sm:grid-cols-3">
-            <FooterCol title="Work" links={[...new Map(reels.map((r) => [r.client, { label: r.client, href: `https://${r.domain.replace(/^@.*/, "")}` || r.url }])).values()].map((l) => ({ ...l, href: l.href === "https://" ? "#work-film" : l.href }))} />
-            <FooterCol title="Studio" links={[...nav, { label: cta, href: "#proposal" }]} />
+            <FooterCol title="Work" links={[...new Map(reels.map((r) => [r.client, { label: r.client, href: `https://${r.domain.replace(/^@.*/, "")}` || r.url }])).values()].map((l) => ({ ...l, href: l.href === "https://" ? "/#work" : l.href }))} />
+            <FooterCol title="Studio" links={[...nav, { label: cta, href: "/#proposal" }]} />
             <FooterCol title="Follow" links={socials} />
           </div>
         </div>

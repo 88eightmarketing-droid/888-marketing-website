@@ -23,9 +23,9 @@
  */
 
 export const nav = [
-  { label: "Work", href: "#work-film" },
-  { label: "How it works", href: "#how" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Work", href: "/#work" },
+  { label: "How it works", href: "/#how" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export const cta = "Get a free proposal";

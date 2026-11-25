@@ -36,7 +36,7 @@ export function TopBar() {
             <a key={n.href} href={n.href} className={`inline-flex min-h-11 items-center text-[14px] font-medium transition-colors ${dark ? "text-white/70 hover:text-white" : "text-steel hover:text-ink"}`}>{n.label}</a>
           ))}
         </nav>
-        <a href="#proposal" className={`inline-flex min-h-11 items-center rounded-full px-5 text-[14px] font-bold transition-transform duration-200 hover:scale-[1.03] ${dark ? "bg-white text-ink" : "bg-ink text-white"}`}>
+        <a href="/#proposal" className={`inline-flex min-h-11 items-center rounded-full px-5 text-[14px] font-bold transition-transform duration-200 hover:scale-[1.03] ${dark ? "bg-white text-ink" : "bg-ink text-white"}`}>
           <span className="hidden sm:inline">{cta}</span>
           <span className="sm:hidden">Free proposal</span>
         </a>
@@ -55,7 +55,7 @@ export function MobileCta() {
   }, []);
   return (
     <div className={`fixed inset-x-3 bottom-3 z-40 transition-[opacity,translate] duration-300 md:hidden ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}>
-      <a href="#proposal" className="flex min-h-[54px] items-center justify-center rounded-[14px] bg-red text-[16px] font-bold text-white shadow-[0_12px_30px_-10px_rgba(168,6,11,.7)]">
+      <a href="/#proposal" className="flex min-h-[54px] items-center justify-center rounded-[14px] bg-red text-[16px] font-bold text-white shadow-[0_12px_30px_-10px_rgba(168,6,11,.7)]">
         {cta} →
       </a>
     </div>

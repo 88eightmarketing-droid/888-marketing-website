@@ -1,0 +1,43 @@
+/* One-page home (25 Nov 2026): the work as full-screen films, three lines, one form. */
+
+/* Work: each panel pins; the next slides up over it. */
+.wr-panel { position: sticky; top: 0; height: 100svh; overflow: hidden; color: #fff; }
+.wr-frame { position: absolute; inset: 0; overflow: hidden; }
+.wr-fill { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.wr-narrow { display: none; }
+@media (max-width: 767px) { .wr-wide { display: none; } .wr-narrow { display: block; } }
+
+.wr-center { position: absolute; inset: 0; display: grid; place-items: center; padding: 12svh 6vw 26svh; }
+.wr-square { width: min(70vw, 52svh); aspect-ratio: 1; object-fit: cover; border-radius: 18px; box-shadow: 0 40px 80px -40px rgba(0,0,0,.8); }
+.wr-pair { grid-auto-flow: column; gap: 3vw; }
+.wr-tall { height: min(62svh, 120vw); aspect-ratio: 9 / 16; object-fit: cover; border-radius: 18px; box-shadow: 0 40px 80px -40px rgba(0,0,0,.8); }
+@media (max-width: 767px) { .wr-second { display: none; } }
+
+.wr-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0) 46%); pointer-events: none; }
+
+.wr-copy { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 20px 28px; }
+@media (min-width: 768px) { .wr-copy { padding: 0 48px 48px; } }
+.wr-label { display: flex; gap: 18px; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+.wr-line { margin-top: 10px; max-width: 16ch; font-size: clamp(2.6rem, 7.4vw, 7.2rem); font-weight: 800; line-height: .92; letter-spacing: -.05em; text-wrap: balance; }
+.wr-client { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 14px; font-size: 16px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,.5); }
+.wr-client:hover { border-color: #fff; }
+
+/* The first film opens out of the white page. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .wr-first .wr-frame { animation: wr-open linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
+    .wr-first { background: #fff !important; }
+  }
+}
+@keyframes wr-open { from { clip-path: inset(9% 6% 9% 6% round 28px); } to { clip-path: inset(0 0 0 0 round 0); } }
+
+/* How: three lines, white. */
+.hw { background: #fff; color: var(--color-ink, #0b0b0c); }
+.hw-list { margin: 0 auto; max-width: 1320px; padding: 120px 20px; display: grid; gap: 40px; }
+@media (min-width: 768px) { .hw-list { padding: 200px 48px; gap: 56px; } }
+.hw-item { display: grid; gap: 10px; border-top: 1px solid var(--color-hair, #e3e1dd); padding-top: 22px; }
+@media (min-width: 768px) { .hw-item { grid-template-columns: 1fr 2fr; align-items: baseline; } }
+.hw-n { font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--color-steel, #6b6b70); }
+.hw-line { font-size: clamp(2.4rem, 6.4vw, 6.2rem); font-weight: 800; line-height: .95; letter-spacing: -.05em; }
+.hw-sub { grid-column: 2; margin-top: 4px; max-width: 42ch; font-size: 18px; color: var(--color-steel, #6b6b70); }
+@media (max-width: 767px) { .hw-sub { grid-column: 1; } }
