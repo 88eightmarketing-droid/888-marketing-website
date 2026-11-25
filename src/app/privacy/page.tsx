@@ -10,7 +10,7 @@ export default function Privacy() {
       <p>This page says what 888 Marketing collects on 888marketing.net and what we do with it.</p>
       <h2>What we collect</h2>
       <p>Only what you type into the proposal form: your name, your business, your email, your phone number if you give it, and your message. The form sends it to us by email so we can reply.</p>
-      <p>The site sets no advertising or tracking cookies. The opening animation remembers, for this browser tab only, that you have seen it. Our host, Vercel, keeps standard server logs (such as IP address and pages requested) to run and protect the site.</p>
+      <p>The site sets no advertising or tracking cookies. The opening animation remembers, for this browser tab only, that you have seen it. Our host, Vercel, keeps standard server logs (such as IP address and pages requested) to run and protect the site, and counts visits anonymously with Vercel Web Analytics, which sets no cookies and does not identify you.</p>
       <h2>What we do with it</h2>
       <p>We use it to answer you and to write the proposal you asked for. We do not sell it, rent it, or add you to a mailing list.</p>
       <p>Services that handle it for us: Vercel (hosting) and Resend (delivering the form to our inbox).</p>
