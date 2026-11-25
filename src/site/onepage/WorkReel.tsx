@@ -54,10 +54,14 @@ function Panel({ reel, index, total }: { reel: Reel; index: number; total: numbe
             <span>{reel.kind}</span>
           </p>
           <h3 className="wr-line">{line}</h3>
-          <a className="wr-client" href={reel.url} target="_blank" rel="noopener">
-            {reel.client} <span aria-hidden>↗</span>
-            <span className="sr-only"> (opens {reel.domain})</span>
-          </a>
+          {reel.url ? (
+            <a className="wr-client" href={reel.url} target="_blank" rel="noopener">
+              {reel.client} <span aria-hidden>↗</span>
+              <span className="sr-only"> (opens {reel.domain})</span>
+            </a>
+          ) : (
+            <p className="wr-client">{reel.client}</p>
+          )}
         </div>
       </div>
     </article>

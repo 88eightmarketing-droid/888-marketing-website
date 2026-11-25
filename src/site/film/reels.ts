@@ -1,6 +1,7 @@
 /**
  * The pieces in the work film. Real 888 work only, paying clients live on
- * their own domains (owner's rule, 8 Nov 2026); no pitches. Clips are cut from
+ * their own domains (owner's rule, 8 Nov 2026). One exception the owner asked
+ * for on 25 Nov: the Carnitas El Rincón concept, labelled Concept and not linked. Clips are cut from
  * the films we made (agency-previews/docs/leads) and the site recordings
  * (public/showcase) into public/film. Copy names the company, never the owner.
  */
@@ -40,23 +41,17 @@ export const reels: Reel[] = [
     ground: "#ff2fa0",
   },
   {
-    id: "pa",
-    kind: "Brand",
-    title: "A brand you\ncan hand out.",
-    body: "A new mark for a licensed plumber, and everything it goes on: cards, flyers, the seal, the site.",
-    client: "Plumbing Art",
-    domain: "plumbingartbayarea.com",
-    url: "https://plumbingartbayarea.com",
-    layout: "kit",
-    wide: c("pa-square"),
-    tall: c("pa-square"),
-    ground: "#101a2c",
-    kit: [
-      { src: "/made/pa-card-front.webp", x: "8%", y: "16%", r: -8 },
-      { src: "/made/pa-flyer.webp", x: "74%", y: "10%", r: 6 },
-      { src: "/made/pa-card-back.webp", x: "10%", y: "58%", r: 5 },
-      { src: "/made/pa-insta.webp", x: "76%", y: "56%", r: -5 },
-    ],
+    id: "herns",
+    kind: "Website",
+    title: "A law office,\nclear at a glance.",
+    body: "Personal injury and business litigation in La Quinta: what to do after an accident, then a call or a three-step form.",
+    client: "Law Offices of Daniel G. Herns",
+    domain: "danielhernslaw.com",
+    url: "https://danielhernslaw.com",
+    layout: "full",
+    wide: c("herns-wide"),
+    tall: c("herns-tall"),
+    ground: "#1c2a3d",
   },
   {
     id: "fren",
@@ -70,6 +65,19 @@ export const reels: Reel[] = [
     wide: c("fren-wide"),
     tall: c("fren-tall"),
     ground: "#120a1c",
+  },
+  {
+    id: "rincon",
+    kind: "Ordering · Concept",
+    title: "By the pound,\nfrom the store.",
+    body: "A concept for a family taquería chain: pick the nearest store, build the order by the pound, pay, pick up. No delivery app in between.",
+    client: "Carnitas El Rincón",
+    domain: "",
+    url: "",
+    layout: "full",
+    wide: c("rincon-wide"),
+    tall: c("rincon-tall"),
+    ground: "#c8102e",
   },
   {
     id: "classe-book",
