@@ -42,14 +42,31 @@ export default function Features() {
       },
       { threshold: [0, 0.4, 1] },
     );
+    // Films load only as they come near, and only the cut this screen shows (the
+    // other is display:none), so nothing competes with the opener on first load.
+    const load = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          for (const v of e.target.querySelectorAll<HTMLVideoElement>("video[data-src]")) {
+            if (!v.offsetParent && getComputedStyle(v).display === "none") continue;
+            v.poster = v.dataset.poster ?? "";
+            v.src = v.dataset.src ?? "";
+            v.removeAttribute("data-src");
+            v.preload = "auto";
+            play.observe(v);
+          }
+        }
+      },
+      { rootMargin: "120% 0px 120% 0px" },
+    );
     el.querySelectorAll(".pm-reveal").forEach((n) => reveal.observe(n));
-    el.querySelectorAll("video").forEach((v) => play.observe(v));
-    return () => { reveal.disconnect(); play.disconnect(); };
+    el.querySelectorAll(".pm-pic").forEach((n) => load.observe(n));
+    return () => { reveal.disconnect(); play.disconnect(); load.disconnect(); };
   }, []);
 
   return (
     <section ref={root} id="work" aria-labelledby="pm-title" className="pm" data-dark>
-      <div aria-hidden className="film-grain pm-grain" />
       <header className="pm-slate pm-reveal">
         <p className="pm-kicker"><span className="pm-rec" />888 presents</p>
         <h2 id="pm-title" className="pm-title">
@@ -100,7 +117,7 @@ function Feature({ reel, index, total }: { reel: Reel; index: number; total: num
 /** Wide screens get the wide cut, phones the vertical one. Pairs show two reels side by side. */
 function Picture({ reel }: { reel: Reel }) {
   const v = (src: string, poster: string, cls: string, key?: string) => (
-    <video key={key} className={cls} src={src} poster={poster} muted loop playsInline preload="metadata" aria-hidden tabIndex={-1} style={{ objectPosition: reel.focus ?? "50% 22%" }} />
+    <video key={key} className={cls} data-src={src} data-poster={poster} muted loop playsInline preload="none" aria-hidden tabIndex={-1} style={{ objectPosition: reel.focus ?? "50% 22%" }} />
   );
   if (reel.layout === "pair")
     return (
