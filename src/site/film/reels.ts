@@ -1,7 +1,7 @@
 /**
  * The pieces in the work film. Real 888 work only, paying clients live on
- * their own domains (owner's rule, 8 Nov 2026). One exception the owner asked
- * for on 25 Nov: the Carnitas El Rincón concept, labelled Concept and not linked. Clips are cut from
+ * their own domains (owner's rule, 8 Nov 2026). Exception the owner asked for on
+ * 25 Nov: Trail Pushers, live on its preview address until its domain is set. Clips are cut from
  * the films we made (agency-previews/docs/leads) and the site recordings
  * (public/showcase) into public/film. Copy names the company, never the owner.
  */
@@ -68,16 +68,29 @@ export const reels: Reel[] = [
   },
   {
     id: "rincon",
-    kind: "Ordering · Concept",
-    title: "By the pound,\nfrom the store.",
-    body: "A concept for a family taquería chain: pick the nearest store, build the order by the pound, pay, pick up. No delivery app in between.",
+    kind: "Website",
+    title: "Twenty stores,\none front door.",
+    body: "For a family carnitas chain: the nearest store in one search, the menu by the pound, party trays, in English and Spanish.",
     client: "Carnitas El Rincón",
-    domain: "",
-    url: "",
+    domain: "carnitaselrincon.com",
+    url: "https://carnitaselrincon.com",
     layout: "full",
     wide: c("rincon-wide"),
     tall: c("rincon-tall"),
     ground: "#c8102e",
+  },
+  {
+    id: "trailpushers",
+    kind: "Website · Brand",
+    title: "Built from\nthe dirt up.",
+    body: "For an off-road crew: their own footage, every rig credited to its owner, the routes they run and the merch drop. The logo, sharpened.",
+    client: "Trail Pushers",
+    domain: "trailpushers.vercel.app",
+    url: "https://trailpushers.vercel.app",
+    layout: "full",
+    wide: c("trailpushers-wide"),
+    tall: c("trailpushers-tall"),
+    ground: "#0b0b0c",
   },
   {
     id: "classe-book",
