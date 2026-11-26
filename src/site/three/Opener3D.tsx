@@ -206,8 +206,8 @@ export default function Opener3D() {
         </a>
         <p aria-hidden className="o3-hint pointer-events-none absolute right-5 top-[5.5rem] font-mono text-[11px] uppercase tracking-[0.24em] text-white/50 md:right-8">Scroll</p>
 
-        {/* The white the camera flies out into */}
-        <div aria-hidden className="o3-white pointer-events-none absolute inset-0 bg-white" />
+        {/* The dark house the camera flies out into */}
+        <div aria-hidden className="o3-white pointer-events-none absolute inset-0 bg-[#0b0b0c]" />
 
         {/* No WebGL / reduced motion fallback: the flat mark */}
         <svg aria-hidden viewBox="0 12 324 172" className="o3-flat absolute left-1/2 top-[38%] w-[min(70vw,560px)] -translate-x-1/2 -translate-y-1/2" fill="none" strokeWidth="15" strokeLinecap="round">

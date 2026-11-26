@@ -6,17 +6,18 @@ import Opener3D from "@/site/three/Opener3D";
 import "@/site/three/opener3d.css";
 import Closing from "./Closing";
 import { Footer } from "./Sections";
-import WorkReel from "@/site/onepage/WorkReel";
-import How from "@/site/onepage/How";
-import "@/site/onepage/onepage.css";
+import Features from "@/site/premiere/Features";
+import Schedule from "@/site/premiere/Schedule";
+import EndCredits from "@/site/premiere/EndCredits";
+import "@/site/film/film.css";
+import "@/site/premiere/premiere.css";
 
 /**
- * The homepage, one page (25 Nov 2026; audit in agency-previews docs/888-audit/AUDIT.md).
- *
- * One idea: the 888 mark as objects, the camera flies through the red eight
- * into a white page, then the work itself, full screen, one line per piece,
- * three lines on how it works, and one form. About 250 words. The services,
- * FAQ and "in writing" detail no longer sit on the home page.
+ * The homepage: the premiere (25 Nov 2026). One idea: 888 gives local
+ * businesses an opening night. The camera flies through the red eight into a
+ * dark house, each client plays as a feature with its credits, the production
+ * schedule, the end credits, one form. The one-page version it grew from is
+ * branch `onepage-2026-11`; the audit is agency-previews docs/888-audit/AUDIT.md.
  */
 export default function Home() {
   useFadeIn();
@@ -25,8 +26,9 @@ export default function Home() {
       <TopBar />
       <main>
         <Opener3D />
-        <WorkReel />
-        <How />
+        <Features />
+        <Schedule />
+        <EndCredits />
         <div id="proposal">
           <Closing />
         </div>

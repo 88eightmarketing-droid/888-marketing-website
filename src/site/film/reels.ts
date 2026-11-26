@@ -21,6 +21,8 @@ export interface Reel {
   tall2?: Clip;
   ground: string;
   focus?: string;
+  /** What 888 made for it, in credit order. Only what was delivered. */
+  credits: string[];
   kit?: { src: string; x: string; y: string; r: number }[];
 }
 
@@ -29,6 +31,7 @@ const c = (name: string): Clip => ({ mp4: `/film/${name}.mp4`, jpg: `/film/${nam
 export const reels: Reel[] = [
   {
     id: "jelly",
+    credits: ["Website", "Booking", "Site film"],
     kind: "Website",
     title: "Built to be\nthe first call.",
     body: "A San Francisco barber's site, designed from her own work: her cuts, her colours, booking in one tap.",
@@ -42,6 +45,7 @@ export const reels: Reel[] = [
   },
   {
     id: "herns",
+    credits: ["Website", "Intake form"],
     kind: "Website",
     title: "A law office,\nclear at a glance.",
     body: "Personal injury and business litigation in La Quinta: what to do after an accident, then a call or a three-step form.",
@@ -55,6 +59,7 @@ export const reels: Reel[] = [
   },
   {
     id: "fren",
+    credits: ["Website", "Party invites", "Ads"],
     kind: "System",
     title: "Invites that\nplay like a game.",
     body: "For a game truck: the parent builds the invite, guests RSVP in three taps and play while they wait, the host sees who is coming.",
@@ -68,6 +73,7 @@ export const reels: Reel[] = [
   },
   {
     id: "rincon",
+    credits: ["Website", "Brand kit", "20 store pages", "Review cards"],
     kind: "Website",
     title: "Twenty stores,\none front door.",
     body: "For a family carnitas chain: the nearest store in one search, the menu by the pound, party trays, in English and Spanish.",
@@ -81,6 +87,7 @@ export const reels: Reel[] = [
   },
   {
     id: "trailpushers",
+    credits: ["Website", "Logo", "Hero film", "Merch"],
     kind: "Website · Brand",
     title: "Built from\nthe dirt up.",
     body: "For an off-road crew: their own footage, every rig credited to its owner, the routes they run and the merch drop. The logo, sharpened.",
@@ -94,6 +101,7 @@ export const reels: Reel[] = [
   },
   {
     id: "classe-book",
+    credits: ["Website", "Booking", "Gift cards"],
     kind: "Booking",
     title: "Booked in\nthree taps.",
     body: "A private cryo studio in San Jose: choose a ritual, pick a time, done. Gift cards for the season, on the same site.",
@@ -107,6 +115,7 @@ export const reels: Reel[] = [
   },
   {
     id: "classe-reels",
+    credits: ["Reels", "Posts", "Publishing"],
     kind: "Content",
     title: "Posted every week,\nin the brand.",
     body: "Reels and posts made in the studio's own look, approved by the owner, posted to Facebook, Instagram and YouTube from one place.",
